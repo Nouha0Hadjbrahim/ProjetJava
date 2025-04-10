@@ -1,0 +1,4 @@
+utils\PasswordUtils.class
+controller\DashboardController.class
+controller\LoginController.class
+controller\TableUtilisateursController.class
