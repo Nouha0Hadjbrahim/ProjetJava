@@ -82,7 +82,6 @@ public class LoginController {
             }
 
         } else if (roles.contains("ROLE_CLIENT")) {
-            // Rediriger vers client_home.fxml
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/front.fxml"));
                 Parent root = loader.load();
@@ -93,9 +92,21 @@ public class LoginController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else if (roles.contains("ROLE_ARTISAN")) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) txtEmail.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Espace artisan");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             showAlert(Alert.AlertType.ERROR, "Rôle inconnu.");
         }
+
     }
 
 

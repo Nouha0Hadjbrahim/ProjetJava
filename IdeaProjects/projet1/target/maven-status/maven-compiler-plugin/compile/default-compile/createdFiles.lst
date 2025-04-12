@@ -1,4 +1,13 @@
+controller\ProfilFrontController.class
 utils\PasswordUtils.class
+controller\FrontClientController.class
 controller\DashboardController.class
 controller\LoginController.class
+controller\MateriauxController.class
+controller\PanierController.class
 controller\TableUtilisateursController.class
+controller\FooterController.class
+controller\AccueilController.class
+controller\ReclamationController.class
+controller\AteliersController.class
+controller\ProduitsController.class

@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.User;
 import service.UserService;
+import utils.PasswordUtils;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -85,30 +86,33 @@ public class SignupController {
             return;
         }
 
-        // Création et enregistrement
-        User user = new User(nom, prenom, email, password);
+        // Hachage et création de l'utilisateur
+        String hashedPassword = PasswordUtils.hashPassword(password);
+        User user = new User(nom, prenom, email, hashedPassword);
+
         userService.register(user);
 
         try {
-            // Charger dashboard.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
-            Parent dashboardRoot = loader.load();
+            // Charger front.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/front.fxml"));
+            Parent frontRoot = loader.load();
 
-            // Passer l'utilisateur au dashboard
-            DashboardController dashboardController = loader.getController();
-            dashboardController.initialize(user);
+            // Passer l'utilisateur au frontController
+            FrontClientController frontController = loader.getController();
+            frontController.initialize(user); // ⚠️ Méthode à créer dans FrontController
 
             // Afficher la scène
             Stage stage = (Stage) btnRegister.getScene().getWindow();
-            stage.setScene(new Scene(dashboardRoot));
-            stage.setTitle("Back Office - Bienvenue");
+            stage.setScene(new Scene(frontRoot));
+            stage.setTitle("Edayetna - Bienvenue");
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "❌ Erreur lors du chargement du tableau de bord !");
+            showAlert(Alert.AlertType.ERROR, "❌ Erreur lors du chargement de l'accueil !");
         }
     }
+
 
     // ========== VALIDATEURS ==========
 

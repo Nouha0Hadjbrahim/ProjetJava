@@ -8,7 +8,8 @@ public class PasswordUtils {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 
-    public static String hashPassword(String plainPassword) {
-        return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+    public static String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt(12));
     }
+
 }
