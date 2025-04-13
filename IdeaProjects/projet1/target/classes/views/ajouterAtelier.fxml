@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<VBox spacing="10"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.AjouterAtelierController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Ajouter un Atelier" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <!-- Champs TextField -->
+    <TextField fx:id="titreField" promptText="Titre"/>
+
+    <!-- ComboBox pour la catégorie -->
+    <ComboBox fx:id="categorieField" promptText="Catégorie">
+    </ComboBox>
+
+    <!-- TextArea pour la description -->
+    <TextArea fx:id="descriptionField" promptText="Description"/>
+
+    <!-- ComboBox pour le niveau de difficulté -->
+    <ComboBox fx:id="niveauDiffField" promptText="Niveau de difficulté">
+    </ComboBox>
+
+    <!-- Champs TextField -->
+    <TextField fx:id="prixField" promptText="Prix"/>
+    <TextField fx:id="dureeField" promptText="Durée (minutes)"/>
+    <TextField fx:id="lienField" promptText="Lien Zoom"/>
+
+    <!-- Date et Heure -->
+    <HBox spacing="10">
+        <DatePicker fx:id="datePicker"/>
+        <TextField fx:id="heureField" promptText="Heure (HH:mm)"/>
+    </HBox>
+
+    <!-- Boutons -->
+    <HBox spacing="10">
+        <Button text="Retour à la liste" onAction="#handleRetourListe"/>
+        <Button text="Enregistrer" onAction="#handleAjouterAtelier"/>
+    </HBox>
+</VBox>

@@ -59,7 +59,7 @@
             <!-- Ateliers -->
             <TitledPane text="🎥 Ateliers en ligne" expanded="false" styleClass="sidebar-button">
                 <VBox>
-                    <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    <Button fx:id="btnTableAteliers" text="• Table" styleClass="sidebar-sub-button"/>
                 </VBox>
             </TitledPane>
 

@@ -13,6 +13,7 @@ import java.io.IOException;
 import service.UserService;
 import model.User;
 import javafx.scene.Parent;
+import utils.SessionManager;
 
 public class LoginController {
 
@@ -63,6 +64,7 @@ public class LoginController {
             showAlert(Alert.AlertType.ERROR, "Email ou mot de passe incorrect.");
             return;
         }
+        SessionManager.setCurrentUser(user);
 
         // Vérification du rôle
         String roles = user.getRoles();

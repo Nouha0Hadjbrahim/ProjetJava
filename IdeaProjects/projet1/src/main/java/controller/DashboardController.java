@@ -37,6 +37,9 @@ public class DashboardController {
     @FXML
     private Button btnTableUtilisateurs;
 
+    @FXML
+    private Button btnTableAteliers;
+
     @FXML private Button btnDashboard;
     @FXML
     private StackPane mainContent;
@@ -61,7 +64,9 @@ public class DashboardController {
     @FXML
     public void initialize() {
         btnTableUtilisateurs.setOnAction(event -> loadTableUtilisateurs());
+        btnTableAteliers.setOnAction(event -> loadTableAteliers());
     }
+
 
     // Getters si besoin (pour injection dynamique)
     public StackPane  getMainContent() {
@@ -72,6 +77,16 @@ public class DashboardController {
     private void loadTableUtilisateurs() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TableUtilisateurs.fxml"));
+            Parent view = loader.load();
+            mainContent.getChildren().setAll(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadTableAteliers() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TableAteliers.fxml"));
             Parent view = loader.load();
             mainContent.getChildren().setAll(view);
         } catch (IOException e) {
