@@ -108,6 +108,27 @@ public class UserService {
         }
         return null;
     }
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM user WHERE email = ?";
+        try (
+             PreparedStatement stmt = cnx.prepareStatement(sql)) {
 
-
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Crée un objet User avec les données de la base
+                    User user = new User();
+                    user.setId(rs.getInt("id")); // ⚠️ Récupère l'ID !
+                    user.setNom(rs.getString("nom"));
+                    user.setPrenom(rs.getString("prenom"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password")); // (Optionnel, selon vos besoins)
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Aucun utilisateur trouvé
+    }
 }

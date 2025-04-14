@@ -37,7 +37,7 @@ public class FrontClientController {
     private List<Object> navLinks;
 
     @FXML
-    public void initialize(User user) {
+    public void initialize() {
         logoImage.setImage(new Image(getClass().getResourceAsStream("/assets/logo2.png")));
         userIcon.setImage(new Image(getClass().getResourceAsStream("/assets/userf.png")));
         cartIcon.setImage(new Image(getClass().getResourceAsStream("/assets/chariot.png")));

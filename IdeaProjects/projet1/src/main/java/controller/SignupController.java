@@ -1,3 +1,4 @@
+
 package controller;
 
 import javafx.fxml.FXML;
@@ -5,12 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
+        import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.User;
 import service.UserService;
 import utils.PasswordUtils;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -90,8 +92,15 @@ public class SignupController {
         String hashedPassword = PasswordUtils.hashPassword(password);
         User user = new User(nom, prenom, email, hashedPassword);
 
-        userService.register(user);
 
+        userService.register(user);
+        User registeredUser = userService.findByEmail(user.getEmail()); // Recharge depuis la BD
+        if (registeredUser != null) {
+            SessionManager.setCurrentUser(registeredUser); // ✅ ID correct
+        } else {
+            showAlert(Alert.AlertType.ERROR, "❌ Utilisateur non trouvé après inscription !");
+        }
+        // Récupérer l'utilisateur complet avec ID, puis enregistrer dans login_history
         try {
             // Charger front.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/front.fxml"));
@@ -99,7 +108,7 @@ public class SignupController {
 
             // Passer l'utilisateur au frontController
             FrontClientController frontController = loader.getController();
-            frontController.initialize(user); // ⚠️ Méthode à créer dans FrontController
+            frontController.initialize(); // ⚠️ Méthode à créer dans FrontController
 
             // Afficher la scène
             Stage stage = (Stage) btnRegister.getScene().getWindow();

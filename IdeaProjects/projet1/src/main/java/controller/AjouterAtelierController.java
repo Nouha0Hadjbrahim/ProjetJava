@@ -3,10 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import model.Ateliers;
 import model.User;
 import service.AteliersService;
@@ -94,7 +91,7 @@ public class AjouterAtelierController {
                 showAlert(Alert.AlertType.INFORMATION, "Atelier modifié avec succès !");
             } else {
                 // Création d'un nouvel atelier
-                Ateliers atelier = new Ateliers(0, currentUser.getId(), titre, categorie, description, niveau, prix, dateHeure, duree, lien);
+                Ateliers atelier = new Ateliers();
                 ateliersService.ajouterAtelier(atelier); // Appel pour ajouter un nouvel atelier dans la base de données
                 showAlert(Alert.AlertType.INFORMATION, "Atelier ajouté avec succès !");
             }

@@ -1,29 +1,24 @@
 package controller;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import model.Ateliers;
 import service.AteliersService;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 public class AteliersController {
 
-    @FXML private TableView<Ateliers> atelierTable;
+    @FXML private ListView<Ateliers> atelierListView;
     @FXML private HBox paginationContainer;
     @FXML private VBox rootContainer;
-
 
     private final AteliersService atelierService = new AteliersService();
     private int currentPage = 1;
@@ -31,115 +26,95 @@ public class AteliersController {
 
     @FXML
     public void initialize() {
-        setupTableColumns();
         loadAteliersPage(currentPage);
     }
 
-    private void setupTableColumns() {
-        // Vos colonnes existantes
-        TableColumn<Ateliers, String> titreCol = new TableColumn<>("Titre");
-        titreCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTitre()));
+    private void loadAteliersPage(int page) {
+        List<Ateliers> ateliers = atelierService.getAteliersPage(page, rowsPerPage);
+        atelierListView.getItems().clear();
 
-        TableColumn<Ateliers, String> categorieCol = new TableColumn<>("Catégorie");
-        categorieCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCategorie()));
+        // Ajouter une ligne d'en-tête
+        atelierListView.getItems().add(new Ateliers()); // Dummy pour l'en-tête
 
-        TableColumn<Ateliers, String> descriptionCol = new TableColumn<>("Description");
-        descriptionCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDescription()));
+        atelierListView.getItems().addAll(ateliers);
 
-        TableColumn<Ateliers, String> niveauDiffCol = new TableColumn<>("Niveau Diff.");
-        niveauDiffCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNiveau_diff()));
-
-        TableColumn<Ateliers, Double> prixCol = new TableColumn<>("Prix");
-        prixCol.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getPrix()).asObject());
-
-        TableColumn<Ateliers, String> dateCoursCol = new TableColumn<>("Date Cours");
-        dateCoursCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDatecours().toString()));
-
-        TableColumn<Ateliers, Integer> dureeCol = new TableColumn<>("Durée");
-        dureeCol.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getDuree()).asObject());
-
-        TableColumn<Ateliers, String> lienCol = new TableColumn<>("Lien");
-        lienCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getLien()));
-
-        TableColumn<Ateliers, Void> actionsColumn = new TableColumn<>("Actions");
-        actionsColumn.setPrefWidth(120);
-
-        // Configuration de la colonne Actions
-        actionsColumn.setCellFactory(param -> new TableCell<Ateliers, Void>() {
-            private final Button editButton = new Button();
-            private final Button deleteButton = new Button();
-            private final Button viewMoreButton = new Button();
-            private final HBox pane = new HBox(5);
-
-            {
-                editButton.setText("\uD83D\uDD8A"); // Icône de crayon
-                deleteButton.setText("\uD83D\uDDD1"); // Icône de corbeille
-
-                editButton.setStyle("-fx-background-color: transparent;");
-                deleteButton.setStyle("-fx-background-color: transparent;");
-
-                editButton.setOnAction(event -> {
-                    Ateliers atelier = getTableView().getItems().get(getIndex());
-
-                    // Initialize FXMLLoader for the AjouterAtelier form
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ajouterAtelier.fxml"));
-                        Parent formView = loader.load(); // Load the form view
-
-                        // Get the controller of the form
-                        AjouterAtelierController controller = loader.getController();
-                        controller.setAtelier(atelier); // Pass the atelier to be edited
-
-                        // Display the form in the parent container
-                        controller.setParentContainer(rootContainer);
-                        rootContainer.getChildren().setAll(formView); // Display the form in the same container
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        showAlert(Alert.AlertType.ERROR, "Erreur lors de l'ouverture du formulaire d'édition.");
-                    }
-                });
-
-                deleteButton.setOnAction(event -> {
-                    Ateliers atelier = getTableView().getItems().get(getIndex());
-
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Confirmation");
-                    alert.setHeaderText("Suppression d'un atelier");
-                    alert.setContentText("Voulez-vous vraiment supprimer : " + atelier.getTitre() + " ?");
-
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == ButtonType.OK) {
-                        atelierService.supprimerAtelier(atelier.getId()); // ✅ Appel correct
-                        getTableView().getItems().remove(atelier); // Mise à jour de l'affichage
-                    }
-                });
-
-
-                pane.getChildren().addAll(editButton, deleteButton);
-            }
-
+        atelierListView.setCellFactory(listView -> new ListCell<Ateliers>() {
             @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
+            protected void updateItem(Ateliers atelier, boolean empty) {
+                super.updateItem(atelier, empty);
+                if (empty || atelier == null) {
                     setGraphic(null);
-                } else {
-                    setGraphic(pane);
+                    return;
                 }
+
+                HBox row = new HBox();
+                row.setSpacing(10);
+                row.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
+
+                // Formatage de la date
+                String dateCours = (atelier.getDatecours() != null)
+                        ? atelier.getDatecours().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+                        : "";
+
+                // Vérifie si c'est la première ligne = en-tête
+                if (atelier.getPrix() == 0.0 && atelier.getDatecours() == null && atelier.getDuree() == 0) {
+                    row.getChildren().addAll(
+                            createBoldLabel("Titre", 150),
+                            createBoldLabel("Catégorie", 150),
+                            createBoldLabel("Description", 200),
+                            createBoldLabel("Niveau", 100),
+                            createBoldLabel("Prix", 80),
+                            createBoldLabel("Date", 160),
+                            createBoldLabel("Durée", 80),
+                            createBoldLabel("Lien", 150),
+                            createBoldLabel("Actions", 120)
+                    );
+                } else {
+                    // Affichage des autres champs sans id et user_id
+                    Label titre = createLabel(atelier.getTitre(), 150);
+                    Label categorie = createLabel(atelier.getCategorie(), 150);
+                    Label description = createLabel(atelier.getDescription(), 200);
+                    Label niveau = createLabel(atelier.getNiveau_diff(), 100);
+                    Label prix = createLabel(String.valueOf(atelier.getPrix()), 80);
+                    Label date = createLabel(dateCours, 160);
+                    Label duree = createLabel(atelier.getDuree() + " min", 80);
+                    Label lien = createLabel(atelier.getLien(), 150);
+
+                    Button editButton = new Button("\uD83D\uDD8A");
+                    Button deleteButton = new Button("\uD83D\uDDD1");
+
+                    editButton.setStyle("-fx-background-color: transparent;");
+                    deleteButton.setStyle("-fx-background-color: transparent;");
+
+                    editButton.setOnAction(event -> ouvrirEditionAtelier(atelier));
+                    deleteButton.setOnAction(event -> supprimerAtelier(atelier));
+
+                    HBox actions = new HBox(5, editButton, deleteButton);
+                    actions.setPrefWidth(120);
+
+                    row.getChildren().addAll(titre, categorie, description, niveau, prix, date, duree, lien, actions);
+                }
+
+                setGraphic(row);
             }
         });
 
-        // Ajouter toutes les colonnes à la TableView
-        atelierTable.getColumns().addAll(titreCol, categorieCol, descriptionCol, niveauDiffCol, prixCol, dateCoursCol, dureeCol, lienCol, actionsColumn);
+        generatePagination();
     }
 
+    private Label createLabel(String text, int width) {
+        Label label = new Label(text);
+        label.setPrefWidth(width);
+        label.setWrapText(true);
+        label.setStyle("-fx-border-color: lightgray; -fx-padding: 5;");
+        return label;
+    }
 
-
-    private void loadAteliersPage(int page) {
-        List<Ateliers> ateliers = atelierService.getAteliersPage(page, rowsPerPage);
-        atelierTable.getItems().setAll(ateliers);
-        generatePagination();
+    private Label createBoldLabel(String text, int width) {
+        Label label = new Label(text);
+        label.setPrefWidth(width);
+        label.setStyle("-fx-font-weight: bold; -fx-background-color: #ececec; -fx-padding: 5;");
+        return label;
     }
 
     private void generatePagination() {
@@ -165,33 +140,52 @@ public class AteliersController {
         }
     }
 
+    private void ouvrirEditionAtelier(Ateliers atelier) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ajouterAtelier.fxml"));
+            Parent formView = loader.load();
+            AjouterAtelierController controller = loader.getController();
+            controller.setAtelier(atelier);
+            controller.setParentContainer(rootContainer);
+            rootContainer.getChildren().setAll(formView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur lors de l'ouverture du formulaire d'édition.");
+        }
+    }
+
+    private void supprimerAtelier(Ateliers atelier) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Suppression d'un atelier");
+        alert.setContentText("Voulez-vous vraiment supprimer : " + atelier.getTitre() + " ?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            atelierService.supprimerAtelier(atelier.getId());
+            loadAteliersPage(currentPage); // Refresh list after deletion
+        }
+    }
+
     @FXML
     private void ouvrirAjoutAtelier() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ajouterAtelier.fxml"));
             Parent formView = loader.load();
-
             AjouterAtelierController formController = loader.getController();
             formController.setParentContainer(rootContainer);
-
-            rootContainer.getChildren().setAll(formView); // affiche le formulaire dans le même conteneur
-
+            rootContainer.getChildren().setAll(formView);
         } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Impossible d’ouvrir la fenêtre d’ajout.");
-            alert.show();
+            showAlert(Alert.AlertType.ERROR, "Impossible d’ouvrir la fenêtre d’ajout.");
         }
     }
+
     private void showAlert(Alert.AlertType alertType, String message) {
         Alert alert = new Alert(alertType);
-        alert.setTitle("Alert");
-        alert.setHeaderText(null);  // Optional, if you don't want a header
+        alert.setTitle("Alerte");
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
-
-
 }

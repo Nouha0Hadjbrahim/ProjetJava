@@ -20,19 +20,145 @@
     -fx-wrap-text: true;
 }
 
-
-
-.button {
-    -fx-background-color: #D9A58C;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 8 14;
-    -fx-background-radius: 20;
-    -fx-cursor: hand;
-    -fx-border-width: 0;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 1, 1);
+/* Style pour le conteneur principal des ateliers */
+.ateliers-container {
+    -fx-padding: 0 50px;
+    -fx-max-width: 1200px;
 }
 
-.button:hover {
-    -fx-background-color: #c17d5a;
+/* Conteneur des cartes */
+.card-container {
+    -fx-padding: 20px;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+}
+
+/* Style des cartes d'atelier */
+.atelier-card {
+    -fx-background-color: white;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-padding: 20px;
+    -fx-min-width: 280px;
+    -fx-max-width: 280px;
+    -fx-spacing: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+.atelier-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+}
+
+.atelier-stitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.atelier-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555;
+}
+
+/* Style pour le prix */
+.price-container {
+    -fx-alignment: center-left;
+    -fx-spacing: 5px;
+}
+
+.atelier-price {
+    -fx-font-weight: bold;
+    -fx-fill: #8C4A1D;
+    -fx-font-size: 16px;
+}
+
+
+/* Conteneur des actions */
+.atelier-actions {
+    -fx-spacing: 15px;
+    -fx-padding: 15px 0 0 0;
+    -fx-alignment: center;
+}
+
+/* Lien "Voir plus" - MODIFICATION */
+.voir-plus-link {
+    -fx-text-fill: #8C4A1D;
+    -fx-underline: true;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-font-weight: normal;
+}
+
+.voir-plus-link:hover {
+    -fx-text-fill: #6e3a15;
+}
+
+/* Bouton "S'inscrire" - MODIFICATION */
+.inscrire-btn ,
+.button{
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 15px;
+    -fx-background-radius: 15px;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 1, 1);
+    -fx-border-width: 0;
+}
+
+.inscrire-btn:hover ,
+.button:hover{
+    -fx-background-color: #6e3a15;
+}
+
+/* Styles pour le modal */
+.dialog-pane {
+    -fx-background-color: #f8e5d5;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f8e5d5;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+    -fx-padding: 5 15;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #6e3a15;
+}
+
+.text-area {
+    -fx-control-inner-background: white;
+    -fx-border-color: #8C4A1D;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Style pour les alertes */
+.alert-dialog {
+    -fx-background-color: #f8e5d5;
+}
+
+.alert-dialog .label {
+    -fx-text-fill: #5a3921;
+}
+
+.alert-dialog .button {
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+}
+
+.alert-dialog .button:hover {
+    -fx-background-color: #6e3a15;
 }

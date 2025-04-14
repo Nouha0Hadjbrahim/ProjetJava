@@ -17,8 +17,7 @@ public class Ateliers {
 
 
     // Constructeur complet
-    public Ateliers(int id, int user, String titre, String categorie, String description, String niveau_diff,
-                    double prix, LocalDateTime datecours, int duree, String lien) {
+    public Ateliers() {
         this.id = id;
         this.user = user;
         this.titre = titre;

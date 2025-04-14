@@ -65,6 +65,7 @@ public class LoginController {
             return;
         }
         SessionManager.setCurrentUser(user);
+        System.out.println("Utilisateur récupéré: " + (user != null ? user.getId() : "NULL")); // Log
 
         // Vérification du rôle
         String roles = user.getRoles();

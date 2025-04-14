@@ -6,23 +6,27 @@
 <?import javafx.scene.text.TextFlow?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.AteliersController"
+            fx:controller="controller.FrontAtelierController"
             stylesheets="@/styles/atelier.css"
             fitToWidth="true"
             style="-fx-background-color: transparent;">
 
-    <VBox spacing="40" alignment="CENTER"  styleClass="bg">
+<VBox spacing="40" alignment="CENTER"  styleClass="bg">
 
-        <!-- Titre principal -->
-        <VBox spacing="10" alignment="CENTER">
-            <Label text="ATELIERS EN LIGNE" styleClass="ateliers-title" />
-            <Label text="Apprenez l'artisanat à distance avec nos experts !" styleClass="ateliers-subtitle" />
-        </VBox>
-
-        <!-- Liste des ateliers -->
-
-
-        <!-- Footer -->
-        <fx:include source="/fornt views/footer.fxml" />
+    <!-- Titre principal -->
+    <VBox spacing="10" alignment="CENTER">
+        <Label text="Ateliers en ligne disponible" styleClass="ateliers-title" />
+        <Label text="Apprenez l'artisanat à distance avec nos experts !" styleClass="ateliers-subtitle" />
     </VBox>
+
+    <!-- Liste des ateliers -->
+    <VBox spacing="20" alignment="CENTER" styleClass="ateliers-container">
+        <HBox fx:id="cardContainer" spacing="25" alignment="CENTER" styleClass="card-container" />
+    </VBox>
+
+    <HBox fx:id="paginationContainer" alignment="CENTER" styleClass="pagination-container" />
+
+    <fx:include source="/fornt views/footer.fxml" />
+</VBox>
 </ScrollPane>
+

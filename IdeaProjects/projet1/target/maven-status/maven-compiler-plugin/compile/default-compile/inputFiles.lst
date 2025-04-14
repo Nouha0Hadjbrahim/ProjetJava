@@ -3,7 +3,9 @@ C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\cont
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\AteliersController.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\DashboardController.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\FooterController.java
+C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\FrontAtelierController.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\FrontClientController.java
+C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\InscriptionAtelierController.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\LoginController.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\MateriauxController.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\PanierController.java
@@ -15,8 +17,10 @@ C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\cont
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\main\Main.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\main\TestDB.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\model\Ateliers.java
+C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\model\InscriptionAtelier.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\model\User.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\service\AteliersService.java
+C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\service\InscriptionAtelierService.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\service\UserService.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\utils\DBConnection.java
 C:\Users\DELL\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\utils\PasswordUtils.java

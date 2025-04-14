@@ -9,6 +9,9 @@ public class User {
     private String roles;
     private String statut;
 
+    public User() {
+    }
+
     // Constructeur sans ID (pour inscription)
     public User(String nom, String prenom, String email, String password) {
         this.nom = nom;
