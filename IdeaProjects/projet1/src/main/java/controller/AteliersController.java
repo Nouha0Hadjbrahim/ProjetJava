@@ -2,12 +2,14 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Ateliers;
 import service.AteliersService;
+import service.InscriptionAtelierService;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +23,7 @@ public class AteliersController {
     @FXML private VBox rootContainer;
 
     private final AteliersService atelierService = new AteliersService();
+    private final InscriptionAtelierService inscriptionService = new InscriptionAtelierService();
     private int currentPage = 1;
     private final int rowsPerPage = 5;
 
@@ -67,7 +70,8 @@ public class AteliersController {
                             createBoldLabel("Date", 160),
                             createBoldLabel("Durée", 80),
                             createBoldLabel("Lien", 150),
-                            createBoldLabel("Actions", 120)
+                            createBoldLabel("Inscrits", 80), // Nouvelle colonne
+                            createBoldLabel("Actions", 80)
                     );
                 } else {
                     // Affichage des autres champs sans id et user_id
@@ -80,6 +84,12 @@ public class AteliersController {
                     Label duree = createLabel(atelier.getDuree() + " min", 80);
                     Label lien = createLabel(atelier.getLien(), 150);
 
+                    // Ajout du nombre d'inscrits avec bouton
+                    int nbInscrits = inscriptionService.getNombreInscriptions(atelier.getId());
+                    Button inscritsBtn = new Button(nbInscrits + " inscrits");
+                    inscritsBtn.setStyle("-fx-background-color: #e3f2fd;");
+                    inscritsBtn.setOnAction(e -> showInscrits(atelier));
+
                     Button editButton = new Button("\uD83D\uDD8A");
                     Button deleteButton = new Button("\uD83D\uDDD1");
 
@@ -91,8 +101,9 @@ public class AteliersController {
 
                     HBox actions = new HBox(5, editButton, deleteButton);
                     actions.setPrefWidth(120);
+                    actions.setAlignment(Pos.CENTER);
 
-                    row.getChildren().addAll(titre, categorie, description, niveau, prix, date, duree, lien, actions);
+                    row.getChildren().addAll(titre, categorie, description, niveau, prix, date, duree, lien, inscritsBtn, actions);
                 }
 
                 setGraphic(row);
@@ -102,6 +113,26 @@ public class AteliersController {
         generatePagination();
     }
 
+    // Nouvelle méthode pour afficher la liste des inscrits
+    private void showInscrits(Ateliers atelier) {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Liste des inscrits - " + atelier.getTitre());
+
+        ListView<String> listView = new ListView<>();
+        List<String> inscrits = inscriptionService.getNomsInscrits(atelier.getId());
+
+        if (inscrits.isEmpty()) {
+            listView.getItems().add("Aucun inscrit pour cet atelier");
+        } else {
+            listView.getItems().addAll(inscrits);
+        }
+
+        dialog.getDialogPane().setContent(listView);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        dialog.showAndWait();
+    }
+
+    // Les méthodes existantes restent inchangées
     private Label createLabel(String text, int width) {
         Label label = new Label(text);
         label.setPrefWidth(width);
@@ -163,7 +194,7 @@ public class AteliersController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             atelierService.supprimerAtelier(atelier.getId());
-            loadAteliersPage(currentPage); // Refresh list after deletion
+            loadAteliersPage(currentPage);
         }
     }
 
@@ -177,7 +208,7 @@ public class AteliersController {
             rootContainer.getChildren().setAll(formView);
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Impossible d’ouvrir la fenêtre d’ajout.");
+            showAlert(Alert.AlertType.ERROR, "Impossible d'ouvrir la fenêtre d'ajout.");
         }
     }
 
