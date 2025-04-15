@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.ProfilController"
+            prefWidth="900" prefHeight="600"
+            stylesheets="@/styles/ProfilBack.css"
+            style="-fx-background-color: white;">
+
+    <VBox alignment="TOP_CENTER" spacing="30" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+        <!-- Titre -->
+        <Label text="MON PROFIL" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #3a4c68;"/>
+
+        <!-- Contenu profil -->
+        <HBox spacing="40" alignment="CENTER" style="-fx-padding: 20;-fx-background-color:#fffcff; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.2, 0, 4);" maxWidth="800">
+
+            <!-- Colonne Photo -->
+            <VBox alignment="CENTER" spacing="15">
+                <StackPane>
+                    <ImageView fx:id="photoProfil" fitWidth="140" fitHeight="140"/>
+                    <ImageView fx:id="editIcon" fitWidth="28" fitHeight="28"
+                               style="-fx-cursor: hand;"
+                               onMouseClicked="#handleBrowsePhoto"
+                               StackPane.alignment="BOTTOM_RIGHT"/>
+                </StackPane>
+                <Label fx:id="labelNomPrenom" style="-fx-font-size: 14px; -fx-font-weight: bold;-fx-text-fill: #3a4c68;"/>
+            </VBox>
+
+            <!-- ✅ Séparateur vertical -->
+            <Separator orientation="VERTICAL" prefHeight="350"/>
+
+            <!-- Colonne Formulaire -->
+            <VBox spacing="12" prefWidth="400">
+
+                <Label text="Nom"/>
+                <TextField fx:id="tfNom"/>
+
+                <Label text="Prénom"/>
+                <TextField fx:id="tfPrenom"/>
+
+                <Label text="Email"/>
+                <TextField fx:id="tfEmail"/>
+
+                <Separator/>
+
+                <Label text="Modifier le mot de passe" style="-fx-font-weight: bold;"/>
+
+                <Label text="Mot de passe actuel"/>
+                <PasswordField fx:id="tfOldPassword"/>
+
+                <Label text="Nouveau mot de passe"/>
+                <PasswordField fx:id="tfNewPassword"/>
+
+                <Button text="Enregistrer" onAction="#handleSave"
+                        />
+            </VBox>
+        </HBox>
+
+    </VBox>
+</AnchorPane>

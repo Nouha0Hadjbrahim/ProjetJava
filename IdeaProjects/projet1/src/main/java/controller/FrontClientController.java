@@ -10,6 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +18,11 @@ import java.util.List;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import model.User;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 
 public class FrontClientController {
 
@@ -33,11 +39,15 @@ public class FrontClientController {
     @FXML private Hyperlink linkReclamation;
     @FXML private MenuButton boutiqueMenu;
     @FXML private Button btnPanier;
+    private User connectedUser;
 
     private List<Object> navLinks;
+    public void setConnectedUser(User user) {
+        this.connectedUser = user;
+    }
 
     @FXML
-    public void initialize(User user) {
+    public void initialize() {
         logoImage.setImage(new Image(getClass().getResourceAsStream("/assets/logo2.png")));
         userIcon.setImage(new Image(getClass().getResourceAsStream("/assets/userf.png")));
         cartIcon.setImage(new Image(getClass().getResourceAsStream("/assets/chariot.png")));
@@ -57,7 +67,6 @@ public class FrontClientController {
         });
 
         boutiqueMenu.getItems().setAll(itemProduits, itemMateriaux);
-
         // Ajout dans la liste de navigation
         navLinks = new ArrayList<>();
         navLinks.add(linkAccueil);
@@ -134,8 +143,22 @@ public class FrontClientController {
     }
 
     @FXML
-    public void handleProfil(ActionEvent event) {
-        System.out.println("👤 Profil cliqué");
+    public void handleProfil() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fornt views/profil.fxml"));
+            Parent profilView = loader.load();
+
+            // Accès au contrôleur de profil
+            ProfilController controller = loader.getController();
+
+            // ⚠️ Ici, tu dois avoir une référence à l'utilisateur connecté
+            controller.setUser(this.connectedUser);
+            contentPane.getChildren().setAll(profilView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -145,8 +168,31 @@ public class FrontClientController {
 
     @FXML
     public void handleDeconnexion(ActionEvent event) {
-        System.out.println("🚪 Déconnexion cliquée");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Déconnexion");
+        alert.setHeaderText("Confirmation de déconnexion");
+        alert.setContentText("Êtes-vous sûr de vouloir vous déconnecter ?");
+
+        ButtonType oui = new ButtonType("Oui");
+        ButtonType non = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(oui, non);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == oui) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+                    Parent root = loader.load();
+                    btnPanier.getScene().setRoot(root);
+                    System.out.println("🔓 Déconnexion réussie");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.err.println("❌ Échec du chargement de login.fxml");
+                }
+            }
+        });
     }
+
 
     @FXML
     public void handleMouseEnterIcon(MouseEvent event) {

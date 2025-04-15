@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.User;
+import service.HistoriqueConnexionService;
 import service.UserService;
 import utils.PasswordUtils;
 
@@ -90,8 +91,11 @@ public class SignupController {
         String hashedPassword = PasswordUtils.hashPassword(password);
         User user = new User(nom, prenom, email, hashedPassword);
 
-        userService.register(user);
 
+        userService.register(user);
+        // Récupérer l'utilisateur complet avec ID, puis enregistrer dans login_history
+        User registeredUser = userService.getUserByEmail(email);
+        new HistoriqueConnexionService().enregistrerConnexion(registeredUser);
         try {
             // Charger front.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/front.fxml"));
@@ -99,7 +103,7 @@ public class SignupController {
 
             // Passer l'utilisateur au frontController
             FrontClientController frontController = loader.getController();
-            frontController.initialize(user); // ⚠️ Méthode à créer dans FrontController
+            frontController.initialize(); // ⚠️ Méthode à créer dans FrontController
 
             // Afficher la scène
             Stage stage = (Stage) btnRegister.getScene().getWindow();

@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.IOException;
+
+import service.HistoriqueConnexionService;
 import service.UserService;
 import model.User;
 import javafx.scene.Parent;
@@ -59,10 +61,12 @@ public class LoginController {
         UserService userService = new UserService();
         User user = userService.login(email, password);
 
+
         if (user == null) {
             showAlert(Alert.AlertType.ERROR, "Email ou mot de passe incorrect.");
             return;
         }
+        new HistoriqueConnexionService().enregistrerConnexion(user);
 
         // Vérification du rôle
         String roles = user.getRoles();
@@ -85,10 +89,19 @@ public class LoginController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/front.fxml"));
                 Parent root = loader.load();
+
+// Récupérer le contrôleur
+                FrontClientController controller = loader.getController();
+
+// Transmettre l'utilisateur connecté
+                controller.setConnectedUser(user); // ← ton objet User authentifié
+
+// Changer la scène
                 Stage stage = (Stage) txtEmail.getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Espace client");
                 stage.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

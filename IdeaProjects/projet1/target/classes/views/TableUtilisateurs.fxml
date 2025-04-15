@@ -3,24 +3,79 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
-<VBox spacing="15" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controller.TableUtilisateursController">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.TableUtilisateursController"
+            stylesheets="@/styles/table_utilisateur.css">
 
-    <Label text="GESTION DES UTILISATEURS" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <!-- EN-TÊTE -->
+    <top>
+        <VBox  alignment="CENTER">
+            <!-- Titre principal -->
+            <Label text="Gestion des utilisateurs" styleClass="titre-principal"/>
 
-    <!-- Barre de recherche -->
-    <TextField fx:id="searchField" promptText="Rechercher un utilisateur.."
-               style="-fx-pref-width: 400; -fx-background-radius: 15;"/>
+            <!-- Ligne décorative -->
+            <HBox alignment="CENTER">
+                <Region
+                        prefHeight="2"
+                        maxHeight="2"
+                        prefWidth="320"
+                        maxWidth="320"
+                        style="-fx-background-color: #3a4c68;" />
+            </HBox>
 
-    <!-- listview  -->
-    <TableView fx:id="userTable" prefHeight="400" style="-fx-background-radius: 10;">
-        <columns>
+            <!-- Barre de recherche -->
+            <HBox fx:id="searchBox" alignment="CENTER_LEFT" >
+                <padding>
+                    <Insets top="20" bottom="20" left="20"/>
+                </padding>
+                <Label text="🔍" styleClass="search-icon"/>
+                <TextField fx:id="searchField"
+                           promptText="Rechercher par nom, prénom ou email..."
+                           styleClass="search-field"/>
+            </HBox>
 
-        </columns>
-    </TableView>
+        </VBox>
+    </top>
 
-    <!-- Pagination -->
-    <HBox fx:id="paginationContainer" alignment="CENTER" spacing="5"/>
-</VBox>
+    <!-- CONTENU : liste des utilisateurs -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <HBox alignment="CENTER">
+
+                <VBox alignment="CENTER" >
+                    <StackPane alignment="CENTER" styleClass="table-card">
+                        <VBox alignment="TOP_CENTER">
+
+                            <!-- ✅ Ligne d'en-tête -->
+                            <HBox alignment="CENTER" styleClass="table-header">
+                                <Label text= " " styleClass="header-cell" prefWidth="50"/>
+
+                                <Label text="Nom &amp; Prénom" styleClass="header-cell" prefWidth="190"/>
+                                <Label text="Email" styleClass="header-cell" prefWidth="190"/>
+                                <Label text="Statut" styleClass="header-cell" prefWidth="150"/>
+                                <Label text="Action" styleClass="header-cell" prefWidth="160"/>
+                            </HBox>
+
+                            <!-- ✅ Liste des utilisateurs -->
+                            <VBox fx:id="userListContainer" alignment="CENTER" spacing="10"/>
+                        </VBox>
+                    </StackPane>
+                </VBox>
+            </HBox>
+        </ScrollPane>
+    </center>
+
+
+    <!-- PAGINATION -->
+    <bottom>
+        <HBox fx:id="paginationContainer" alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+        </HBox>
+    </bottom>
+
+</BorderPane>

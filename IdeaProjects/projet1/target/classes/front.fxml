@@ -51,9 +51,9 @@
                         <ImageView fx:id="userIcon" fitHeight="24" fitWidth="24" />
                     </graphic>
                     <items>
-                        <MenuItem text="Profil" onAction="#handleNavLinkClick" />
+                        <MenuItem text="Profil" onAction="#handleProfil" />
                         <MenuItem text="Historique" />
-                        <MenuItem text="Déconnexion" />
+                        <MenuItem text="Déconnexion" onAction="#handleDeconnexion"/>
                     </items>
                 </MenuButton>
             </HBox>

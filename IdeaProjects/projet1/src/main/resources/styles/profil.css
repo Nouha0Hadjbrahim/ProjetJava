@@ -19,6 +19,52 @@
     -fx-text-alignment: center;
     -fx-wrap-text: true;
 }
+/* ===== CONTENEUR GÉNÉRAL ===== */
+.root {
+    -fx-background-color: #fdfdfd;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* ===== TITRE ===== */
+.label {
+    -fx-text-fill: #8C4A1D;
+}
+
+
+/* ===== CHAMPS TEXTE ===== */
+.text-field, .password-field {
+    -fx-background-color: #fffcff;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10;
+    -fx-background-radius: 15;
+    -fx-padding: 8;
+    -fx-font-size: 15px;
+}
+.text-field:hover, .password-field:hover {
+    -fx-background-color: rgba(1, 1, 46, 0.15);
+    -fx-border-color: #8C4A1D;
+
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #8C4A1D;
+}
+
+/* ===== BOUTON ENREGISTRER ===== */
+
+
+/* ===== IMAGE DE PROFIL ===== */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.3, 0, 2);
+}
+
+/* ===== ICONE MODIFICATION (petit crayon) ===== */
+.edit-icon {
+    -fx-background-color: transparent ;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 1);
+    -fx-padding: 4;
+}
 
 .button {
     -fx-background-color: #D9A58C;

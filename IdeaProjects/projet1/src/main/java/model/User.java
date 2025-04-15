@@ -8,6 +8,11 @@ public class User {
     private String password;
     private String roles;
     private String statut;
+    private String photo;
+
+    public User() {
+        // Constructeur par défaut nécessaire pour instancier via `new User()`
+    }
 
     // Constructeur sans ID (pour inscription)
     public User(String nom, String prenom, String email, String password) {
@@ -19,6 +24,7 @@ public class User {
         this.statut = "active";     // valeur par défaut
     }
 
+
     // Constructeur complet
     public User(int id, String nom, String prenom, String email, String password, String roles, String statut) {
         this.id = id;
@@ -29,7 +35,16 @@ public class User {
         this.roles = roles;
         this.statut = statut;
     }
-
+    public User(int id, String nom, String prenom, String email, String password, String roles, String statut, String photo) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.statut = statut;
+        this.photo = photo;
+    }
     // Getters
     public int getId() { return id; }
     public String getNom() { return nom; }
@@ -61,4 +76,12 @@ public class User {
                 ", statut='" + statut + '\'' +
                 '}';
     }
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photoProfil) {
+        this.photo = photoProfil;
+    }
+
 }

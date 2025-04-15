@@ -1,6 +1,8 @@
+model\HistoriqueConnexion.class
 controller\ProfilFrontController.class
 utils\PasswordUtils.class
 controller\FrontClientController.class
+controller\ProfilController.class
 controller\DashboardController.class
 controller\LoginController.class
 controller\MateriauxController.class
@@ -8,6 +10,9 @@ controller\PanierController.class
 controller\TableUtilisateursController.class
 controller\FooterController.class
 controller\AccueilController.class
+controller\EditUserController.class
 controller\ReclamationController.class
+service\HistoriqueConnexionService.class
+controller\HistoriqueConnexionController.class
 controller\AteliersController.class
 controller\ProduitsController.class
