@@ -90,4 +90,16 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    private void handleListeReclamation() {
+        try {
+            // Charge la vue des réclamations backoffice
+            Parent view = FXMLLoader.load(getClass().getResource("/views/BackReclamations.fxml"));
+            mainContent.getChildren().setAll(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de la vue des réclamations");
+        }
+    }
+
 }

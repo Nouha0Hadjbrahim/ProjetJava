@@ -80,7 +80,9 @@
             <!-- Réclamations -->
             <TitledPane text="💬 Réclamations" expanded="false" styleClass="sidebar-button">
                 <VBox>
-                    <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    <Button fx:id="btnListeReclamation" text="• Liste"
+                            styleClass="sidebar-sub-button"
+                            onAction="#handleListeReclamation"/>
                 </VBox>
             </TitledPane>
 

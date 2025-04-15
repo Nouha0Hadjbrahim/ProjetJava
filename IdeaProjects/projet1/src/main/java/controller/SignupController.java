@@ -99,7 +99,7 @@ public class SignupController {
 
             // Passer l'utilisateur au frontController
             FrontClientController frontController = loader.getController();
-            frontController.initialize(user); // ⚠️ Méthode à créer dans FrontController
+            frontController.initialize(); // ⚠️ Méthode à créer dans FrontController
 
             // Afficher la scène
             Stage stage = (Stage) btnRegister.getScene().getWindow();
