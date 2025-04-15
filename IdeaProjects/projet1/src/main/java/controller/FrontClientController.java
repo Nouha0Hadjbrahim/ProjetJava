@@ -31,6 +31,7 @@ public class FrontClientController {
     @FXML private Hyperlink linkAccueil;
     @FXML private Hyperlink linkAteliers;
     @FXML private Hyperlink linkReclamation;
+    @FXML private Hyperlink inscri;
     @FXML private MenuButton boutiqueMenu;
     @FXML private Button btnPanier;
 
@@ -64,6 +65,8 @@ public class FrontClientController {
         navLinks.add(boutiqueMenu);
         navLinks.add(linkAteliers);
         navLinks.add(linkReclamation);
+        navLinks.add(inscri);
+
 
         setActiveNav(linkAccueil);
         loadDashboardHome();
@@ -97,21 +100,25 @@ public class FrontClientController {
                 loadPage("/fornt views/ateliers.fxml");
             } else if (source == linkReclamation) {
                 loadPage("/fornt views/reclamation.fxml");
+            } else if (source == inscri) {
+                loadPage("/fornt views/inscription_atelier.fxml");
             } else if (source instanceof Button) {
                 Button btn = (Button) source;
                 if ("btnPanier".equals(btn.getId())) {
                     loadPage("/fornt views/panier.fxml");
                 }
-            }
-            else if (source instanceof MenuItem) {
+            } else if (source instanceof MenuItem) {
                 MenuItem item = (MenuItem) source;
-
                 String text = item.getText();
+
                 if ("Profil".equals(text)) {
                     loadPage("/fornt views/profil.fxml");
+                } else if ("Mes inscriptions".equals(text)) {
+                    loadPage("/fornt views/inscription_atelier.fxml"); // Ajout ici
+                } else if ("Mes réclamations".equals(text)) {
+                    loadPage("/fornt views/mes_reclamations.fxml"); // Exemple pour l'autre item
                 }
             }
-
         }
     }
 

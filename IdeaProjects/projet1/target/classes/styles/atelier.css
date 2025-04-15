@@ -162,3 +162,88 @@
 .alert-dialog .button:hover {
     -fx-background-color: #6e3a15;
 }
+.card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.2, 4, 4);
+}
+
+.card-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #843C0C;
+}
+
+.action-buttons {
+    -fx-spacing: 10;
+}
+
+/* Style personnalisé pour le ComboBox */
+.rounded-combo-box {
+    -fx-background-color: #f5f5f5; /* Gris clair au lieu de blanc */
+    -fx-background-radius: 15px; /* Coins très arrondis */
+    -fx-border-radius: 15px; /* Coins arrondis pour la bordure */
+    -fx-border-color: #d3d3d3;
+    -fx-border-width: 1px;
+    -fx-padding: 0 0 0 10px;
+    -fx-font-size: 12px;
+    -fx-pref-height: 30px;
+}
+
+/* Style de la flèche */
+.rounded-combo-box .arrow-button {
+    -fx-background-radius: 0 15px 15px 0; /* Coins arrondis seulement à droite */
+    -fx-background-color: transparent;
+}
+
+.rounded-combo-box .arrow {
+    -fx-background-color: #8B4513; /* Couleur marron */
+}
+
+/* Style des items dans la liste déroulante */
+.rounded-combo-box .list-cell {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px 10px;
+}
+
+.rounded-combo-box .list-view {
+    -fx-background-radius: 10px;
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #d3d3d3;
+    -fx-border-radius: 10px;
+}
+
+/* Effet hover marron */
+.rounded-combo-box .list-cell:filled:hover {
+    -fx-background-color: #8B4513; /* Marron */
+    -fx-text-fill: white;
+}
+
+/* Style des statuts */
+.status-upcoming, .status-completed {
+    -fx-background-radius: 10px;
+    -fx-padding: 2px 8px;
+}
+
+.status-upcoming {
+    -fx-text-fill: #8B4513; /* Marron au lieu de bleu */
+    -fx-background-color: #f0e6d2; /* Beige clair */
+}
+
+.status-upcoming:hover {
+    -fx-background-color: #8B4513; /* Marron */
+    -fx-text-fill: white;
+}
+
+.status-completed {
+    -fx-text-fill: #5a3921; /* Marron foncé */
+    -fx-background-color: #e6d5c3; /* Beige */
+}
+
+.status-completed:hover {
+    -fx-background-color: #8B4513; /* Marron */
+    -fx-text-fill: white;
+}

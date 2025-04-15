@@ -4,7 +4,6 @@ import model.Ateliers;
 import utils.DBConnection;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,29 +71,42 @@ public class AteliersService {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = cnx.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, atelier.getUser());
+            // Vérification si l'utilisateur est null
+            Integer userId = atelier.getUser();  // On laisse l'utilisateur être un Integer qui peut être null
+            if (userId == null) {
+                System.err.println("❌ L'utilisateur est null.");
+                return false;
+            }
+
+            // Set les paramètres de la requête
+            stmt.setInt(1, userId); // ID de l'utilisateur
+
             stmt.setString(2, atelier.getTitre());
             stmt.setString(3, atelier.getCategorie());
             stmt.setString(4, atelier.getDescription());
             stmt.setString(5, atelier.getNiveau_diff());
             stmt.setDouble(6, atelier.getPrix());
-            stmt.setTimestamp(7, atelier.getDatecours() != null ?
-                    Timestamp.valueOf(atelier.getDatecours()) : null);
+            stmt.setTimestamp(7, atelier.getDatecours() != null ? Timestamp.valueOf(atelier.getDatecours()) : null);
             stmt.setInt(8, atelier.getDuree());
             stmt.setString(9, atelier.getLien());
 
+            // Exécution de la requête d'insertion
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        atelier.setId(rs.getInt(1));
+                        atelier.setId(rs.getInt(1)); // Récupère la clé générée (ID de l'atelier)
+                        System.out.println("Atelier ajouté avec succès ! ID généré : " + atelier.getId());
                         return true;
                     }
                 }
+            } else {
+                System.err.println("Aucune ligne affectée, l'ajout a échoué.");
             }
         } catch (SQLException e) {
-            System.err.println("❌ Erreur ajouterAtelier: " + e.getMessage());
+            System.err.println("❌ Erreur lors de l'ajout de l'atelier : " + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
@@ -178,14 +190,18 @@ public class AteliersService {
         return null;
     }
 
-    // Méthode pour fermer la connexion (optionnel)
-    public void close() {
-        try {
-            if (cnx != null && !cnx.isClosed()) {
-                cnx.close();
+    public boolean titreExists(String titre) {
+        try (
+             PreparedStatement statement = cnx.prepareStatement(
+                     "SELECT COUNT(*) FROM atelierenligne WHERE titre = ?")) {
+            statement.setString(1, titre);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
-            System.err.println("Erreur fermeture connexion: " + e.getMessage());
+            e.printStackTrace();
         }
+        return false;
     }
 }

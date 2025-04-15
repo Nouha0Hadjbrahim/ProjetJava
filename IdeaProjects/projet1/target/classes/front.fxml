@@ -52,7 +52,13 @@
                     </graphic>
                     <items>
                         <MenuItem text="Profil" onAction="#handleNavLinkClick" />
-                        <MenuItem text="Historique" />
+                        <Menu text="Historique">
+                            <items>
+                                <MenuItem text="Mes inscriptions" onAction="#handleNavLinkClick" />
+                                <MenuItem text="Mes réclamations" onAction="#handleNavLinkClick" />
+                                <SeparatorMenuItem />
+                            </items>
+                        </Menu>
                         <MenuItem text="Déconnexion" />
                     </items>
                 </MenuButton>

@@ -32,9 +32,6 @@ public class AjouterAtelierController {
     private Runnable refreshCallback;
     private javafx.scene.layout.Pane parentContainer;
 
-    public void setRefreshCallback(Runnable callback) {
-        this.refreshCallback = callback;
-    }
 
     public void setParentContainer(javafx.scene.layout.Pane container) {
         this.parentContainer = container;
@@ -54,30 +51,47 @@ public class AjouterAtelierController {
         }
 
         try {
-            String titre = titreField.getText();
+            // Récupération des valeurs
+            String titre = titreField.getText().trim();
             String categorie = categorieField.getValue();
-            String description = descriptionField.getText();
+            String description = descriptionField.getText().trim();
             String niveau = niveauDiffField.getValue();
-            String lien = lienField.getText();
+            String lien = lienField.getText().trim();
 
-            if (titre.isEmpty() || categorie == null || description.isEmpty() || niveau == null || prixField.getText().isEmpty()
-                    || datePicker.getValue() == null || heureField.getText().isEmpty() || dureeField.getText().isEmpty() || lien.isEmpty()) {
+            // Validation des champs obligatoires
+            if (titre.isEmpty() || categorie == null || description.isEmpty() || niveau == null
+                    || prixField.getText().isEmpty() || datePicker.getValue() == null
+                    || heureField.getText().isEmpty() || dureeField.getText().isEmpty() || lien.isEmpty()) {
                 showAlert(Alert.AlertType.WARNING, "Veuillez remplir tous les champs.");
                 return;
             }
 
+            // Conversion des valeurs numériques
             double prix = Double.parseDouble(prixField.getText());
             int duree = Integer.parseInt(dureeField.getText());
 
+            // Construction de la date/heure
             String dateStr = datePicker.getValue().toString();
             String heureStr = heureField.getText(); // format "HH:mm"
             String dateHeureStr = dateStr + " " + heureStr;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime dateHeure = LocalDateTime.parse(dateHeureStr, formatter);
 
-            // Si l'atelier à modifier existe (mode modification)
+            // VALIDATIONS
+            if (!validateDescription(description)) return;
+            if (!validateDate(dateHeure)) return;
+            if (!validateDuree(duree)) return;
+            if (!validateLien(lien)) return;
+
+            // Vérification de l'unicité du titre (uniquement pour les nouveaux ateliers)
+            if (atelierEnEdition == null && ateliersService.titreExists(titre)) {
+                showAlert(Alert.AlertType.ERROR, "Ce titre d'atelier existe déjà. Veuillez en choisir un autre.");
+                return;
+            }
+
+            // Création ou modification de l'atelier
             if (atelierEnEdition != null) {
-                // Mise à jour des informations de l'atelier
+                // Mode modification
                 atelierEnEdition.setTitre(titre);
                 atelierEnEdition.setCategorie(categorie);
                 atelierEnEdition.setDescription(description);
@@ -87,25 +101,36 @@ public class AjouterAtelierController {
                 atelierEnEdition.setDuree(duree);
                 atelierEnEdition.setLien(lien);
 
-                ateliersService.modifierAtelier(atelierEnEdition); // Appel pour mettre à jour l'atelier dans la base de données
+                ateliersService.modifierAtelier(atelierEnEdition);
                 showAlert(Alert.AlertType.INFORMATION, "Atelier modifié avec succès !");
             } else {
-                // Création d'un nouvel atelier
+                // Mode création
                 Ateliers atelier = new Ateliers();
-                ateliersService.ajouterAtelier(atelier); // Appel pour ajouter un nouvel atelier dans la base de données
+                atelier.setUser(currentUser.getId());
+                atelier.setTitre(titre);
+                atelier.setCategorie(categorie);
+                atelier.setDescription(description);
+                atelier.setNiveau_diff(niveau);
+                atelier.setPrix(prix);
+                atelier.setDatecours(dateHeure);
+                atelier.setDuree(duree);
+                atelier.setLien(lien);
+
+                ateliersService.ajouterAtelier(atelier);
                 showAlert(Alert.AlertType.INFORMATION, "Atelier ajouté avec succès !");
             }
 
             if (refreshCallback != null) {
-                refreshCallback.run(); // Actualisation de la liste des ateliers
+                refreshCallback.run();
             }
 
-            handleRetourListe(); // Retourner à la liste des ateliers
+            handleRetourListe();
 
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Veuillez entrer des valeurs numériques valides pour le prix et la durée.");
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur lors de l'ajout ou de la modification de l'atelier : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -154,5 +179,70 @@ public class AjouterAtelierController {
         lienField.setText(atelier.getLien());
     }
 
+    private boolean validateInputs(String titre, String description, LocalDateTime dateHeure, int duree, String lien) {
+        // Vérification de la description (minimum 10 caractères)
+        if (description.length() < 10) {
+            showAlert(Alert.AlertType.ERROR, "La description doit contenir au moins 10 caractères.");
+            return false;
+        }
+
+        // Vérification de la date (doit être supérieure à aujourd'hui)
+        if (dateHeure.isBefore(LocalDateTime.now())) {
+            showAlert(Alert.AlertType.ERROR, "La date du cours doit être ultérieure à aujourd'hui.");
+            return false;
+        }
+
+        // Vérification de la durée (positive)
+        if (duree <= 0) {
+            showAlert(Alert.AlertType.ERROR, "La durée doit être un nombre positif en minutes.");
+            return false;
+        }
+
+        // Vérification du lien Google Meet
+        if (!lien.matches("^https://meet\\.google\\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$")) {
+            showAlert(Alert.AlertType.ERROR, "Le lien doit être sous la forme: https://meet.google.com/xxx-xxxx-xxx");
+            return false;
+        }
+
+        // Vérification de l'unicité du titre
+        if (ateliersService.titreExists(titre)) {
+            showAlert(Alert.AlertType.ERROR, "Ce titre d'atelier existe déjà. Veuillez en choisir un autre.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateDescription(String description) {
+        if (description.length() < 10) {
+            showAlert(Alert.AlertType.ERROR, "La description doit contenir au moins 10 caractères.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateDate(LocalDateTime dateHeure) {
+        if (dateHeure.isBefore(LocalDateTime.now())) {
+            showAlert(Alert.AlertType.ERROR, "La date du cours doit être ultérieure à aujourd'hui.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateDuree(int duree) {
+        if (duree <= 0) {
+            showAlert(Alert.AlertType.ERROR, "La durée doit être un nombre positif en minutes.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateLien(String lien) {
+        if (!lien.matches("^https://meet\\.google\\.com/[a-zA-Z0-9-]{3,}$")) {
+            showAlert(Alert.AlertType.ERROR, "Le lien doit être sous la forme: https://meet.google.com/xxx");
+            return false;
+        }
+        return true;
+    }
 
 }
