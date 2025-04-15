@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/20.0.1"
+            fx:controller="controller.ProductCatalogController"
+            stylesheets="@/styles/front_client.css, @/styles.css"
+            style="-fx-background-color: #F5E1D4;"> <!-- lighter brown -->
+
+    <!-- ✅ Improved Navbar -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #A0522D;"> <!-- softer brown -->
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+
+            <!-- Logo -->
+            <ImageView fx:id="logoImage" fitHeight="40" fitWidth="80" />
+
+            <!-- Push content right -->
+            <Region fx:id="spacer" HBox.hgrow="ALWAYS" />
+
+            <!-- Navigation Items -->
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Hyperlink fx:id="linkAccueil" text="Accueil" styleClass="nav-link" onAction="#handleNavLinkClick" />
+
+                <MenuButton fx:id="boutiqueMenu" text="Boutique" styleClass="nav-link">
+                    <items>
+                        <MenuItem text="Produits" onAction="#handleNavLinkClick" />
+                        <MenuItem text="Matériaux" onAction="#handleNavLinkClick" />
+                    </items>
+                </MenuButton>
+
+                <Hyperlink fx:id="linkAteliers" text="Ateliers en ligne" styleClass="nav-link" onAction="#handleNavLinkClick" />
+                <Hyperlink fx:id="linkReclamation" text="Réclamation" styleClass="nav-link" onAction="#handleNavLinkClick" />
+
+                <!-- ✅ Cart + History moved here -->
+                <Button fx:id="btnPanier"
+                        onAction="#viewCart"
+                        styleClass="icon-button">
+                    <graphic>
+                        <ImageView fx:id="cartIcon" fitHeight="22" fitWidth="22">
+                            <Image url="@resources/icons/panier.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="btnHistorique"
+                        onAction="#viewOrderHistory"
+                        styleClass="icon-button">
+                    <graphic>
+                        <ImageView fitHeight="22" fitWidth="22">
+                            <Image url="@resources/icons/history.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <!-- User Menu -->
+                <MenuButton fx:id="userMenu" graphicTextGap="10">
+                    <graphic>
+                        <ImageView fx:id="userIcon" fitHeight="24" fitWidth="24" />
+                    </graphic>
+                    <items>
+                        <MenuItem text="Profil" onAction="#handleNavLinkClick" />
+                        <MenuItem text="Déconnexion" />
+                    </items>
+                </MenuButton>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ✅ Main Content: Only Grid -->
+    <center>
+        <VBox style="-fx-background-color: #f5e6d3; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #d3b8a3; -fx-border-width: 1; -fx-padding: 15;">
+            <!-- Removed the second header (View Cart + History) -->
+
+            <GridPane fx:id="productGrid" alignment="CENTER" hgap="20" vgap="20" styleClass="grid-pane">
+                <padding>
+                    <Insets bottom="15" left="15" right="15" top="15" />
+                </padding>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,129 @@
+/* === Base === */
+.root {
+    -fx-background-color: #D9A58C;
+}
+
+/* === Barre de navigation === */
+.hbox {
+    -fx-padding: 10;
+    -fx-spacing: 20;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-background-color: #8C4A1D;
+}
+
+/* === Liens de navigation === */
+.hyperlink, .menu-button {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+}
+
+.hyperlink:hover, .menu-button:hover {
+    -fx-text-fill: #FFD2A6;
+    -fx-underline: true;
+}
+
+/* === Liens actifs === */
+.hyperlink.nav-link.active {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFD2A6;
+}
+
+.menu-button.nav-link.active > .label {
+    -fx-text-fill: #FFD2A6;
+}
+
+
+.menu-button {
+    -fx-display: none; /* ❌ ça c'est dangereux */
+}
+
+
+.menu-item > .label {
+    -fx-text-fill: #8C4A1D;
+}
+
+.menu-item:hover > .label {
+    -fx-text-fill: #8C4A1D;
+}
+
+.menu-item {
+    -fx-background-color: white;
+    -fx-font-size: 13px;
+}
+
+.menu-item:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+
+/* === Titre et sous-titre === */
+.label {
+    -fx-text-fill: white;
+}
+
+.label.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.label.subtitle {
+    -fx-font-size: 16px;
+    -fx-opacity: 0.9;
+}
+
+/* === Images === */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0.3, 0, 3);
+}
+
+#logoImage {
+    -fx-fit-width: 80px;
+}
+#userMenu > .arrow-button {
+    -fx-padding: 0;
+    -fx-shape: "";
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-opacity: 0;
+}
+.menu-item {
+    -fx-text-fill: #8C4A1D; /* couleur du texte */
+    -fx-font-size: 13px;
+    -fx-background-color: white;
+}
+
+.menu-item:hover {
+    -fx-background-color: #FFD2A6; /* fond au survol */
+    -fx-text-fill: #8C4A1D; /* texte au survol */
+}
+.footer {
+    -fx-background-color: #C79074;
+    -fx-padding: 30 40;
+}
+
+.footer-content {
+    -fx-padding: 10 20;
+}
+
+.footer-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.footer Label {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+.social-icon {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-padding: 6;
+}
