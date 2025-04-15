@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.ReclamationController"
+            stylesheets="@/styles/reclamation.css"
+            fitToWidth="true"
+            style="-fx-background-color: transparent;">
+
+    <VBox fx:id="reclamationContainer" spacing="25" alignment="TOP_CENTER" styleClass="bg">
+        <padding>
+            <Insets top="25" right="25" bottom="25" left="25"/>
+        </padding>
+
+        <!-- Titre principal -->
+        <VBox spacing="5" alignment="CENTER">
+            <Label text="Liste des Réclamations" styleClass="reclamation-title" />
+            <Label text="Apprenez l'artisanat à distance avec nos experts !" styleClass="reclamation-subtitle" />
+        </VBox>
+
+        <!-- Message quand aucune réclamation -->
+        <Label fx:id="noReclamationLabel" text="Vous n'avez rien réclamé" styleClass="no-reclamation-label"
+               visible="false" managed="false"/>
+
+        <!-- TableView pour afficher les réclamations -->
+        <TableView fx:id="reclamationTable" styleClass="reclamation-table">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" styleClass="table-column" />
+                <TableColumn fx:id="titreColumn" text="Titre" styleClass="table-column" />
+                <TableColumn fx:id="statutColumn" text="Statut" styleClass="table-column" />
+                <TableColumn fx:id="dateColumn" text="Date" styleClass="table-column" />
+                <TableColumn fx:id="actionColumn" text="Action" styleClass="table-column" />
+            </columns>
+            <placeholder>
+                <Label text="Aucune réclamation trouvée" styleClass="no-reclamation-label" />
+            </placeholder>
+        </TableView>
+
+        <!-- Séparateur -->
+        <Separator style="-fx-padding: 10 0;"/>
+
+        <!-- Formulaire d'ajout de réclamation -->
+        <VBox spacing="15" styleClass="form-container">
+            <Label text="Ajouter une réclamation" styleClass="form-title" />
+
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="30" />
+                    <ColumnConstraints percentWidth="70" />
+                </columnConstraints>
+
+                <!-- Titre -->
+                <Label text="Titre:" styleClass="form-label"/>
+                <TextField fx:id="titreField" GridPane.columnIndex="1" styleClass="form-field"/>
+
+                <!-- Erreur titre -->
+                <Label fx:id="titreErrorLabel"
+                       text=""
+                       GridPane.columnIndex="1" GridPane.rowIndex="1"
+                       style="-fx-text-fill: red;"
+                       visible="false" managed="false" />
+
+                <!-- Description -->
+                <Label text="Description:" GridPane.rowIndex="2" styleClass="form-label"/>
+                <TextArea fx:id="descriptionField"
+                          GridPane.columnIndex="1" GridPane.rowIndex="2"
+                          wrapText="true" prefRowCount="4" styleClass="form-field"/>
+
+                <!-- Erreur description -->
+                <Label fx:id="descriptionErrorLabel"
+                       text=""
+                       GridPane.columnIndex="1" GridPane.rowIndex="3"
+                       style="-fx-text-fill: red;"
+                       visible="false" managed="false" />
+
+                <!-- Bouton -->
+                <Button fx:id="submitButton"
+                        text="Soumettre"
+                        GridPane.columnIndex="1" GridPane.rowIndex="4"
+                        styleClass="submit-button" />
+            </GridPane>
+        </VBox>
+
+        <!-- Footer -->
+        <fx:include source="/fornt views/footer.fxml" />
+    </VBox>
+</ScrollPane>

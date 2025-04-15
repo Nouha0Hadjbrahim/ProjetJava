@@ -1,0 +1,85 @@
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-background-color: #1d2135;
+    -fx-text-fill: white;
+}
+
+/* Consulter back */
+
+/* Détails des réclamations */
+.detail-label {
+    -fx-font-weight: bold;
+}
+
+.detail-value {
+    -fx-font-size: 14px;
+}
+
+.text-area {
+    -fx-border-color: #ddd;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+}
+
+.button {
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+}
+
+#repondreButton {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+#modifierButton {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+}
+
+#retourButton {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
+
+/* REPONSE */
+
+/* Style pour la zone de réponse */
+.text-area {
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Boutons principaux */
+.button {
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+/* Style spécifique pour le bouton d'action */
+#actionButton {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+/* Style spécifique pour le bouton retour */
+#retourButton {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
+
+/* Checkbox réponse finale */
+.check-box {
+    -fx-padding: 0 10px 0 0;
+}
