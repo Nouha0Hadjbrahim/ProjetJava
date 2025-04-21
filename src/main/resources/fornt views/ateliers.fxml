@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.AteliersController"
+            stylesheets="@/styles/atelier.css"
+            fitToWidth="true"
+            style="-fx-background-color: transparent;">
+
+    <VBox spacing="40" alignment="CENTER"  styleClass="bg">
+
+        <!-- Titre principal -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="ATELIERS EN LIGNE" styleClass="ateliers-title" />
+            <Label text="Apprenez l'artisanat à distance avec nos experts !" styleClass="ateliers-subtitle" />
+        </VBox>
+
+        <!-- Liste des ateliers -->
+
+
+        <!-- Footer -->
+        <fx:include source="/fornt views/footer.fxml" />
+    </VBox>
+</ScrollPane>

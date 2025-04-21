@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox spacing="15" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.TableFournisseurController">
+
+    <Label text="GESTION DES FOURNISSEURS" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <!-- Barre de recherche -->
+    <TextField fx:id="searchField" promptText="Rechercher un fournisseur..."
+               style="-fx-pref-width: 400; -fx-background-radius: 15;"/>
+
+    <!-- Bouton Ajouter -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="btnAjouter" onAction="#handleAjouter"
+                style="-fx-background-color: transparent;">
+            <graphic>
+                <ImageView fitHeight="23" fitWidth="23">
+                    <image>
+                        <Image url="/assets/icons/ajouter.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Ajouter un fournisseur" />
+            </tooltip>
+        </Button>
+    </HBox>
+
+    <!-- En-têtes des colonnes -->
+    <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
+        <Label text="Nom" style="-fx-font-weight: bold; -fx-pref-width: 200;" />
+        <Label text="Adresse" style="-fx-font-weight: bold; -fx-pref-width: 250;" />
+        <Label text="Contact" style="-fx-font-weight: bold; -fx-pref-width: 150;" />
+        <Label text="Actions" style="-fx-font-weight: bold; -fx-pref-width: 160;" />
+    </HBox>
+
+    <!-- ListView -->
+    <ListView fx:id="listViewFournisseurs" prefHeight="400" style="-fx-background-radius: 10;"/>
+
+    <!-- Pagination -->
+    <HBox fx:id="paginationContainer" alignment="CENTER" spacing="5"/>
+</VBox>

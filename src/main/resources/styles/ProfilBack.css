@@ -1,0 +1,72 @@
+/* ===== CONTENEUR GÉNÉRAL ===== */
+.root {
+    -fx-background-color: #fdfdfd;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* ===== TITRE ===== */
+.label {
+    -fx-text-fill: #3a4c68;
+}
+
+
+/* ===== CHAMPS TEXTE ===== */
+.text-field, .password-field {
+    -fx-background-color: #fffcff;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10;
+    -fx-background-radius: 15;
+    -fx-padding: 8;
+    -fx-font-size: 15px;
+}
+.text-field:hover, .password-field:hover {
+    -fx-background-color: rgba(1, 1, 46, 0.15);
+    -fx-border-color: #507fc3;
+
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3a4c68;
+}
+
+/* ===== BOUTON ENREGISTRER ===== */
+.button {
+    -fx-background-color: #3a4c68;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+
+.button:hover {
+    -fx-background-color: #507fc3;
+}
+
+/* ===== IMAGE DE PROFIL ===== */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.3, 0, 2);
+}
+
+/* ===== ICONE MODIFICATION (petit crayon) ===== */
+.edit-icon {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 1);
+    -fx-padding: 4;
+}
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+    -fx-cursor: hand;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+}
+
+.icon-button:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #3a4c68;
+}

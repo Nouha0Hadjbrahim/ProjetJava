@@ -1,0 +1,55 @@
+.historique-container {
+    -fx-padding: 30;
+    -fx-background-color: #f4f4f4;
+}
+
+.historique-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3a4c68;
+    -fx-padding: 10 0 20 0;
+}
+
+.historique-list {
+    -fx-padding: 0 20 0 20;
+    -fx-spacing: 15;
+}
+
+.historique-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #dcdcdc;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0.3, 0, 2);
+}
+
+.historique-date {
+    -fx-font-size: 14px;
+    -fx-text-fill: #444;
+}
+
+.historique-ip {
+    -fx-font-size: 13px;
+    -fx-text-fill: #888;
+}
+.pagination-box {
+    -fx-padding: 20 20 0 0;
+}
+
+.arrow-button {
+    -fx-font-size: 30px;
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-text-fill: #3a4c68;
+    -fx-border-color: transparent;
+    -fx-padding: 5 5;
+    -fx-border-radius: 30;
+    -fx-transition: 0.3s all ease-in-out;
+}
+
+.arrow-button:hover {
+    -fx-background-color: #3a4c68;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 1);
+}

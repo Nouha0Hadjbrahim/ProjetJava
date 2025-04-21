@@ -1,0 +1,30 @@
+.form-button {
+    -fx-background-color: #111c3c;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-pref-width: 250;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 1);
+    -fx-padding: 10 0;
+}
+
+.form-button:hover {
+    -fx-background-color: #8C4A1D;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+.hover-link {
+    -fx-text-fill: #8A3B12;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-border-color: transparent;
+    -fx-underline: false;
+    -fx-cursor: hand;
+}
+
+.hover-link:hover {
+    -fx-text-fill: rgb(195, 137, 104);
+    -fx-underline: true;
+}
+

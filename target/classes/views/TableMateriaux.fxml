@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx/17.0.1"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.TableMateriauxController">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <Label text="GESTION DES Matériaux"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="searchField"
+               promptText="Rechercher un Matériau…"
+               style="-fx-pref-width: 400; -fx-background-radius: 15;"/>
+
+    <ComboBox fx:id="categoryComboBox"
+              prefWidth="150"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="btnAjouter" text="Ajouter"/>
+    </HBox>
+
+    <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
+        <Label text="Photo" prefWidth="100" style="-fx-font-weight: bold;"/>
+        <Label text="Nom" prefWidth="150" style="-fx-font-weight: bold;"/>
+        <Label text="Catégorie" prefWidth="100" style="-fx-font-weight: bold;"/>
+        <Label text="Quantité" prefWidth="80" style="-fx-font-weight: bold;"/>
+        <Label text="Prix" prefWidth="80" style="-fx-font-weight: bold;"/>
+        <Label text="Actions" prefWidth="160" style="-fx-font-weight: bold;"/>
+    </HBox>
+
+    <ListView fx:id="listViewMateriaux" prefHeight="200"/>
+
+    <!-- PieChart réduit et non extensible -->
+    <PieChart fx:id="pieChartQuantites"
+              prefWidth="300" prefHeight="200"
+              maxWidth="300" maxHeight="200"
+              VBox.vgrow="NEVER"
+              legendSide="RIGHT"/>
+
+    <HBox fx:id="paginationContainer" alignment="CENTER" spacing="5"/>
+
+</VBox>
