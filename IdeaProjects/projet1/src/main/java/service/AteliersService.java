@@ -205,4 +205,107 @@ public class AteliersService {
         return false;
     }
 
+    public List<Ateliers> getAteliersPageByArtisan(int page, int pageSize, int artisanId) {
+        List<Ateliers> ateliers = new ArrayList<>();
+        String sql = "SELECT * FROM atelierenligne WHERE id_user_id = ? LIMIT ? OFFSET ?";
+
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, artisanId);
+            ps.setInt(2, pageSize);
+            ps.setInt(3, (page - 1) * pageSize);
+
+            System.out.println("Executing query: " + ps.toString()); // Debug
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Ateliers a = new Ateliers();
+                a.setId(rs.getInt("id"));
+                a.setTitre(rs.getString("titre"));
+                a.setUser(rs.getInt("id_user_id"));
+                a.setCategorie(rs.getString("categorie"));
+                a.setDescription(rs.getString("description"));
+                a.setNiveau_diff(rs.getString("niveau_diff"));
+                a.setPrix(rs.getDouble("prix"));
+
+                Timestamp timestamp = rs.getTimestamp("datecours");
+                a.setDatecours(timestamp != null ? timestamp.toLocalDateTime() : null);
+
+                a.setDuree(rs.getInt("duree"));
+                a.setLien(rs.getString("lien"));
+
+                ateliers.add(a);
+
+                System.out.println("Atelier chargé: " + a.getTitre()); // Debug
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur getAteliersPageByArtisan: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return ateliers;
+    }
+
+    public List<Ateliers> searchAteliersByTitre(String titre, int artisanId) {
+        List<Ateliers> result = new ArrayList<>();
+        String query = "SELECT * FROM atelierenligne WHERE titre LIKE ? AND id_user_id = ?";
+
+        try (
+             PreparedStatement pst = cnx.prepareStatement(query)) {
+            pst.setString(1, "%" + titre + "%");
+            pst.setInt(2, artisanId);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Ateliers a = new Ateliers();
+                a.setId(rs.getInt("id"));
+                a.setTitre(rs.getString("titre"));
+                a.setCategorie(rs.getString("categorie"));
+                a.setDescription(rs.getString("description"));
+                a.setNiveau_diff(rs.getString("niveau_diff"));
+                a.setPrix(rs.getDouble("prix"));
+                a.setDatecours(rs.getTimestamp("datecours").toLocalDateTime());
+                a.setDuree(rs.getInt("duree"));
+                a.setLien(rs.getString("lien"));
+                result.add(a);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public List<Ateliers> getAllAteliers() {
+        List<Ateliers> ateliers = new ArrayList<>();
+        String sql = "SELECT * FROM atelierenligne"; // Ou ajoute une condition si tu veux limiter la recherche
+
+        try (Statement stmt = cnx.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Ateliers a = new Ateliers();
+                a.setId(rs.getInt("id"));
+                a.setTitre(rs.getString("titre"));
+                a.setUser(rs.getInt("id_user_id"));
+                a.setCategorie(rs.getString("categorie"));
+                a.setDescription(rs.getString("description"));
+                a.setNiveau_diff(rs.getString("niveau_diff"));
+                a.setPrix(rs.getDouble("prix"));
+                Timestamp timestamp = rs.getTimestamp("datecours");
+                a.setDatecours(timestamp != null ? timestamp.toLocalDateTime() : null);
+                a.setDuree(rs.getInt("duree"));
+                a.setLien(rs.getString("lien"));
+
+                ateliers.add(a);
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur getAllAteliers: " + e.getMessage());
+        }
+        return ateliers;
+    }
+
+
+
+
+
+
 }

@@ -29,7 +29,6 @@ public class AjouterAtelierController {
     @FXML private TextField lienField;
 
     private final AteliersService ateliersService = new AteliersService();
-    private Runnable refreshCallback;
     private javafx.scene.layout.Pane parentContainer;
 
 
@@ -39,7 +38,7 @@ public class AjouterAtelierController {
 
     @FXML
     private void initialize() {
-        categorieField.getItems().addAll("Poterie", "Peinture", "Broderie", "Tricot", "Couture", "Bijoux", "Faits Main");
+        categorieField.getItems().addAll("Poterie", "Peinture", "Broderie", "Tricot", "Couture", "Bijoux Faits Main");
         niveauDiffField.getItems().addAll("Débutant", "Intermédiaire", "Avancé");
     }
 
@@ -83,11 +82,21 @@ public class AjouterAtelierController {
             if (!validateDuree(duree)) return;
             if (!validateLien(lien)) return;
 
-            // Vérification de l'unicité du titre (uniquement pour les nouveaux ateliers)
-            if (atelierEnEdition == null && ateliersService.titreExists(titre)) {
-                showAlert(Alert.AlertType.ERROR, "Ce titre d'atelier existe déjà. Veuillez en choisir un autre.");
-                return;
+            // Vérification de l'unicité du titre
+            if (atelierEnEdition == null) {
+                // Cas de création
+                if (ateliersService.titreExists(titre)) {
+                    showAlert(Alert.AlertType.ERROR, "Ce titre d'atelier existe déjà. Veuillez en choisir un autre.");
+                    return;
+                }
+            } else {
+                // Cas de modification : on vérifie uniquement si le titre a changé
+                if (!titre.equals(atelierEnEdition.getTitre()) && ateliersService.titreExists(titre)) {
+                    showAlert(Alert.AlertType.ERROR, "Ce titre d'atelier existe déjà. Veuillez en choisir un autre.");
+                    return;
+                }
             }
+
 
             // Création ou modification de l'atelier
             if (atelierEnEdition != null) {
@@ -120,9 +129,6 @@ public class AjouterAtelierController {
                 showAlert(Alert.AlertType.INFORMATION, "Atelier ajouté avec succès !");
             }
 
-            if (refreshCallback != null) {
-                refreshCallback.run();
-            }
 
             handleRetourListe();
 
@@ -179,40 +185,6 @@ public class AjouterAtelierController {
         lienField.setText(atelier.getLien());
     }
 
-    private boolean validateInputs(String titre, String description, LocalDateTime dateHeure, int duree, String lien) {
-        // Vérification de la description (minimum 10 caractères)
-        if (description.length() < 10) {
-            showAlert(Alert.AlertType.ERROR, "La description doit contenir au moins 10 caractères.");
-            return false;
-        }
-
-        // Vérification de la date (doit être supérieure à aujourd'hui)
-        if (dateHeure.isBefore(LocalDateTime.now())) {
-            showAlert(Alert.AlertType.ERROR, "La date du cours doit être ultérieure à aujourd'hui.");
-            return false;
-        }
-
-        // Vérification de la durée (positive)
-        if (duree <= 0) {
-            showAlert(Alert.AlertType.ERROR, "La durée doit être un nombre positif en minutes.");
-            return false;
-        }
-
-        // Vérification du lien Google Meet
-        if (!lien.matches("^https://meet\\.google\\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$")) {
-            showAlert(Alert.AlertType.ERROR, "Le lien doit être sous la forme: https://meet.google.com/xxx-xxxx-xxx");
-            return false;
-        }
-
-        // Vérification de l'unicité du titre
-        if (ateliersService.titreExists(titre)) {
-            showAlert(Alert.AlertType.ERROR, "Ce titre d'atelier existe déjà. Veuillez en choisir un autre.");
-            return false;
-        }
-
-        return true;
-    }
-
     private boolean validateDescription(String description) {
         if (description.length() < 10) {
             showAlert(Alert.AlertType.ERROR, "La description doit contenir au moins 10 caractères.");
@@ -230,7 +202,7 @@ public class AjouterAtelierController {
     }
 
     private boolean validateDuree(int duree) {
-        if (duree <= 0) {
+        if (duree < 30) {
             showAlert(Alert.AlertType.ERROR, "La durée doit être un nombre positif en minutes.");
             return false;
         }

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
+
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.FrontAtelierController"
@@ -18,6 +16,24 @@
         <Label text="Ateliers en ligne disponible" styleClass="ateliers-title" />
         <Label text="Apprenez l'artisanat à distance avec nos experts !" styleClass="ateliers-subtitle" />
     </VBox>
+
+    <HBox spacing="10.0" alignment="CENTER">
+        <ComboBox fx:id="categoryFilter" promptText="Toutes les catégories"
+                  prefWidth="180.0" prefHeight="30.0"
+                  styleClass="rounded-combo-box">
+        </ComboBox>
+
+        <ComboBox fx:id="niveauFilter" promptText="Tous les niveaux"
+                  prefWidth="180.0" prefHeight="30.0"
+                  styleClass="rounded-combo-box">
+        </ComboBox>
+
+        <ComboBox fx:id="priceSortFilter" promptText="Trier par prix"
+                  prefWidth="180.0" prefHeight="30.0"
+                  styleClass="rounded-combo-box">
+        </ComboBox>
+
+    </HBox>
 
     <!-- Liste des ateliers -->
     <VBox spacing="20" alignment="CENTER" styleClass="ateliers-container">

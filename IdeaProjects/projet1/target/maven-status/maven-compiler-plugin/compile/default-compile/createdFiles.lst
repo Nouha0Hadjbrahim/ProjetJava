@@ -10,6 +10,7 @@ main\TestDB.class
 service\AteliersService.class
 controller\DashboardController.class
 controller\LoginController.class
+controller\AteliersAdminController.class
 model\InscriptionAtelier.class
 controller\MateriauxController.class
 controller\SignupController.class
@@ -22,6 +23,8 @@ controller\AccueilController.class
 controller\ReclamationController.class
 controller\InscriptionAtelierController.class
 controller\FrontAtelierController.class
+controller\AteliersAdminController$1.class
+controller\DashboardArtisanController.class
 service\UserService.class
 controller\AteliersController.class
 controller\ProduitsController.class

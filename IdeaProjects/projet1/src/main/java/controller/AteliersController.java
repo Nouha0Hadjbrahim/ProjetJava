@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import model.Ateliers;
 import service.AteliersService;
 import service.InscriptionAtelierService;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -21,19 +22,27 @@ public class AteliersController {
     @FXML private ListView<Ateliers> atelierListView;
     @FXML private HBox paginationContainer;
     @FXML private VBox rootContainer;
+    @FXML
+    private TextField searchField;
+
 
     private final AteliersService atelierService = new AteliersService();
     private final InscriptionAtelierService inscriptionService = new InscriptionAtelierService();
     private int currentPage = 1;
-    private final int rowsPerPage = 5;
+    private final int rowsPerPage = 1;
+    int userId = SessionManager.getCurrentUser().getId();
 
     @FXML
     public void initialize() {
-        loadAteliersPage(currentPage);
+        loadAteliersPage(currentPage,userId);
+        // Listener sur la barre de recherche
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            loadFilteredAteliers(newValue);
+        });
     }
 
-    private void loadAteliersPage(int page) {
-        List<Ateliers> ateliers = atelierService.getAteliersPage(page, rowsPerPage);
+    private void loadAteliersPage(int page, int artisanId) {
+        List<Ateliers> ateliers = atelierService.getAteliersPageByArtisan(page, rowsPerPage, artisanId); // <- filtré par artisan
         atelierListView.getItems().clear();
 
         // Ajouter une ligne d'en-tête
@@ -70,7 +79,7 @@ public class AteliersController {
                             createBoldLabel("Date", 160),
                             createBoldLabel("Durée", 80),
                             createBoldLabel("Lien", 150),
-                            createBoldLabel("Inscrits", 80), // Nouvelle colonne
+                            createBoldLabel("Inscrits", 80),
                             createBoldLabel("Actions", 80)
                     );
                 } else {
@@ -84,7 +93,6 @@ public class AteliersController {
                     Label duree = createLabel(atelier.getDuree() + " min", 80);
                     Label lien = createLabel(atelier.getLien(), 150);
 
-                    // Ajout du nombre d'inscrits avec bouton
                     int nbInscrits = inscriptionService.getNombreInscriptions(atelier.getId());
                     Button inscritsBtn = new Button(nbInscrits + " inscrits");
                     inscritsBtn.setStyle("-fx-background-color: #e3f2fd;");
@@ -112,6 +120,7 @@ public class AteliersController {
 
         generatePagination();
     }
+
 
     // Nouvelle méthode pour afficher la liste des inscrits
     private void showInscrits(Ateliers atelier) {
@@ -158,7 +167,7 @@ public class AteliersController {
             Button pageBtn = new Button(String.valueOf(pageIndex));
             pageBtn.setOnAction(e -> {
                 currentPage = pageIndex;
-                loadAteliersPage(pageIndex);
+                loadAteliersPage(pageIndex,userId);
             });
 
             pageBtn.getStyleClass().add("pagination-button");
@@ -194,7 +203,7 @@ public class AteliersController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             atelierService.supprimerAtelier(atelier.getId());
-            loadAteliersPage(currentPage);
+            loadAteliersPage(currentPage,userId);
         }
     }
 
@@ -219,4 +228,19 @@ public class AteliersController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    private void loadFilteredAteliers(String filter) {
+        List<Ateliers> filteredList;
+
+        if (filter == null || filter.trim().isEmpty()) {
+            filteredList = atelierService.getAteliersPageByArtisan(currentPage, rowsPerPage, userId);
+        } else {
+            filteredList = atelierService.searchAteliersByTitre(filter.trim(), userId);
+        }
+
+        atelierListView.getItems().clear();
+        atelierListView.getItems().add(new Ateliers()); // Dummy pour l'en-tête
+        atelierListView.getItems().addAll(filteredList);
+    }
+
 }

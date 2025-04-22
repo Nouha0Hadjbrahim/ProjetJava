@@ -10,7 +10,7 @@
     <Label text="GESTION DES ATELIERS" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
     <TextField fx:id="searchField" promptText="Rechercher un atelier.."
-               style="-fx-pref-width: 400; -fx-background-radius: 15;"/>
+               style="-fx-pref-width: 100; -fx-background-radius: 15;"/>
 
     <HBox spacing="10" alignment="CENTER_LEFT">
         <Button text="+" onAction="#ouvrirAjoutAtelier" style="-fx-font-size: 18px; -fx-background-radius: 50%;"/>

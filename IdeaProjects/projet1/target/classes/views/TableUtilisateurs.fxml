@@ -14,12 +14,6 @@
     <TextField fx:id="searchField" promptText="Rechercher un utilisateur.."
                style="-fx-pref-width: 400; -fx-background-radius: 15;"/>
 
-    <!-- listview  -->
-    <TableView fx:id="userTable" prefHeight="400" style="-fx-background-radius: 10;">
-        <columns>
-
-        </columns>
-    </TableView>
 
     <!-- Pagination -->
     <HBox fx:id="paginationContainer" alignment="CENTER" spacing="5"/>

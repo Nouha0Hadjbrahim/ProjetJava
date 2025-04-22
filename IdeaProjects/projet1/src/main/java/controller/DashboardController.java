@@ -86,7 +86,7 @@ public class DashboardController {
 
     private void loadTableAteliers() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TableAteliers.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TableAteliersAdmin.fxml"));
             Parent view = loader.load();
             mainContent.getChildren().setAll(view);
         } catch (IOException e) {

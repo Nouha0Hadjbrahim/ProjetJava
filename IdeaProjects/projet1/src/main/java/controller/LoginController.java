@@ -97,8 +97,10 @@ public class LoginController {
             }
         } else if (roles.contains("ROLE_ARTISAN")) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboardArtisan.fxml"));
                 Parent root = loader.load();
+                DashboardArtisanController controller = loader.getController();
+                controller.initialize(user); // si tu veux passer les infos du user
                 Stage stage = (Stage) txtEmail.getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Espace artisan");
