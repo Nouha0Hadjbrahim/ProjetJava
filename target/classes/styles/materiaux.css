@@ -134,6 +134,22 @@
     -fx-background-radius: 20px;
     -fx-padding: 8px 15px;
 }
+.scan-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+.stock-limit-label {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-padding: 5px;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+    -fx-margin: 5px;
+}
 
 .action-btn {
     -fx-background-color: #8d6e63;

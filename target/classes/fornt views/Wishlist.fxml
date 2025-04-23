@@ -20,10 +20,9 @@
 
         <!-- Barre de recherche et bouton retour (identique à materiaux) -->
         <HBox spacing="20" alignment="CENTER">
-            <TextField promptText="Rechercher..." styleClass="search-field"/>
 
-            <Button text="Retour aux matériaux" styleClass="action-btn"
-                    onAction="#handleBackToMaterials"/>
+
+
         </HBox>
 
         <!-- Grille des flip cards -->

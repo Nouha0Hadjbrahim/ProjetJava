@@ -89,10 +89,15 @@ public class WishlistService implements AutoCloseable {
         return null;
     }
 
+    // Dans la méthode loadMaterialsForWishlist()
     private void loadMaterialsForWishlist(WishlistMateriaux wishlist) throws SQLException {
-        String sql = "SELECT m.id, m.nom_materiel, m.prix_unitaire, m.categorie, m.description, m.photo " +
-                "FROM materiaux m JOIN wishlistmateriaux_materiaux wm ON m.id = wm.materiaux_id " +
-                "WHERE wm.wishlistmateriaux_id = ?";
+        // Correction de la requête SQL
+        String sql = "SELECT m.id, m.nom_materiel, m.prix_unitaire, m.categorie, m.description, m.photo, "
+                + "m.quantite_stock, m.seuil_min " // Ajout des colonnes manquantes
+                + "FROM materiaux m "
+                + "JOIN wishlistmateriaux_materiaux wm ON m.id = wm.materiaux_id "
+                + "WHERE wm.wishlistmateriaux_id = ?";
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, wishlist.getId());
             try (ResultSet rs = stmt.executeQuery()) {
@@ -104,6 +109,16 @@ public class WishlistService implements AutoCloseable {
                     material.setCategorie(rs.getString("categorie"));
                     material.setDescription(rs.getString("description"));
                     material.setPhoto(rs.getString("photo"));
+
+                    // Ajout des valeurs de stock
+                    material.setQuantiteStock(rs.getInt("quantite_stock"));
+                    material.setSeuilMin(rs.getInt("seuil_min"));
+
+                    // Log de vérification
+                    System.out.println("[BDD] Matériau chargé: " + material.getNomMateriel()
+                            + " | Stock: " + material.getQuantiteStock()
+                            + " | Seuil: " + material.getSeuilMin());
+
                     wishlist.addMaterial(material);
                 }
             }

@@ -1,5 +1,6 @@
 model\HistoriqueConnexion.class
 controller\ProfilFrontController.class
+controller\MateriauxController$1.class
 controller\ModifierMaterielController.class
 controller\AjoutMaterielController$1.class
 controller\DashboardController.class
@@ -24,6 +25,7 @@ utils\SessionManager.class
 utils\PasswordUtils.class
 controller\AjoutFournisseurController.class
 controller\FrontClientController.class
+utils\QRCodeGenerator.class
 controller\ProfilController.class
 controller\ModifierMaterielController$1.class
 model\WishlistMateriaux.class

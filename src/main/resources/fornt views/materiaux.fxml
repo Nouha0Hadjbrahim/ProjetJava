@@ -25,9 +25,8 @@
 
         <!-- Barre de recherche et filtres -->
         <HBox spacing="20" alignment="CENTER">
-            <TextField promptText="Rechercher..." styleClass="search-field">
-
-            </TextField>
+            <TextField fx:id="searchField" promptText="Rechercher..." styleClass="search-field"
+                       onKeyReleased="#handleSearch" />
 
             <ComboBox fx:id="filterCombo" promptText="Aucun filtre" styleClass="filter-combo"/>
 
@@ -52,7 +51,6 @@
         </GridPane>
 
         <!-- Footer -->
-        <fx:include source="/components/Header.fxml"/>
         <fx:include source="/fornt views/footer.fxml"/>
     </VBox>
 </ScrollPane>

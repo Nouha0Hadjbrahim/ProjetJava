@@ -36,7 +36,6 @@ public class WishlistController {
         System.out.println("[WISHLIST] Initialisation du contrôleur");
         try {
             wishlistService = new WishlistService();
-
         } catch (SQLException e) {
             handleError("Erreur d'initialisation", e);
         }
@@ -79,74 +78,19 @@ public class WishlistController {
                     row++;
                 }
             }
+
         } catch (Exception e) {
             handleError("Erreur de chargement de la Wishlist", e);
         }
     }
-
-    private Button createRemoveButton(Material material) {
-        Button removeBtn = new Button("Retirer");
-        removeBtn.getStyleClass().add("wishlist-remove-btn");
-
-        removeBtn.setOnAction(e -> {
-            System.out.println("[ACTION] Bouton Retirer cliqué pour: " + material.getNomMateriel());
-            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmation.setTitle("Confirmation");
-            confirmation.setHeaderText("Retirer ce matériau");
-            confirmation.setContentText("Êtes-vous sûr de vouloir retirer " + material.getNomMateriel() + " de votre Wishlist ?");
-
-            Optional<ButtonType> result = confirmation.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                try {
-                    User currentUser = SessionManager.getInstance().getCurrentUser();
-                    wishlistService.removeFromWishlist(currentUser, material);
-                    System.out.println("[DATA] Matériau retiré: " + material.getNomMateriel());
-                    showAlert("Succès", material.getNomMateriel() + " a été retiré de votre Wishlist");
-                    loadWishlistMaterials();
-                } catch (SQLException ex) {
-                    handleError("Erreur lors de la suppression", ex);
-                }
-            }
-        });
-        return removeBtn;
-    }
-
-    @FXML
-    private void handleBackToMaterials() {
-        try {
-            URL fxmlLocation = getClass().getResource("/fornt views/materiaux.fxml");
-            Parent root = FXMLLoader.load(fxmlLocation);
-            Stage stage = (Stage) materialsGrid.getScene().getWindow();
-            stage.getScene().setRoot(root);
-            stage.setTitle("Matériaux");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handleError(String context, Exception e) {
-        System.err.println("[ERREUR] " + context + ": " + e.getMessage());
-        showAlert("Erreur", context + ": " + e.getMessage());
-        e.printStackTrace();
-    }
-
-    private void showAlert(String title, String message) {
-        System.out.println("[ALERT] " + title + ": " + message);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 
     private StackPane createFlipCard(Material material) {
         StackPane flipCard = new StackPane();
         flipCard.getStyleClass().add("flip-card");
         flipCard.setPrefSize(250, 300);
 
-        VBox front = createFrontFace(material);
-        VBox back = createBackFace(material, flipCard);
+        Node front = createFrontFace(material);
+        Node back = createBackFace(material, flipCard);
 
         flipCard.getChildren().addAll(front, back);
         back.setVisible(false);
@@ -161,11 +105,13 @@ public class WishlistController {
         return flipCard;
     }
 
-    private VBox createFrontFace(Material material) {
-        VBox front = new VBox(10);
-        front.getStyleClass().add("flip-card-front");
-        front.setAlignment(Pos.CENTER);
-        front.setPadding(new Insets(15));
+    private StackPane createFrontFace(Material material) {
+        StackPane frontContainer = new StackPane();
+        frontContainer.getStyleClass().add("flip-card-front");
+
+        VBox content = new VBox(10);
+        content.setAlignment(Pos.CENTER);
+        content.setPadding(new Insets(15));
 
         ImageView imageView = loadMaterialImage(material);
 
@@ -181,11 +127,24 @@ public class WishlistController {
         detailsBtn.getStyleClass().add("flip-btn");
         detailsBtn.setOnAction(e -> {
             System.out.println("[ACTION] Bouton Détails cliqué pour: " + material.getNomMateriel());
-            flipCard((StackPane) detailsBtn.getParent().getParent());
+            flipCard((StackPane) detailsBtn.getParent().getParent().getParent());
         });
 
-        front.getChildren().addAll(imageView, nameLabel, priceLabel, detailsBtn);
-        return front;
+        content.getChildren().addAll(imageView, nameLabel, priceLabel, detailsBtn);
+        frontContainer.getChildren().add(content);
+        System.out.println("[DEBUG] Matériau: " + material.getNomMateriel()
+                + " | Stock: " + material.getQuantiteStock()
+                + " | Seuil: " + material.getSeuilMin());
+
+        // Ajout conditionnel du label de stock limité
+        if (material.getQuantiteStock() > 0 && material.getQuantiteStock() < material.getSeuilMin()) {
+            Label stockLimitLabel = new Label("Stock Limité");
+            stockLimitLabel.getStyleClass().add("stock-limit-label");
+            StackPane.setAlignment(stockLimitLabel, Pos.TOP_RIGHT);
+            frontContainer.getChildren().add(stockLimitLabel);
+        }
+
+        return frontContainer;
     }
 
     private VBox createBackFace(Material material, StackPane flipCard) {
@@ -214,35 +173,60 @@ public class WishlistController {
         HBox buttonsBox = new HBox(10);
         buttonsBox.setAlignment(Pos.CENTER);
 
-        // Bouton "Ajouter au panier" avec icône
+        // Bouton Ajouter au panier
         ImageView cartIcon = new ImageView(new Image(getClass().getResourceAsStream("/assets/icons/panier.png")));
         cartIcon.setFitHeight(20);
         cartIcon.setFitWidth(20);
         Button addToCartBtn = new Button("", cartIcon);
         addToCartBtn.getStyleClass().add("action-btn");
-        addToCartBtn.setOnAction(e -> {
-            System.out.println("[ACTION] Ajout au panier: " + material.getNomMateriel());
+        addToCartBtn.setOnAction(e -> handleAddToCart(material));
 
-        });
-
-        // Bouton "Supprimer" (déjà défini via une méthode externe)
+        // Bouton Retirer
         Button removeBtn = createRemoveButton(material);
 
-        // Bouton "Retour" avec icône
+        // Bouton Retour
         ImageView backIcon = new ImageView(new Image(getClass().getResourceAsStream("/assets/icons/retour.png")));
         backIcon.setFitHeight(20);
         backIcon.setFitWidth(20);
         Button backBtn = new Button("", backIcon);
         backBtn.getStyleClass().add("flip-btn");
-        backBtn.setOnAction(e -> {
-            System.out.println("[ACTION] Bouton Retour cliqué");
-            flipCard(flipCard); // Appel à la méthode de retournement de carte
-        });
+        backBtn.setOnAction(e -> flipCard(flipCard));
 
         buttonsBox.getChildren().addAll(addToCartBtn, removeBtn, backBtn);
         return buttonsBox;
     }
-    ImageView loadMaterialImage(Material material) {
+
+    private Button createRemoveButton(Material material) {
+        Button removeBtn = new Button("Retirer");
+        removeBtn.getStyleClass().add("wishlist-remove-btn");
+
+        removeBtn.setOnAction(e -> {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setTitle("Confirmation");
+            confirmation.setHeaderText("Retirer ce matériau");
+            confirmation.setContentText("Êtes-vous sûr de vouloir retirer " + material.getNomMateriel() + " de votre Wishlist ?");
+
+            Optional<ButtonType> result = confirmation.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    wishlistService.removeFromWishlist(currentUser, material);
+                    showAlert("Succès", material.getNomMateriel() + " a été retiré de votre Wishlist");
+                    loadWishlistMaterials();
+                } catch (SQLException ex) {
+                    handleError("Erreur lors de la suppression", ex);
+                }
+            }
+        });
+        return removeBtn;
+    }
+
+    private void handleAddToCart(Material material) {
+        System.out.println("[ACTION] Ajout au panier: " + material.getNomMateriel());
+        // Implémentez la logique d'ajout au panier ici
+    }
+
+    private ImageView loadMaterialImage(Material material) {
         ImageView imageView = new ImageView();
         try {
             String imagePath = "/assets/prod_mat/" + material.getPhoto();
@@ -252,10 +236,8 @@ public class WishlistController {
                     new Image(getClass().getResourceAsStream("/assets/placeholder.png"));
             imageView.setImage(image);
         } catch (Exception e) {
-            System.err.println("[ERREUR] Chargement image: " + e.getMessage());
             imageView.setImage(new Image(getClass().getResourceAsStream("/assets/default_material.png")));
         }
-
         imageView.setFitWidth(150);
         imageView.setFitHeight(150);
         imageView.setPreserveRatio(true);
@@ -263,7 +245,6 @@ public class WishlistController {
     }
 
     private void flipCard(StackPane flipCard) {
-        System.out.println("[ANIMATION] Rotation de la carte");
         Node front = flipCard.getChildren().get(0);
         Node back = flipCard.getChildren().get(1);
 
@@ -290,4 +271,16 @@ public class WishlistController {
         rotateOut.play();
     }
 
+    private void handleError(String context, Exception e) {
+        System.err.println("[ERREUR] " + context + ": " + e.getMessage());
+        showAlert("Erreur", context + ": " + e.getMessage());
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

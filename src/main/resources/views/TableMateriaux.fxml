@@ -24,7 +24,7 @@
               prefWidth="150"/>
 
     <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button fx:id="btnAjouter" text="Ajouter"/>
+        <Button fx:id="btnAjouter" />
     </HBox>
 
     <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
