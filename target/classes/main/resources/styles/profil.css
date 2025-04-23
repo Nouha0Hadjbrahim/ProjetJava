@@ -1,0 +1,96 @@
+/* === Section Profil === */
+.bg {
+    -fx-background: #f8e5d5;
+    -fx-background-color: #f8e5d5;
+}
+
+.profil-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+    -fx-padding: 10 0 0 0;
+    -fx-alignment: center;
+}
+
+.profil-subtitle {
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-padding: 5 0 20 0;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+/* ===== CONTENEUR GÉNÉRAL ===== */
+.root {
+    -fx-background-color: #fdfdfd;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* ===== TITRE ===== */
+.label {
+    -fx-text-fill: #8C4A1D;
+}
+
+
+/* ===== CHAMPS TEXTE ===== */
+.text-field, .password-field {
+    -fx-background-color: #fffcff;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10;
+    -fx-background-radius: 15;
+    -fx-padding: 8;
+    -fx-font-size: 15px;
+}
+.text-field:hover, .password-field:hover {
+    -fx-background-color: rgba(1, 1, 46, 0.15);
+    -fx-border-color: #8C4A1D;
+
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #8C4A1D;
+}
+
+/* ===== BOUTON ENREGISTRER ===== */
+
+
+/* ===== IMAGE DE PROFIL ===== */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.3, 0, 2);
+}
+
+/* ===== ICONE MODIFICATION (petit crayon) ===== */
+.edit-icon {
+    -fx-background-color: transparent ;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 1);
+    -fx-padding: 4;
+}
+
+.button {
+    -fx-background-color: #D9A58C;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 14;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 1, 1);
+}
+
+.button:hover {
+    -fx-background-color: #c17d5a;
+}
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+    -fx-cursor: hand;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+}
+
+.icon-button:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color:  #c17d5a;
+}

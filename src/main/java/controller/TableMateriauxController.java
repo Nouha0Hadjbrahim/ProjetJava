@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
+import service.WhatsAppService;
 
 public class TableMateriauxController {
 
@@ -43,28 +44,39 @@ public class TableMateriauxController {
     private final int rowsPerPage = 5;
     private List<Material> allMateriaux;
     private User connectedUser;
+    private WhatsAppService whatsappService;
+
 
     @FXML
     public void initialize() {
         try {
             materiauxService = new MateriauxService();
-            // Charger tous les matériaux au démarrage
+            whatsappService = new WhatsAppService();
             allMateriaux = materiauxService.getAll();
             //stat
             populatePieChart(allMateriaux);
             configureListView();
             setupCategoryComboBox();
+
             loadMateriauxPage(currentPage);
-
             generatePagination();
-
             setupButtons();
+
+            //recherche
             setupSearchListener();
             List<Material> lowGlobal = allMateriaux.stream()
                     .filter(m -> m.getQuantiteStock() < m.getSeuilMin())
                     .collect(Collectors.toList());
             if (!lowGlobal.isEmpty()) {
                 showLowStockAlert(lowGlobal);
+                // envoi asynchrone du WhatsApp
+                new Thread(() -> {
+                    try {
+                        whatsappService.sendLowStockAlert(lowGlobal);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
 
 

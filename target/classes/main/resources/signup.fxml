@@ -9,6 +9,7 @@
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="controller.SignupController"
+           stylesheets="@/styles/signup.css"
            style="-fx-background-color: #8A3B12;">  <!-- Marron -->
 
    <VBox alignment="CENTER" spacing="20" maxWidth="400"
@@ -43,7 +44,7 @@
 
       <!-- BOUTON S'INSCRIRE -->
       <Button fx:id="btnRegister" text="S'inscrire"
-              style="-fx-background-color: #111c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-pref-width: 250;" />
+              styleClass="form-button" />
 
       <!-- Séparateur -->
       <HBox alignment="CENTER" spacing="5">
@@ -54,7 +55,7 @@
 
       <!-- Bouton Google -->
       <Button text="S'inscrire avec Google"
-              style="-fx-background-color: #0b0b1c; -fx-text-fill: white; -fx-background-radius: 5; -fx-pref-width: 250;">
+              styleClass="form-button">
          <graphic>
             <ImageView fx:id="googleIcon" fitHeight="16" fitWidth="16" />
          </graphic>
@@ -63,7 +64,7 @@
 
       <!-- Lien vers login -->
       <Hyperlink fx:id="linkLogin" text="Vous avez déjà un compte ? Connectez-vous."
-                 style="-fx-text-fill: #3f3f3f; -fx-font-size: 11px;" />
+                 styleClass="hover-link" />
 
    </VBox>
 </StackPane>

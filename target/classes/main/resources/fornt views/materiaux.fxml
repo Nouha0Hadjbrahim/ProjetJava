@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.transform.Rotate?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.paint.Color?>
+
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MateriauxController"
+            stylesheets="@/styles/materiaux.css"
+            fitToWidth="true"
+            style="-fx-background-color: transparent;">
+
+    <VBox spacing="40" alignment="CENTER" styleClass="bg">
+        <!-- Titre principal -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="MATERIAUX" styleClass="materiaux-title"/>
+            <Label text="Des matériaux soigneusement sélectionnés pour sublimer vos créations artisanales"
+                   styleClass="materiaux-subtitle"/>
+        </VBox>
+
+        <!-- Barre de recherche et filtres -->
+        <HBox spacing="20" alignment="CENTER">
+            <TextField promptText="Rechercher..." styleClass="search-field">
+
+            </TextField>
+
+            <ComboBox fx:id="filterCombo" promptText="Aucun filtre" styleClass="filter-combo"/>
+
+            <Button styleClass="wishlist-btn">
+                <graphic>
+                    <ImageView fitWidth="20" fitHeight="20">
+
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+
+        <!-- Grille des flip cards -->
+        <!-- Gardez la structure de base mais simplifiez GridPane -->
+        <GridPane fx:id="materialsGrid" hgap="20" vgap="20" alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+            </columnConstraints>
+        </GridPane>
+
+        <!-- Footer -->
+        <fx:include source="/components/Header.fxml"/>
+        <fx:include source="/fornt views/footer.fxml"/>
+    </VBox>
+</ScrollPane>

@@ -9,6 +9,7 @@
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="controller.LoginController"
+           stylesheets="@/styles/signup.css"
            style="-fx-background-color: #8A3B12;">  <!-- Marron -->
 
     <VBox alignment="CENTER" spacing="20" maxWidth="450"
@@ -34,7 +35,7 @@
         </VBox>
 
         <Button fx:id="btnLogin" text="Se connecter"
-                style="-fx-background-color: #111c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-pref-width: 300;" />
+                styleClass="form-button" />
 
         <Hyperlink text="Mot de passe oublié ?"
                    style="-fx-font-size: 11px; -fx-text-fill: #444;" />
@@ -45,7 +46,7 @@
 
         <!-- Google Login -->
         <Button text="Se connecter avec Google"
-                style="-fx-background-color: #0b0b1c; -fx-text-fill: white; -fx-background-radius: 6; -fx-pref-width: 300;">
+                styleClass="form-button">
             <graphic>
                 <ImageView fx:id="googleIcon" fitHeight="16" fitWidth="16" />
             </graphic>
@@ -53,7 +54,7 @@
 
         <!-- Face ID Login -->
         <Button text="Se connecter avec Face ID"
-                style="-fx-background-color: #0b0b1c; -fx-text-fill: white; -fx-background-radius: 6; -fx-pref-width: 300;">
+                styleClass="form-button">
             <graphic>
                 <ImageView fx:id="faceIcon" fitHeight="16" fitWidth="16" />
             </graphic>
@@ -63,7 +64,7 @@
         <Label>
             <graphic>
                 <Hyperlink fx:id="linkSignup" text=" Vous n'avez pas de compte ? Créer un compte"
-                           style="-fx-text-fill: #8A3B12; -fx-font-weight: bold;" />
+                           styleClass="hover-link" />
             </graphic>
         </Label>
     </VBox>

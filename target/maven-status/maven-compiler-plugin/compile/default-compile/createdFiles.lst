@@ -6,6 +6,7 @@ controller\DashboardController.class
 controller\LoginController.class
 controller\MateriauxController.class
 controller\ModifierFournisseurController.class
+service\WhatsAppService.class
 controller\TableUtilisateursController.class
 controller\TableMateriauxController$1.class
 service\FournisseurService.class
