@@ -44,14 +44,14 @@ public class TableMateriauxController {
     private final int rowsPerPage = 5;
     private List<Material> allMateriaux;
     private User connectedUser;
-    private WhatsAppService whatsappService;
+   // private WhatsAppService whatsappService;
 
 
     @FXML
     public void initialize() {
         try {
             materiauxService = new MateriauxService();
-            whatsappService = new WhatsAppService();
+           // whatsappService = new WhatsAppService();
             allMateriaux = materiauxService.getAll();
             //stat
             populatePieChart(allMateriaux);
@@ -67,7 +67,7 @@ public class TableMateriauxController {
             List<Material> lowGlobal = allMateriaux.stream()
                     .filter(m -> m.getQuantiteStock() < m.getSeuilMin())
                     .collect(Collectors.toList());
-            if (!lowGlobal.isEmpty()) {
+           /* if (!lowGlobal.isEmpty()) {
                 showLowStockAlert(lowGlobal);
                 // envoi asynchrone du WhatsApp
                 new Thread(() -> {
@@ -77,7 +77,7 @@ public class TableMateriauxController {
                         e.printStackTrace();
                     }
                 }).start();
-            }
+            }*/
 
 
         } catch (SQLException e) {
@@ -141,6 +141,7 @@ public class TableMateriauxController {
                     setGraphic(null);
                 } else {
                     HBox row = new HBox(10);
+                    row.getStyleClass().add("table-row");
                     row.setStyle("-fx-padding: 5;");
 
                     Label photoLabel = new Label(material.getPhoto());
@@ -156,6 +157,7 @@ public class TableMateriauxController {
                     quantityLabel.setPrefWidth(80);
 
                     if (material.getQuantiteStock() < material.getSeuilMin()) {
+                        quantityLabel.getStyleClass().add("quantity-warning");
                         quantityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
                         row.setStyle("-fx-background-color: #ffcccc;");
                     }
@@ -392,7 +394,7 @@ public class TableMateriauxController {
         pieChartQuantites.setLabelsVisible(true);
 
         // taille
-        pieChartQuantites.setPrefSize(300, 200);
+        pieChartQuantites.setPrefSize(400, 300);
         pieChartQuantites.setMinSize(300, 200);
 
         // légende à droite

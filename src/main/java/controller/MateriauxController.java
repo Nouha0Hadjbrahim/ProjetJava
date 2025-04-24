@@ -251,20 +251,26 @@ public class MateriauxController {
 
         return back;
     }
-
+ //ici bouton panier
     private HBox createActionButtons(Material material, StackPane flipCard) {
         HBox box = new HBox(10);
         box.setAlignment(Pos.CENTER);
+        // ajouter au panier
         ImageView cartIcon = new ImageView(new Image(getClass().getResourceAsStream("/assets/icons/panier.png")));
         cartIcon.setFitHeight(20); cartIcon.setFitWidth(20);
         Button addToCart = new Button("", cartIcon);
         addToCart.getStyleClass().add("action-btn");
         addToCart.setOnAction(e -> handleAddToCart(material));
+
+
+        //wishlist
         ImageView wishIcon = new ImageView(new Image(getClass().getResourceAsStream("/assets/icons/heart.png")));
         wishIcon.setFitHeight(20); wishIcon.setFitWidth(20);
         Button wishBtn = new Button("", wishIcon);
         wishBtn.getStyleClass().add("action-btn");
         wishBtn.setOnAction(e -> handleWishlistAction(material));
+
+        //retour
         ImageView backIcon = new ImageView(new Image(getClass().getResourceAsStream("/assets/icons/retour.png")));
         backIcon.setFitHeight(20); backIcon.setFitWidth(20);
         Button backBtn = new Button("", backIcon);

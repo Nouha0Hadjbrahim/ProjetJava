@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.zxing.WriterException;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
@@ -20,12 +21,19 @@ import javafx.util.Duration;
 import model.Material;
 import model.User;
 import service.WishlistService;
-import java.io.IOException;
+import utils.QRCodeGenerator;
+import utils.SessionManager;
+
+
+
+import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import utils.SessionManager;
 
 public class WishlistController {
     @FXML private GridPane materialsGrid;
@@ -132,11 +140,7 @@ public class WishlistController {
 
         content.getChildren().addAll(imageView, nameLabel, priceLabel, detailsBtn);
         frontContainer.getChildren().add(content);
-        System.out.println("[DEBUG] Matériau: " + material.getNomMateriel()
-                + " | Stock: " + material.getQuantiteStock()
-                + " | Seuil: " + material.getSeuilMin());
 
-        // Ajout conditionnel du label de stock limité
         if (material.getQuantiteStock() > 0 && material.getQuantiteStock() < material.getSeuilMin()) {
             Label stockLimitLabel = new Label("Stock Limité");
             stockLimitLabel.getStyleClass().add("stock-limit-label");
@@ -153,19 +157,31 @@ public class WishlistController {
         back.setAlignment(Pos.CENTER);
         back.setPadding(new Insets(15));
 
-        Label descTitle = new Label("Description");
-        descTitle.getStyleClass().add("back-title");
+        ;
 
-        TextArea description = new TextArea(material.getDescription());
-        description.getStyleClass().add("back-description");
-        description.setEditable(false);
-        description.setWrapText(true);
-        description.setPrefHeight(100);
-        description.setMaxWidth(200);
+
+
+
+        // Génération du QR code
+        ImageView qrView;
+        try {
+            String host;
+            try {
+                host = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e) {
+                host = "localhost";
+            }
+            String url = "http://" + host + ":8000/material?id=" + material.getId();
+            qrView = new ImageView(QRCodeGenerator.generateQRCodeImage(url, 160, 160));
+        } catch (WriterException e) {
+            qrView = new ImageView(new Image(getClass().getResourceAsStream("/assets/default_qr.png")));
+        }
+        qrView.setFitWidth(160);
+        qrView.setFitHeight(160);
 
         HBox buttonsBox = createActionButtons(material, flipCard);
 
-        back.getChildren().addAll(descTitle, description, buttonsBox);
+        back.getChildren().addAll( qrView, buttonsBox);
         return back;
     }
 
@@ -173,7 +189,6 @@ public class WishlistController {
         HBox buttonsBox = new HBox(10);
         buttonsBox.setAlignment(Pos.CENTER);
 
-        // Bouton Ajouter au panier
         ImageView cartIcon = new ImageView(new Image(getClass().getResourceAsStream("/assets/icons/panier.png")));
         cartIcon.setFitHeight(20);
         cartIcon.setFitWidth(20);
@@ -181,10 +196,8 @@ public class WishlistController {
         addToCartBtn.getStyleClass().add("action-btn");
         addToCartBtn.setOnAction(e -> handleAddToCart(material));
 
-        // Bouton Retirer
         Button removeBtn = createRemoveButton(material);
 
-        // Bouton Retour
         ImageView backIcon = new ImageView(new Image(getClass().getResourceAsStream("/assets/icons/retour.png")));
         backIcon.setFitHeight(20);
         backIcon.setFitWidth(20);
@@ -197,7 +210,13 @@ public class WishlistController {
     }
 
     private Button createRemoveButton(Material material) {
-        Button removeBtn = new Button("Retirer");
+        Image deleteIcon = new Image(getClass().getResourceAsStream("/assets/icons/retirer.png"));
+        ImageView iconView = new ImageView(deleteIcon);
+        iconView.setFitWidth(16);
+        iconView.setFitHeight(16);
+
+        Button removeBtn = new Button();
+        removeBtn.setGraphic(iconView);
         removeBtn.getStyleClass().add("wishlist-remove-btn");
 
         removeBtn.setOnAction(e -> {
@@ -218,12 +237,12 @@ public class WishlistController {
                 }
             }
         });
+
         return removeBtn;
     }
 
     private void handleAddToCart(Material material) {
         System.out.println("[ACTION] Ajout au panier: " + material.getNomMateriel());
-        // Implémentez la logique d'ajout au panier ici
     }
 
     private ImageView loadMaterialImage(Material material) {
@@ -231,9 +250,7 @@ public class WishlistController {
         try {
             String imagePath = "/assets/prod_mat/" + material.getPhoto();
             URL imageUrl = getClass().getResource(imagePath);
-            Image image = imageUrl != null ?
-                    new Image(imageUrl.toExternalForm()) :
-                    new Image(getClass().getResourceAsStream("/assets/placeholder.png"));
+            Image image = imageUrl != null ? new Image(imageUrl.toExternalForm()) : new Image(getClass().getResourceAsStream("/assets/placeholder.png"));
             imageView.setImage(image);
         } catch (Exception e) {
             imageView.setImage(new Image(getClass().getResourceAsStream("/assets/default_material.png")));

@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -23,7 +25,7 @@ public class TableFournisseurController {
     @FXML private ListView<Fournisseur> listViewFournisseurs;
     @FXML private HBox paginationContainer;
     @FXML private Button btnAjouter;
-
+    private List<Fournisseur> allFournisseurs; // Liste complète pour la recherche
     private FournisseurService fournisseurService;
     private int currentPage = 1;
     private final int rowsPerPage = 5;
@@ -34,10 +36,31 @@ public class TableFournisseurController {
             fournisseurService = new FournisseurService();
             configureListView();
             loadFournisseursPage(currentPage);
+            allFournisseurs = fournisseurService.getAll();
+            setupSearchListener();
         } catch (SQLException e) {
             showErrorAlert("Erreur d'initialisation", "Impossible de se connecter à la base de données");
             e.printStackTrace();
         }
+    }
+    private void setupSearchListener() {
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String keyword = newValue.trim().toLowerCase();
+            if (keyword.isEmpty()) {
+                try {
+                    loadFournisseursPage(currentPage); // Recharge la pagination normale
+                } catch (SQLException e) {
+                    showErrorAlert("Erreur", "Impossible de recharger les fournisseurs");
+                }
+            } else {
+                List<Fournisseur> filteredList = allFournisseurs.stream()
+                        .filter(f -> f.getNomFournisseur().toLowerCase().contains(keyword)) // <-- Seulement le nom
+                        .collect(Collectors.toList());
+
+                listViewFournisseurs.getItems().setAll(filteredList);
+                paginationContainer.getChildren().clear();
+            }
+        });
     }
 
     private void configureListView() {

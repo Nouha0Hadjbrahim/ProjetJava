@@ -15,7 +15,7 @@
     </properties>
 
     <dependencies>
-        <!-- JavaFX -->
+        <!-- ✅ JavaFX pour l'interface graphique -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -31,31 +31,35 @@
             <artifactId>javafx-web</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        <!-- ✅ Ajouté pour SwingFXUtils -->
+        <!-- ✅ Utilisé pour la conversion d’images entre Swing et FX (par ex. QR code image) -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-swing</artifactId>
             <version>${javafx.version}</version>
         </dependency>
 
-        <!-- JDBC MySQL -->
+        <!-- ✅ Connexion à la base de données MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
+
+        <!-- ✅ Pour le hashage des mots de passe (authentification) -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
+
+        <!-- ✅ Très important : utilisé pour parser les réponses JSON de l’API WhatsApp -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.15.0</version>
         </dependency>
 
-        <!-- code QR -->
+        <!-- ✅ Librairie pour la génération et lecture des codes QR -->
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
@@ -70,6 +74,7 @@
 
     <build>
         <plugins>
+            <!-- ✅ Plugin JavaFX pour exécuter l’app avec Maven -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -78,6 +83,8 @@
                     <mainClass>main.Main</mainClass>
                 </configuration>
             </plugin>
+
+            <!-- ✅ Plugin de compilation Java -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -88,5 +95,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

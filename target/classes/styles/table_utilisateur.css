@@ -159,3 +159,55 @@
     -fx-max-width: 800; /* largeur max */
     -fx-min-width: 800;
 }
+/* Styles pour le PieChart */
+.pie-chart {
+    -fx-pref-width: 350;
+    -fx-pref-height: 250;
+    -fx-background-color: white;
+    -fx-border-radius: 10;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+}
+
+/* Style spécifique aux matériaux */
+#materiauxListContainer .table-row {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+.quantity-warning {
+    -fx-text-fill: #d32f2f;
+    -fx-font-weight: bold;
+}
+/* ========== HEADER ========== */
+.table-header {
+    -fx-background-color: #3a4c68;    /* bleu foncé */
+    -fx-padding: 8 10;
+    -fx-border-radius: 5 5 0 0;
+    -fx-background-radius: 5 5 0 0;
+}
+.table-header .col-header {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+
+
+
+
+
+
+/* ========== ACTIONS (boutons icônes) ========== */
+.table-listview .button {
+    -fx-background-color: transparent;
+}
+.combo-custom {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 4 10 4 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0.2, 0, 1);
+}

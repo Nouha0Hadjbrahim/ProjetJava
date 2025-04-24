@@ -15,7 +15,7 @@ import model.Material;
 public class WhatsAppService {
     private static final String API_URL = "https://graph.facebook.com/v19.0/";
     private static final String PHONE_NUMBER_ID = "609959038874010";
-    private static final String ACCESS_TOKEN = "EAAOM00FWLgcBOzE98ZC76wb2SEKd0LtsJRwuKvcr3V0eX1optdUjdZBciZAZBpkzDEyz5ZAa4QZB3jMtYBmmXEzgTcvi2P9VAYtiDjthnzOU3C6ZBpB4NchGggyjZCP9kXmRWRSIki4wHiOlcvcwY3EZABp1gwbt3HtXZB9a2taFSOhlhjlppLuboRUOxf2O7ZBZBT1LznZAFYCBtyOhqpG1hXoT5QXyQR1gZD";
+    private static final String ACCESS_TOKEN = "EAAOM00FWLgcBOZBIgnT4W6bEWUylQRsA5gV4lncJNHSZCSWKpDPWbUhCKBjxkfZCol32mYC55oNihU0h9sRNFiG5ZAYHVK9PZAty2nIZCiTy1B1eOQpX1mr1c9ZC4n7eVO6bds3XMzxkBr3l8DARqMeV1zlDtSRRJM7CBySFfPbRlVa3oLuu1rkNZBRpZA3SSiz4IZAs0OZBGJklSlQoQmGyu2HCMMDNQTCReXzjLTEE49E";
     private static final String RECIPIENT = "21658761296";
     private final ObjectMapper mapper = new ObjectMapper();
 
