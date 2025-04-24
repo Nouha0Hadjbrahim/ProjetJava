@@ -29,7 +29,7 @@ public class AteliersController {
     private final AteliersService atelierService = new AteliersService();
     private final InscriptionAtelierService inscriptionService = new InscriptionAtelierService();
     private int currentPage = 1;
-    private final int rowsPerPage = 1;
+    private final int rowsPerPage = 5;
     int userId = SessionManager.getCurrentUser().getId();
 
     @FXML

@@ -37,10 +37,9 @@
 
     <!-- Liste des ateliers -->
     <VBox spacing="20" alignment="CENTER" styleClass="ateliers-container">
-        <HBox fx:id="cardContainer" spacing="25" alignment="CENTER" styleClass="card-container" />
+        <GridPane fx:id="cardContainer" hgap="20" vgap="20" alignment="CENTER" styleClass="card-container" />
     </VBox>
 
-    <HBox fx:id="paginationContainer" alignment="CENTER" styleClass="pagination-container" />
 
     <fx:include source="/fornt views/footer.fxml" />
 </VBox>

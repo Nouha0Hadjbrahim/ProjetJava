@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="rootContainer" spacing="15" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.AteliersAdminController">
+
+    <Label text="GESTION DES ATELIERS" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <ComboBox fx:id="categoryFilter" promptText="Tous les catégories"
+              prefWidth="180.0" prefHeight="30.0"
+              styleClass="rounded-combo-box">
+    </ComboBox>
+
+    <ListView fx:id="atelierListView" prefHeight="400" style="-fx-background-radius: 10;"/>
+
+    <HBox fx:id="paginationContainer" alignment="CENTER" spacing="5"/>
+</VBox>

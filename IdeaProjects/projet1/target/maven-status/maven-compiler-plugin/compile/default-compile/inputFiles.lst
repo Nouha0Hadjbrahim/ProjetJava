@@ -2,6 +2,7 @@ C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\sr
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\AjouterAtelierController.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\AteliersAdminController.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\AteliersController.java
+C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\CalendrierController.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\DashboardArtisanController.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\DashboardController.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\controller\FooterController.java
@@ -22,8 +23,11 @@ C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\sr
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\model\InscriptionAtelier.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\model\User.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\service\AteliersService.java
+C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\service\EpingleService.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\service\InscriptionAtelierService.java
+C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\service\SimpleWebService.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\service\UserService.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\utils\DBConnection.java
+C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\utils\EmailSender.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\utils\PasswordUtils.java
 C:\Users\DELL\javaproject\mer\webproject_java\ProjetJava\IdeaProjects\projet1\src\main\java\utils\SessionManager.java
