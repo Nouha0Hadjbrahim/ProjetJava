@@ -27,9 +27,9 @@
             </HBox>
 
             <!-- Barre de recherche -->
-            <HBox fx:id="searchBox" alignment="CENTER_LEFT" >
+            <HBox fx:id="searchBox" alignment="CENTER" >
                 <padding>
-                    <Insets top="20" bottom="20" left="20"/>
+                    <Insets top="50" bottom="12" />
                 </padding>
                 <Label text="🔍" styleClass="search-icon"/>
                 <TextField fx:id="searchField"
@@ -42,6 +42,7 @@
 
     <!-- CONTENU : liste des utilisateurs -->
     <center>
+
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
             <HBox alignment="CENTER">
 

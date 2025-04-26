@@ -48,7 +48,9 @@
 
                 <MenuButton fx:id="userMenu" graphicTextGap="10">
                     <graphic>
-                        <ImageView fx:id="userIcon" fitHeight="24" fitWidth="24" />
+                        <ImageView fx:id="userIcon" fitHeight="32"
+                                   fitWidth="32"
+                                   pickOnBounds="true" />
                     </graphic>
                     <items>
                         <MenuItem text="Profil" onAction="#handleProfil" />

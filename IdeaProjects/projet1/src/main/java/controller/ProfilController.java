@@ -4,13 +4,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.User;
 import service.UserService;
 import utils.PasswordUtils;
 import javafx.scene.shape.Circle;
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import java.io.IOException;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -22,6 +26,8 @@ public class ProfilController {
     @FXML private TextField tfEmail;
     @FXML private PasswordField tfOldPassword;
     @FXML private PasswordField tfNewPassword;
+    @FXML private Button btnHistorique;
+    @FXML private ImageView iconHistorique;
 
     @FXML private ImageView photoProfil;
     @FXML private ImageView editIcon;
@@ -36,6 +42,8 @@ public class ProfilController {
         tfNom.setText(user.getNom());
         tfPrenom.setText(user.getPrenom());
         tfEmail.setText(user.getEmail());
+        iconHistorique.setImage(new Image(getClass().getResourceAsStream("/assets/icons/historique.png")));
+
 
         try {
             String path = "/assets/users/" + user.getPhoto();
@@ -48,6 +56,10 @@ public class ProfilController {
         editIcon.setImage(new Image(getClass().getResourceAsStream("/assets/icons/modifier.png")));
         editIcon.setOnMouseClicked(event -> handleBrowsePhoto()); // il manquait ici
 
+    }
+    @FXML
+    private void handleAfficherHistorique() {
+        handleHistory(user);
     }
 
     @FXML
@@ -184,6 +196,25 @@ public class ProfilController {
         return password.length() >= 6 &&
                 password.matches(".*[A-Z].*") &&    // au moins une majuscule
                 password.matches(".*\\d.*");        // au moins un chiffre
+    }
+
+    private void handleHistory(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/HistoriqueConnexion.fxml"));
+            Parent root = loader.load();
+
+            HistoriqueConnexionController controller = loader.getController();
+            controller.setUser(user);
+
+            Stage stage = new Stage();
+            stage.setTitle("Historique de " + user.getNom());
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger l'historique.");
+        }
     }
 
 }

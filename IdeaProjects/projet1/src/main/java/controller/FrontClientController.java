@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+import javafx.scene.shape.Circle;
 import model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -44,12 +45,26 @@ public class FrontClientController {
     private List<Object> navLinks;
     public void setConnectedUser(User user) {
         this.connectedUser = user;
+        if (connectedUser != null) {
+
+            // Chargement photo profil
+            String photoPath = connectedUser.getPhoto();
+            Image image;
+            try {
+                image = new Image(getClass().getResourceAsStream("/assets/users/" + photoPath));
+                if (image.isError()) throw new Exception();
+            } catch (Exception e) {
+                image = new Image(getClass().getResourceAsStream("/assets/userf.png"));
+            }
+            userIcon.setImage(image);
+            Circle clip = new Circle(16, 16, 16);
+            userIcon.setClip(clip);
+        }
     }
 
     @FXML
     public void initialize() {
         logoImage.setImage(new Image(getClass().getResourceAsStream("/assets/logo2.png")));
-        userIcon.setImage(new Image(getClass().getResourceAsStream("/assets/userf.png")));
         cartIcon.setImage(new Image(getClass().getResourceAsStream("/assets/chariot.png")));
 
         // Créer les menu items du menu Boutique (ici explicitement)

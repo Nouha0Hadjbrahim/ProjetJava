@@ -97,19 +97,20 @@ public class SignupController {
         User registeredUser = userService.getUserByEmail(email);
         new HistoriqueConnexionService().enregistrerConnexion(registeredUser);
         try {
-            // Charger front.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/front.fxml"));
             Parent frontRoot = loader.load();
 
-            // Passer l'utilisateur au frontController
+            // ✅ Transmettre l'utilisateur connecté
             FrontClientController frontController = loader.getController();
-            frontController.initialize(); // ⚠️ Méthode à créer dans FrontController
+            frontController.setConnectedUser(registeredUser);
 
-            // Afficher la scène
+            // ✅ NE PAS appeler initialize() manuellement (JavaFX le fait)
+
             Stage stage = (Stage) btnRegister.getScene().getWindow();
             stage.setScene(new Scene(frontRoot));
             stage.setTitle("Edayetna - Bienvenue");
             stage.show();
+
 
         } catch (IOException e) {
             e.printStackTrace();

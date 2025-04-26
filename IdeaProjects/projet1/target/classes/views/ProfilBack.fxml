@@ -59,7 +59,22 @@
 
                 <Button text="Enregistrer" onAction="#handleSave"
                         />
+                <HBox alignment="BOTTOM_RIGHT" prefWidth="Infinity">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    <Button fx:id="btnHistorique" onAction="#handleAfficherHistorique"
+                            styleClass="icon-button">
+                        <graphic>
+                            <ImageView fx:id="iconHistorique" fitWidth="18" fitHeight="18" />
+                        </graphic>
+                    </Button>
+                </HBox>
             </VBox>
+            <!-- Icône historique en bas à droite -->
+
+
+
         </HBox>
 
     </VBox>

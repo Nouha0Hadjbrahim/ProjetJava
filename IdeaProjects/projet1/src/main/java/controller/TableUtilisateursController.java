@@ -150,7 +150,16 @@ public class TableUtilisateursController {
     }
 
     private void handleInfo(User user) {
-        showAlert("Infos", "Utilisateur : " + user.getNom() + " " + user.getPrenom());
+        String info = String.format(
+                "Nom & Prénom : %s %s\nEmail        : %s\nStatut       : %s\nRôle         : %s",
+                user.getNom(),
+                user.getPrenom(),
+                user.getEmail(),
+                user.getStatut(),
+                user.getRoles()
+        );
+
+        showAlert("🧾 Informations Utilisateur", info);
     }
 
     private void handleEdit(User user) {

@@ -4,7 +4,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
-
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.ProfilController"
             stylesheets="@/styles/profil.css"
@@ -63,7 +66,20 @@
 
                 <Button text="Enregistrer" onAction="#handleSave"
                 />
+                <!-- Icône historique en bas à droite -->
+                <HBox alignment="BOTTOM_RIGHT" prefWidth="Infinity">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    <Button fx:id="btnHistorique" onAction="#handleAfficherHistorique"
+                            styleClass="icon-button">
+                        <graphic>
+                            <ImageView fx:id="iconHistorique" fitWidth="18" fitHeight="18" />
+                        </graphic>
+                    </Button>
+                </HBox>
             </VBox>
+
         </HBox>
         <!-- Footer -->
         <fx:include source="/fornt views/footer.fxml" />
