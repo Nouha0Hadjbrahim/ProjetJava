@@ -40,20 +40,19 @@ public class AteliersAdminController {
     }
 
     private void loadAteliersPage(int page) {
-        List<Ateliers> ateliers = atelierService.getAteliersPage(page, rowsPerPage);
-
-        // Filtrage par catégorie
         String selectedCategory = categoryFilter.getValue();
-        if (selectedCategory != null && !selectedCategory.equals("Tous")) {
-            ateliers = ateliers.stream()
-                    .filter(a -> selectedCategory.equals(a.getCategorie()))
-                    .collect(Collectors.toList());
-        }
+
+        List<Ateliers> ateliers = atelierService.getAteliersPage(page, rowsPerPage)
+                .stream()
+                .filter(a -> selectedCategory == null
+                        || "Tous".equalsIgnoreCase(selectedCategory)
+                        || selectedCategory.equalsIgnoreCase(a.getCategorie()))
+                .collect(Collectors.toList());
 
         atelierListView.getItems().clear();
 
-        // Ajouter une ligne d'en-tête
-        atelierListView.getItems().add(new Ateliers()); // Dummy pour l'en-tête
+        // Ajouter l'en-tête
+        atelierListView.getItems().add(new Ateliers()); // Dummy pour en-tête
 
         atelierListView.getItems().addAll(ateliers);
 
@@ -66,7 +65,8 @@ public class AteliersAdminController {
                     return;
                 }
 
-                HBox row = new HBox();
+
+    HBox row = new HBox();
                 row.setSpacing(10);
                 row.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
 

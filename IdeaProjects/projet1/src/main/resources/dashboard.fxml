@@ -5,6 +5,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.DashboardController"
@@ -91,6 +95,16 @@
     <!-- CONTENU CENTRAL -->
     <center>
         <StackPane fx:id="mainContent" style="-fx-background-color: #F4F6FA;"/>
+        <BarChart fx:id="barChart" layoutX="50" layoutY="50" prefWidth="600" prefHeight="400">
+            <xAxis>
+                <CategoryAxis label="Catégorie"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Inscriptions"/>
+            </yAxis>
+        </BarChart>
+
+
     </center>
 
 </BorderPane>

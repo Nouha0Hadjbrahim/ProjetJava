@@ -237,7 +237,7 @@ public class InscriptionAtelierController {
             }
 
             // 4. Génère l'URL et le QR code
-            String ip = "192.168.1.14"; // ton IP locale Wi-Fi ici
+            String ip = "172.20.10.2"; // ton IP locale Wi-Fi ici
             String url = "http://" + ip + ":" + port;
 
             File tempQR = File.createTempFile("qr-", ".png");
@@ -300,7 +300,7 @@ public class InscriptionAtelierController {
                     "<div class='container'>" +
                     "<div class='header'>" +
                     "<img src='logo2.png' alt='Logo'>" +
-                    "<div class='header-title'>Détails de l'inscription</div>" +
+                    "<div class='header-title'>Détails de l'atelier auquel vous etes inscrit</div>" +
                     "</div>" +
                     "<h2>" + atelier.getTitre() + "</h2>" +
                     "<div class='info-block'><span class='label'>Catégorie :</span><span class='value'>" + atelier.getCategorie() + "</span></div>" +

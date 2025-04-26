@@ -9,4 +9,5 @@
     <Label text="Bienvenue dans le tableau de bord"
            style="-fx-font-size: 24px; -fx-text-fill: #2c3e50;"
            layoutX="50" layoutY="50"/>
+
 </AnchorPane>

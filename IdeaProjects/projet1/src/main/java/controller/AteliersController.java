@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class AteliersController {
 
@@ -230,17 +231,18 @@ public class AteliersController {
     }
 
     private void loadFilteredAteliers(String filter) {
-        List<Ateliers> filteredList;
+        List<Ateliers> allAteliers = atelierService.getAteliersPageByArtisan(currentPage, rowsPerPage, userId); // Charger d'abord tous les ateliers de l'artisan
 
-        if (filter == null || filter.trim().isEmpty()) {
-            filteredList = atelierService.getAteliersPageByArtisan(currentPage, rowsPerPage, userId);
-        } else {
-            filteredList = atelierService.searchAteliersByTitre(filter.trim(), userId);
-        }
+        List<Ateliers> filteredList = allAteliers.stream()
+                .filter(a -> filter == null
+                        || filter.isBlank()
+                        || a.getTitre().toLowerCase().contains(filter.toLowerCase()))
+                .collect(Collectors.toList());
 
         atelierListView.getItems().clear();
         atelierListView.getItems().add(new Ateliers()); // Dummy pour l'en-tête
         atelierListView.getItems().addAll(filteredList);
     }
+
 
 }

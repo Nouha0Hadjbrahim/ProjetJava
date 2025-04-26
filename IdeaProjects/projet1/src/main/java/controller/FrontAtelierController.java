@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -83,48 +84,42 @@ public class FrontAtelierController implements Initializable {
 
 
     public void loadAllAteliers() {
-        // Récupération complète sans pagination
         List<Ateliers> allAteliers = atelierService.getAllAteliers();
 
         String selectedCategorie = categoryFilter.getValue();
         String selectedNiveau = niveauFilter.getValue();
         String selectedPriceSort = priceSortFilter.getValue();
 
-        // Appliquer les filtres
-        List<Ateliers> filteredAteliers = new ArrayList<>();
-        for (Ateliers atelier : allAteliers) {
-            boolean matchCategorie = selectedCategorie.equals("Toutes les catégories") ||
-                    (atelier.getCategorie() != null && atelier.getCategorie().equalsIgnoreCase(selectedCategorie));
-
-            boolean matchNiveau = selectedNiveau.equals("Tous les niveaux") ||
-                    (atelier.getNiveau_diff() != null && atelier.getNiveau_diff().equalsIgnoreCase(selectedNiveau));
-
-            if (matchCategorie && matchNiveau) {
-                filteredAteliers.add(atelier);
-            }
-        }
-
-        EpingleService epingleService = new EpingleService();
         Set<Integer> epingledIds = epingleService.getEpinglesForUser(userId);
 
-        // 🔝 Trier : ateliers épinglés d'abord
-        filteredAteliers.sort((a1, a2) -> {
-            boolean e1 = epingledIds.contains(a1.getId());
-            boolean e2 = epingledIds.contains(a2.getId());
-            return Boolean.compare(!e1, !e2); // true < false donc e1 true → -1
-        });
+        List<Ateliers> filteredAndSortedAteliers = allAteliers.stream()
+                .filter(atelier -> (selectedCategorie.equals("Toutes les catégories")
+                        || (atelier.getCategorie() != null && atelier.getCategorie().equalsIgnoreCase(selectedCategorie))))
+                .filter(atelier -> (selectedNiveau.equals("Tous les niveaux")
+                        || (atelier.getNiveau_diff() != null && atelier.getNiveau_diff().equalsIgnoreCase(selectedNiveau))))
+                .sorted((a1, a2) -> {
+                    // Trier d'abord par épinglé
+                    boolean e1 = epingledIds.contains(a1.getId());
+                    boolean e2 = epingledIds.contains(a2.getId());
+                    int epingleCompare = Boolean.compare(!e1, !e2);
+                    if (epingleCompare != 0) {
+                        return epingleCompare;
+                    }
 
-        // Tri
-        if ("Croissant".equals(selectedPriceSort)) {
-            filteredAteliers.sort((a1, a2) -> Double.compare(a1.getPrix(), a2.getPrix()));
-        } else if ("Décroissant".equals(selectedPriceSort)) {
-            filteredAteliers.sort((a1, a2) -> Double.compare(a2.getPrix(), a1.getPrix()));
-        }
+                    // Ensuite tri par prix si nécessaire
+                    if ("Croissant".equals(selectedPriceSort)) {
+                        return Double.compare(a1.getPrix(), a2.getPrix());
+                    } else if ("Décroissant".equals(selectedPriceSort)) {
+                        return Double.compare(a2.getPrix(), a1.getPrix());
+                    } else {
+                        return 0; // Pas de tri supplémentaire
+                    }
+                })
+                .collect(Collectors.toList());
 
-        // Affichage sans pagination
-        displayAteliers(filteredAteliers);
-
+        displayAteliers(filteredAndSortedAteliers);
     }
+
 
 
 
