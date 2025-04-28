@@ -39,6 +39,10 @@
             </placeholder>
         </TableView>
 
+        <Pagination fx:id="pagination"
+                    styleClass="pagination"
+                    maxPageIndicatorCount="5"/>
+
         <!-- Séparateur -->
         <Separator style="-fx-padding: 10 0;"/>
 

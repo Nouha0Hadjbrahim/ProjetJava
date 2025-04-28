@@ -93,13 +93,21 @@ public class DashboardController {
     @FXML
     private void handleListeReclamation() {
         try {
-            // Charge la vue des réclamations backoffice
-            Parent view = FXMLLoader.load(getClass().getResource("/views/BackReclamations.fxml"));
+            // Créer manuellement un FXMLLoader
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/BackReclamations.fxml"));
+            Parent view = loader.load();
+
+            BackReclamationController controller = loader.getController();
+            // controller.doSomethingIfNeeded();
+
+            // Remplacer le contenu du mainContent
             mainContent.getChildren().setAll(view);
+
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de la vue des réclamations");
         }
     }
+
 
 }

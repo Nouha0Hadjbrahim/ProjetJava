@@ -280,3 +280,17 @@
     -fx-border-radius: 3px;
     -fx-padding: 5px;
 }
+
+/* Dans votre fichier CSS */
+.pagination .page {
+    -fx-pref-height: 40px;
+}
+
+.reclamation-table {
+    -fx-table-cell-size: 35px;
+}
+
+.no-reclamation-label {
+    -fx-padding: 20px;
+    -fx-font-size: 14px;
+}

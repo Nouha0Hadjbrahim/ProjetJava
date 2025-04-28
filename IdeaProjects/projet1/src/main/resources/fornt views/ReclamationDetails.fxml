@@ -48,7 +48,7 @@
         <HBox fx:id="actionButtonsBox" spacing="10" alignment="CENTER">
             <Button fx:id="modifierButton" text="Modifier" onAction="#handleModifier"/>
             <Button fx:id="supprimerButton" text="Supprimer" onAction="#handleSupprimer"/>
-            <Button fx:id="pdfButton" text="Générer PDF" styleClass="action-button" visible="false"/>
+            <Button fx:id="pdfButton" text="Générer PDF" styleClass="action-button" onAction="#handleGeneratePDF" visible="false"/>
         </HBox>
 
         <!-- Bouton Retour -->

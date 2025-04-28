@@ -6,18 +6,25 @@ import utils.DBConnection;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReclamationService {
 
-    public List<Reclamation> getReclamationsByUserId(int userId) {
+    // Récupère les réclamations paginées POUR l'utilisateur connecté
+    public List<Reclamation> getReclamationsForUser(int userId, int offset, int limit) {
         List<Reclamation> reclamations = new ArrayList<>();
-        String query = "SELECT id, user_id, titre, description, statut, date_reclamation FROM reclamation WHERE user_id = ?";
+        String query = "SELECT id, user_id, titre, description, statut, date_reclamation " +
+                "FROM reclamation WHERE user_id = ? ORDER BY date_reclamation DESC LIMIT ?, ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, userId);
+            stmt.setInt(1, userId);  // Filtre par utilisateur
+            stmt.setInt(2, offset);  // Pagination
+            stmt.setInt(3, limit);   // Pagination
+
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -35,6 +42,21 @@ public class ReclamationService {
             e.printStackTrace();
         }
         return reclamations;
+    }
+
+    // Compte le nombre total de réclamations POUR l'utilisateur connecté
+    public int getTotalReclamationsForUser(int userId) {
+        String query = "SELECT COUNT(*) as total FROM reclamation WHERE user_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next() ? rs.getInt("total") : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public Reclamation addReclamation(int userId, String titre, String description) throws SQLException {
@@ -143,4 +165,109 @@ public class ReclamationService {
             return pstmt.executeUpdate() > 0;
         }
     }
+
+    public List<Reclamation> getActiveReclamations(int offset, int limit) {
+        List<Reclamation> reclamations = new ArrayList<>();
+        String query = "SELECT * FROM reclamation WHERE statut IN ('En attente', 'En cours') ORDER BY date_reclamation DESC LIMIT ?, ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, offset);
+            stmt.setInt(2, limit);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Reclamation rec = new Reclamation(
+                        rs.getInt("user_id"),
+                        rs.getString("titre"),
+                        rs.getString("description"),
+                        rs.getString("statut"),
+                        rs.getDate("date_reclamation").toLocalDate()
+                );
+                rec.setId(rs.getInt("id"));
+                reclamations.add(rec);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reclamations;
+    }
+
+    public List<Reclamation> getArchivedReclamations(int offset, int limit) {
+        List<Reclamation> reclamations = new ArrayList<>();
+        String query = "SELECT * FROM reclamation WHERE statut = 'Répondu' ORDER BY date_reclamation DESC LIMIT ?, ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, offset);
+            stmt.setInt(2, limit);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Reclamation rec = new Reclamation(
+                        rs.getInt("user_id"),
+                        rs.getString("titre"),
+                        rs.getString("description"),
+                        rs.getString("statut"),
+                        rs.getDate("date_reclamation").toLocalDate()
+                );
+                rec.setId(rs.getInt("id"));
+                reclamations.add(rec);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reclamations;
+    }
+
+    public int getTotalActiveReclamations() {
+        String query = "SELECT COUNT(*) as total FROM reclamation WHERE statut IN ('En attente', 'En cours')";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            return rs.next() ? rs.getInt("total") : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int getTotalArchivedReclamations() {
+        String query = "SELECT COUNT(*) as total FROM reclamation WHERE statut = 'Répondu'";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            return rs.next() ? rs.getInt("total") : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public Map<String, Integer> getReclamationStats() {
+        Map<String, Integer> stats = new HashMap<>();
+        String query = "SELECT statut, COUNT(*) as count FROM reclamation GROUP BY statut";
+
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                stats.put(rs.getString("statut"), rs.getInt("count"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        stats.putIfAbsent("En attente", 0);
+        stats.putIfAbsent("En cours", 0);
+        stats.putIfAbsent("Répondu", 0);
+
+        return stats;
+    }
+
+
 }

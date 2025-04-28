@@ -1,85 +1,174 @@
-.table-view {
-    -fx-background-color: white;
-    -fx-border-color: #ddd;
+/* ===== STYLES GÉNÉRAUX ===== */
+.root {
+    -fx-font-family: 'Segoe UI', Arial;
+    -fx-background-color: #f5f5f5;
 }
 
-.table-column {
-    -fx-alignment: CENTER;
-    -fx-font-size: 14px;
+/* ===== TOGGLE BUTTON ===== */
+.toggle-button {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #333;
+    -fx-padding: 5 15;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
 }
 
-.button {
+.toggle-button:selected {
     -fx-background-color: #1d2135;
     -fx-text-fill: white;
 }
 
-/* Consulter back */
-
-/* Détails des réclamations */
-.detail-label {
-    -fx-font-weight: bold;
+/* ===== TABLEAU DES RÉCLAMATIONS ===== */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 
-.detail-value {
+.table-view .virtual-flow {
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #1d2135;
+    -fx-background-radius: 5px 5px 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-padding: 10 0;
+}
+
+/* Toutes les lignes blanches */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Suppression de l'alternance de couleurs */
+.table-row-cell:odd {
+    -fx-background-color: white;
+}
+
+/* Style de sélection cohérent */
+.table-row-cell:selected {
+    -fx-background-color: #e0e0e0; /* Gris clair */
+    -fx-text-fill: black; /* Texte noir pour meilleure lisibilité */
+}
+
+/* Style pour les lignes archivées - Utilisation d'une classe standard */
+.archived-row .table-cell {
+    -fx-text-fill: #777;
+    -fx-font-style: italic;
+}
+
+/* Style de sélection pour les archives */
+.archived-row:selected .table-cell {
+    -fx-text-fill: black; /* Texte noir en sélection */
+    -fx-font-style: italic; /* Conserve l'italique */
+}
+
+/* ===== BOUTON CONSULTER ===== */
+.action-button {
+    -fx-background-color: #1d2135;
+    -fx-text-fill: white;
+    -fx-background-radius: 3;
+    -fx-padding: 3 8;
+    -fx-font-size: 12px;
+}
+
+.action-button:hover {
+    -fx-background-color: #3a4b6b;
+}
+
+/* ===== BARRE DE RECHERCHE ===== */
+#searchField {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5 15;
+    -fx-pref-width: 300px;
     -fx-font-size: 14px;
 }
 
-.text-area {
-    -fx-border-color: #ddd;
-    -fx-border-radius: 3px;
-    -fx-padding: 5px;
+/* ===== PAGINATION ===== */
+.pagination {
+    -fx-page-information-visible: false;
 }
 
-.button {
-    -fx-padding: 8px 16px;
-    -fx-background-radius: 4px;
+.pagination .pagination-control {
+    -fx-background-color: transparent;
 }
 
-#repondreButton {
-    -fx-background-color: #4CAF50;
+.pagination .button {
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+    -fx-background-radius: 15;
+    -fx-background-color: #e0e0e0;
+}
+
+.pagination .button:selected {
+    -fx-background-color: #1d2135;
     -fx-text-fill: white;
 }
 
-#modifierButton {
-    -fx-background-color: #2196F3;
-    -fx-text-fill: white;
+/* ===== TITRE ===== */
+.reclamation-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1d2135;
 }
 
-#retourButton {
-    -fx-background-color: #f44336;
-    -fx-text-fill: white;
+/* ===== MESSAGE AUCUNE RÉCLAMATION ===== */
+.no-reclamation-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #777;
+    -fx-padding: 20 0;
 }
 
-/* REPONSE */
+/* Effet de survol */
+.table-row-cell:hover {
+    -fx-background-color: #f0f7ff; /* Bleu très très clair */
+}
 
-/* Style pour la zone de réponse */
-.text-area {
+/* Supprimer les lignes vides */
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+}
+
+/* Statistique */
+
+.stat-box {
+    -fx-background-color: #f5f5f5;
     -fx-border-color: #ddd;
     -fx-border-radius: 5px;
-    -fx-padding: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 15px;
+    -fx-min-width: 120px;
+    -fx-alignment: center;
 }
 
-/* Boutons principaux */
-.button {
-    -fx-padding: 8px 16px;
-    -fx-background-radius: 4px;
+.stat-title {
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-cursor: hand;
+    -fx-text-fill: #555;
 }
 
-/* Style spécifique pour le bouton d'action */
-#actionButton {
-    -fx-background-color: #4CAF50;
-    -fx-text-fill: white;
-}
-
-/* Style spécifique pour le bouton retour */
-#retourButton {
-    -fx-background-color: #f44336;
-    -fx-text-fill: white;
-}
-
-/* Checkbox réponse finale */
-.check-box {
-    -fx-padding: 0 10px 0 0;
+.stat-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
 }

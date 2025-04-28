@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Reclamation;
+import service.ReclamationService;
 import utils.DBConnection;
 
 import java.io.IOException;
@@ -47,6 +48,9 @@ public class ReclamationController {
 
     @FXML
     private Label descriptionErrorLabel;
+
+    @FXML private Pagination pagination;
+    private final int itemsPerPage = 5;
 
 
     private static final int TITRE_MIN_LENGTH = 3;
@@ -106,6 +110,7 @@ public class ReclamationController {
 
         // Load data
         loadReclamations();
+        setupPagination();
 
         // Setup form submission
         submitButton.setOnAction(event -> addReclamation());
@@ -151,13 +156,17 @@ public class ReclamationController {
     }
 
     private void updateUI() {
-        if (reclamationTable.getItems().isEmpty()) {
-            reclamationTable.setVisible(false);
-            noReclamationLabel.setVisible(true);
-            noReclamationLabel.setText("Vous n'avez rien réclamé");
+        boolean hasReclamations = !reclamationTable.getItems().isEmpty();
+
+        reclamationTable.setVisible(hasReclamations);
+        noReclamationLabel.setVisible(!hasReclamations);
+        pagination.setVisible(hasReclamations);
+
+        if (!hasReclamations && pagination.getCurrentPageIndex() > 0) {
+            // Cas spécial : page vide mais pas la première page
+            noReclamationLabel.setText("Aucune réclamation sur cette page");
         } else {
-            reclamationTable.setVisible(true);
-            noReclamationLabel.setVisible(false);
+            noReclamationLabel.setText("Vous n'avez rien réclamé");
         }
     }
 
@@ -296,4 +305,31 @@ public class ReclamationController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    private void setupPagination() {
+        int userId = 3; // À remplacer par l'ID dynamique si nécessaire
+        int totalItems = new ReclamationService().getTotalReclamationsForUser(userId);
+        int pageCount = (totalItems + itemsPerPage - 1) / itemsPerPage; // Calcul robuste
+
+        pagination.setPageCount(pageCount > 0 ? pageCount : 1); // Toujours au moins 1 page
+        pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
+            loadPage(newIndex.intValue());
+        });
+
+        // Charge la première page immédiatement
+        loadPage(0);
+    }
+
+    private void loadPage(int pageIndex) {
+        int userId = 3; // À remplacer par l'ID dynamique
+        int offset = pageIndex * itemsPerPage;
+        List<Reclamation> reclamations = new ReclamationService().getReclamationsForUser(userId, offset, itemsPerPage);
+
+        reclamationTable.getItems().setAll(reclamations);
+        updateUI();
+
+        // Force la mise à jour visuelle
+        reclamationTable.refresh();
+    }
+
 }

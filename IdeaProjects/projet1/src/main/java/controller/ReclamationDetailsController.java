@@ -1,17 +1,31 @@
 package controller;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Reclamation;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.PNGTranscoder;
 import service.ReclamationService;
 import service.ReponseService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.text.Normalizer;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+
+import javafx.stage.FileChooser;
 
 public class ReclamationDetailsController {
     @FXML private Label idLabel;
@@ -211,9 +225,154 @@ public class ReclamationDetailsController {
         }
     }
 
+
     @FXML
     private void handleGeneratePDF() {
-        System.out.println("Génération PDF pour la réclamation: " + reclamation.getId());
+        if (reclamation == null || !"Répondu".equalsIgnoreCase(reclamation.getStatut().trim())) {
+            showAlert("Erreur", "Seules les réclamations avec le statut 'Répondu' peuvent être exportées en PDF.");
+            return;
+        }
+
+        try {
+            // Configuration du FileChooser
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Enregistrer le PDF de la réclamation");
+            fileChooser.setInitialFileName("reclamation_" + reclamation.getId() + "_" +
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".pdf");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Documents PDF", "*.pdf"));
+            File file = fileChooser.showSaveDialog(pdfButton.getScene().getWindow());
+
+            if (file == null) return; // Annulation par l'utilisateur
+
+            // Vérification de l'extension .pdf
+            if (!file.getName().toLowerCase().endsWith(".pdf")) {
+                file = new File(file.getAbsolutePath() + ".pdf");
+            }
+
+            // Création du document PDF avec marges personnalisées
+            Document document = new Document(PageSize.A4, 40, 40, 60, 60);
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
+
+            // Ajout des métadonnées
+            document.addTitle("Réclamation #" + reclamation.getId());
+            document.addCreator("Système de Gestion des Réclamations");
+
+            document.open();
+
+            // ========== EN-TÊTE ========== //
+            // Logo
+            try {
+                // Charger le SVG
+                String svgPath = getClass().getResource("/assets/logo 1.svg").toString();
+                TranscoderInput input = new TranscoderInput(svgPath);
+
+                // Convertir en PNG en mémoire
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                TranscoderOutput output = new TranscoderOutput(outputStream);
+
+                PNGTranscoder transcoder = new PNGTranscoder();
+                transcoder.transcode(input, output);
+
+                // Créer l'image PDF
+                Image logo = Image.getInstance(outputStream.toByteArray());
+                logo.scaleToFit(100, 60);
+                document.add(logo);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Titre principal
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20, BaseColor.DARK_GRAY);
+            Paragraph title = new Paragraph("RÉCLAMATION #" + reclamation.getId(), titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            title.setSpacingAfter(20f);
+            document.add(title);
+
+            // Sous-titre
+            Font subtitleFont = FontFactory.getFont(FontFactory.HELVETICA, 14, BaseColor.GRAY);
+            Paragraph subtitle = new Paragraph("Document généré le " +
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    subtitleFont);
+            subtitle.setAlignment(Element.ALIGN_CENTER);
+            subtitle.setSpacingAfter(30f);
+            document.add(subtitle);
+
+            // ========== SECTION DÉTAILS ========== //
+            // Style des polices
+            Font sectionFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.DARK_GRAY);
+            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE);
+            Font contentFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+
+            // Section "Détails de la réclamation"
+            Paragraph sectionTitle = new Paragraph("Détails de la réclamation : ", sectionFont);
+            sectionTitle.setSpacingBefore(20f);
+            sectionTitle.setSpacingAfter(15f);
+            document.add(sectionTitle);
+
+            // Tableau des détails
+            PdfPTable detailsTable = new PdfPTable(2);
+            detailsTable.setWidthPercentage(100);
+            detailsTable.setSpacingBefore(10f);
+            detailsTable.setSpacingAfter(20f);
+            detailsTable.setWidths(new float[]{1, 3});
+
+            // Ajout des lignes avec style amélioré
+            addStyledTableRow(detailsTable, "ID", String.valueOf(reclamation.getId()), headerFont, contentFont, BaseColor.DARK_GRAY);
+            addStyledTableRow(detailsTable, "Titre", reclamation.getTitre(), headerFont, contentFont, BaseColor.DARK_GRAY);
+            addStyledTableRow(detailsTable, "Description", reclamation.getDescription(), headerFont, contentFont, BaseColor.DARK_GRAY);
+            addStyledTableRow(detailsTable, "Statut", reclamation.getStatut(), headerFont, contentFont, BaseColor.DARK_GRAY);
+            addStyledTableRow(detailsTable, "Date",
+                    reclamation.getDateReclamation().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    headerFont, contentFont, BaseColor.DARK_GRAY);
+
+            document.add(detailsTable);
+
+            // ========== SECTION RÉPONSE ========== //
+            Paragraph responseTitle = new Paragraph("Réponse officielle : ", sectionFont);
+            responseTitle.setSpacingBefore(20f);
+            responseTitle.setSpacingAfter(15f);
+            document.add(responseTitle);
+
+            // Style pour la réponse
+            Font responseFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK);
+            Paragraph response = new Paragraph(reponseArea.getText(), responseFont);
+            response.setAlignment(Element.ALIGN_JUSTIFIED);
+            response.setSpacingAfter(30f);
+            document.add(response);
+
+            // ========== PIED DE PAGE ========== //
+            Paragraph footer = new Paragraph("Service Client - © " + LocalDate.now().getYear(),
+                    FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE, 10, BaseColor.GRAY));
+            footer.setAlignment(Element.ALIGN_CENTER);
+            document.add(footer);
+
+            document.close();
+
+            showAlert("Succès", "Le PDF a été généré avec succès:\n" + file.getAbsolutePath());
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Une erreur est survenue lors de la génération du PDF:\n" + e.getMessage());
+        }
+    }
+
+    private void addStyledTableRow(PdfPTable table, String header, String content, Font headerFont, Font contentFont, BaseColor headerColor) {
+        // Cellule d'en-tête
+        PdfPCell headerCell = new PdfPCell(new Phrase(header, headerFont));
+        headerCell.setBackgroundColor(headerColor);
+        headerCell.setPadding(8f);
+        headerCell.setBorderColor(BaseColor.WHITE);
+        headerCell.setBorderWidth(1.5f);
+
+        // Cellule de contenu
+        PdfPCell contentCell = new PdfPCell(new Phrase(content, contentFont));
+        contentCell.setPadding(8f);
+        contentCell.setBorderColor(new BaseColor(220, 220, 220));
+        contentCell.setBackgroundColor(BaseColor.WHITE);
+
+        table.addCell(headerCell);
+        table.addCell(contentCell);
     }
 
     @FXML

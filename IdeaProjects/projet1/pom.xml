@@ -46,6 +46,25 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-codec</artifactId>
+            <version>1.16</version>
+        </dependency>
+
     </dependencies>
 
     <build>
