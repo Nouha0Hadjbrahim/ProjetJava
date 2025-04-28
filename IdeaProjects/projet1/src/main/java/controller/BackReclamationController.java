@@ -12,7 +12,6 @@ import service.ReclamationService;
 import service.ReponseService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -99,6 +98,8 @@ public class BackReclamationController {
 
             // Rafraîchir les données après fermeture de la fenêtre de détail
             loadPage(pagination.getCurrentPageIndex());
+
+            refreshAll();
 
         } catch (IOException e) {
             System.err.println("Erreur lors du chargement de la vue de détail:");
@@ -195,5 +196,8 @@ public class BackReclamationController {
         loadStatistics();
         loadPage(pagination.getCurrentPageIndex());
     }
+
+
+
 
 }
