@@ -172,3 +172,9 @@
     -fx-font-weight: bold;
     -fx-text-fill: #2c3e50;
 }
+
+/* traduction */
+.combo-box {
+    -fx-pref-width: 120;
+    -fx-font-size: 12px;
+}

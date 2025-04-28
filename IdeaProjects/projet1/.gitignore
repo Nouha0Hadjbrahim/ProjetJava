@@ -27,3 +27,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Fichiers de configuration sensibles
+#traduction
+config.properties
+
+

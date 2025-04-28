@@ -1,11 +1,13 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Reclamation;
 import service.ReclamationService;
 import service.ReponseService;
+import service.TranslationService;
 
 import java.sql.SQLException;
 
@@ -19,6 +21,9 @@ public class BackReclamationDetailsController {
     @FXML private CheckBox finaleCheckbox;
     @FXML private Button actionButton;
     @FXML private Button retourButton;
+
+    @FXML private MenuButton translateMenu;
+    private final TranslationService translationService = new TranslationService();
 
     private Reclamation reclamation;
     private final ReclamationService reclamationService = new ReclamationService();
@@ -48,6 +53,8 @@ public class BackReclamationDetailsController {
         descriptionArea.setText(reclamation.getDescription());
         statutLabel.setText(reclamation.getStatut());
         dateLabel.setText(reclamation.getDateReclamation().toString());
+
+        configureTranslationMenu();
 
         switch (reclamation.getStatut()) {
             case "En attente":
@@ -121,10 +128,70 @@ public class BackReclamationDetailsController {
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
     }
+
+    //traduction
+
+    private void configureTranslationMenu() {
+        translateMenu.getItems().clear();
+
+        // Langues disponibles avec leurs codes
+        String[][] languages = {
+                {"Français", "fr"},
+                {"Anglais", "en"},
+                {"Espagnol", "es"},
+                {"Allemand", "de"},
+                {"Arabe", "ar"},
+                {"Italien", "it"},
+                {"Portugais", "pt"}
+        };
+
+        for (String[] lang : languages) {
+            MenuItem item = new MenuItem(lang[0]);
+            String targetLanguage = lang[1];
+            item.setOnAction(e -> {
+                showLoadingAlert();
+                new Thread(() -> {
+                    String translatedText = translationService.translateText(
+                            reclamation.getDescription(),
+                            targetLanguage
+                    );
+                    // Met à jour l'UI sur le thread JavaFX
+                    javafx.application.Platform.runLater(() -> {
+                        descriptionArea.setText(translatedText);
+                        closeLoadingAlert();
+                    });
+                }).start();
+            });
+            translateMenu.getItems().add(item);
+        }
+    }
+
+    private Alert loadingAlert;
+
+    private void showLoadingAlert() {
+        javafx.application.Platform.runLater(() -> {
+            loadingAlert = new Alert(Alert.AlertType.INFORMATION);
+            loadingAlert.setTitle("Traduction en cours");
+            loadingAlert.setHeaderText(null);
+            loadingAlert.setContentText("Veuillez patienter pendant la traduction...");
+            loadingAlert.show();
+        });
+    }
+
+    private void closeLoadingAlert() {
+        javafx.application.Platform.runLater(() -> {
+            if (loadingAlert != null) {
+                loadingAlert.close();
+            }
+        });
+    }
+
 }
