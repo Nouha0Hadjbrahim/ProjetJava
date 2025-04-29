@@ -42,7 +42,7 @@
 }
 
 .action-button {
-    -fx-background-color: #2196F3;
+    -fx-background-color: #af4907;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 5px 10px;
@@ -51,7 +51,7 @@
 }
 
 .action-button:hover {
-    -fx-background-color: #0b7dda;
+    -fx-background-color: #af4907;
 }
 
 /* Formulaire */
@@ -82,7 +82,7 @@
 
 /* Bouton */
 .submit-button {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #af4907;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 8px 16px;
@@ -91,7 +91,7 @@
 }
 
 .submit-button:hover {
-    -fx-background-color: #45a049;
+    -fx-background-color: #af4907;
 }
 
 /* Message quand pas de réclamations */
@@ -154,7 +154,7 @@
 
 /* Bouton Consulter */
 .button {
-    -fx-background-color: #3498db;
+    -fx-background-color: #af4907;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 5px 10px;
@@ -163,7 +163,7 @@
 }
 
 .button:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: #af4907;
 }
 
 /* Formulaire */
@@ -195,13 +195,13 @@
 }
 
 .form-field:focused {
-    -fx-border-color: #3498db;
+    -fx-border-color: #af4907;
     -fx-border-width: 2px;
 }
 
 /* Bouton Soumettre */
 .submit-button {
-    -fx-background-color: #2ecc71;
+    -fx-background-color: #af4907;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 8px 16px;
@@ -210,7 +210,7 @@
 }
 
 .submit-button:hover {
-    -fx-background-color: #27ae60;
+    -fx-background-color: #af4907;
 }
 
 /* Message quand pas de réclamations */
@@ -230,7 +230,7 @@
 }
 
 .dialog-pane .button {
-    -fx-background-color: #3498db;
+    -fx-background-color: #af4907;
     -fx-text-fill: white;
 }
 
@@ -269,13 +269,13 @@
 /* Style pour le mode édition */
 .detail-textarea:editable {
     -fx-background-color: white;
-    -fx-border-color: #4a90e2;
+    -fx-border-color: #af4907;
     -fx-border-width: 1.5px;
 }
 
 .edit-field {
     -fx-background-color: white;
-    -fx-border-color: #4a90e2;
+    -fx-border-color: #af4907;
     -fx-border-width: 1.5px;
     -fx-border-radius: 3px;
     -fx-padding: 5px;
@@ -293,4 +293,79 @@
 .no-reclamation-label {
     -fx-padding: 20px;
     -fx-font-size: 14px;
+}
+
+
+/* new */
+/* TableView principale */
+.reclamation-table {
+    -fx-background-color: white;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+.reclamation-table .column-header-background {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.reclamation-table .column-header .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.reclamation-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #eeeeee;
+}
+
+.reclamation-table .table-row-cell:hover {
+    -fx-background-color: #eef6ff;
+}
+
+.reclamation-table .table-row-cell:filled:selected {
+    -fx-background-color: #af4907;
+    -fx-text-fill: white;
+}
+
+
+/* Titre du formulaire */
+.form-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 10px 0;
+    -fx-alignment: CENTER;
+}
+
+/* Messages d'erreur */
+.error-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #d9534f; /* rouge pour les erreurs */
+    -fx-font-style: italic;
+}
+
+/* Bouton centré */
+.submit-button {
+    -fx-background-color: #af4907;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 4px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+}
+
+/* Conteneur du formulaire */
+.form-container {
+    -fx-background-color: white;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 8px;
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-alignment: CENTER;
 }

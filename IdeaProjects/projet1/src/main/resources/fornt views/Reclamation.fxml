@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
@@ -16,76 +15,69 @@
         </padding>
 
         <!-- Titre principal -->
-        <VBox spacing="5" alignment="CENTER">
-            <Label text="Liste des Réclamations" styleClass="reclamation-title" />
-            <Label text="Apprenez l'artisanat à distance avec nos experts !" styleClass="reclamation-subtitle" />
-        </VBox>
+        <Label text="Liste des Réclamations" styleClass="reclamation-title" />
 
-        <!-- Message quand aucune réclamation -->
-        <Label fx:id="noReclamationLabel" text="Vous n'avez rien réclamé" styleClass="no-reclamation-label"
-               visible="false" managed="false"/>
+        <!-- TableView avec conteneur pour contrôler la largeur -->
+        <StackPane alignment="CENTER">
+            <TableView fx:id="reclamationTable"
+                       maxWidth="900"
+                       prefHeight="400"
+                       styleClass="reclamation-table">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="titreColumn" text="Titre" prefWidth="180"/>
+                    <TableColumn fx:id="statutColumn" text="Statut" prefWidth="150"/>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="150"/>
+                    <TableColumn fx:id="actionColumn" text="Actions" prefWidth="120"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
+        </StackPane>
 
-        <!-- TableView pour afficher les réclamations -->
-        <TableView fx:id="reclamationTable" styleClass="reclamation-table">
-            <columns>
-                <TableColumn fx:id="idColumn" text="ID" styleClass="table-column" />
-                <TableColumn fx:id="titreColumn" text="Titre" styleClass="table-column" />
-                <TableColumn fx:id="statutColumn" text="Statut" styleClass="table-column" />
-                <TableColumn fx:id="dateColumn" text="Date" styleClass="table-column" />
-                <TableColumn fx:id="actionColumn" text="Action" styleClass="table-column" />
-            </columns>
-            <placeholder>
-                <Label text="Aucune réclamation trouvée" styleClass="no-reclamation-label" />
-            </placeholder>
-        </TableView>
+        <Label fx:id="noReclamationLabel"
+               text="Aucune réclamation disponible"
+               visible="false"
+               managed="false"
+               style="-fx-text-fill: grey; -fx-font-style: italic;" />
 
+        <!-- Pagination -->
         <Pagination fx:id="pagination"
                     styleClass="pagination"
                     maxPageIndicatorCount="5"/>
 
-        <!-- Séparateur -->
-        <Separator style="-fx-padding: 10 0;"/>
-
         <!-- Formulaire d'ajout de réclamation -->
-        <VBox spacing="15" styleClass="form-container">
-            <Label text="Ajouter une réclamation" styleClass="form-title" />
+        <VBox spacing="15" styleClass="form-container" maxWidth="900" alignment="CENTER">
+            <!-- Titre centré -->
+            <Label text="Ajouter une Nouvelle Réclamation" styleClass="form-title" />
 
-            <GridPane hgap="15" vgap="15">
+            <GridPane hgap="10" vgap="10" alignment="CENTER">
                 <columnConstraints>
-                    <ColumnConstraints percentWidth="30" />
-                    <ColumnConstraints percentWidth="70" />
+                    <ColumnConstraints halignment="RIGHT" hgrow="NEVER" />
+                    <ColumnConstraints hgrow="ALWAYS" prefWidth="300"/>
                 </columnConstraints>
 
                 <!-- Titre -->
-                <Label text="Titre:" styleClass="form-label"/>
-                <TextField fx:id="titreField" GridPane.columnIndex="1" styleClass="form-field"/>
-
-                <!-- Erreur titre -->
-                <Label fx:id="titreErrorLabel"
-                       text=""
-                       GridPane.columnIndex="1" GridPane.rowIndex="1"
-                       style="-fx-text-fill: red;"
-                       visible="false" managed="false" />
+                <Label text="Titre" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="titreField" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                 <!-- Description -->
-                <Label text="Description:" GridPane.rowIndex="2" styleClass="form-label"/>
-                <TextArea fx:id="descriptionField"
-                          GridPane.columnIndex="1" GridPane.rowIndex="2"
-                          wrapText="true" prefRowCount="4" styleClass="form-field"/>
-
-                <!-- Erreur description -->
-                <Label fx:id="descriptionErrorLabel"
-                       text=""
-                       GridPane.columnIndex="1" GridPane.rowIndex="3"
-                       style="-fx-text-fill: red;"
-                       visible="false" managed="false" />
-
-                <!-- Bouton -->
-                <Button fx:id="submitButton"
-                        text="Soumettre"
-                        GridPane.columnIndex="1" GridPane.rowIndex="4"
-                        styleClass="submit-button" />
+                <Label text="Description" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextArea fx:id="descriptionField" wrapText="true" prefRowCount="4" styleClass="form-field"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1"/>
             </GridPane>
+
+            <!-- Messages d'erreur -->
+            <VBox alignment="CENTER" spacing="5">
+                <Label fx:id="titreErrorLabel" text="Le titre doit contenir entre 3 et 6 caractères"
+                       styleClass="error-label" visible="false" managed="false"/>
+                <Label fx:id="descriptionErrorLabel" text="La description doit contenir entre 3 et 500 caractères"
+                       styleClass="error-label" visible="false" managed="false"/>
+            </VBox>
+
+            <!-- Bouton centré -->
+            <Button fx:id="submitButton" text="Ajouter" styleClass="submit-button" />
         </VBox>
 
         <!-- Footer -->

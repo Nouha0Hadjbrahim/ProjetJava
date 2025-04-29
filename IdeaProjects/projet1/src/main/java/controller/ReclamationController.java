@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -60,6 +61,7 @@ public class ReclamationController {
     private static final int DESCRIPTION_MIN_LENGTH = 3;
     private static final int DESCRIPTION_MAX_LENGTH = 500;
     private static final List<String> MOTS_INTERDITS = List.of("spam", "insulte");
+    private boolean formSubmitted = false;
 
     @FXML
     public void initialize() {
@@ -113,11 +115,55 @@ public class ReclamationController {
     }
 
     private void setupFormValidation() {
-        titreField.textProperty().addListener((obs, oldText, newText) -> validateInputs());
-        descriptionField.textProperty().addListener((obs, oldText, newText) -> validateInputs());
-        submitButton.setOnAction(event -> addReclamation());
-        validateInputs();
-    }
+            // Validation temps réel pour le champ "titre"
+            titreField.textProperty().addListener((obs, oldValue, newValue) -> {
+                if (newValue.length() > TITRE_MAX_LENGTH) {
+                    setError(titreErrorLabel, "Le titre ne peut pas dépasser " + TITRE_MAX_LENGTH + " caractères.");
+                } else if (newValue.length() < TITRE_MIN_LENGTH && !newValue.isEmpty()) {
+                    setError(titreErrorLabel, "Le titre doit contenir au moins " + TITRE_MIN_LENGTH + " caractères.");
+                } else if (containsForbiddenWord(newValue)) {
+                    setError(titreErrorLabel, "Le titre contient un mot interdit.");
+                } else {
+                    clearError(titreErrorLabel);
+                }
+                validateInputs(); // Met à jour l'état du bouton
+            });
+
+            // Validation temps réel pour le champ "description"
+            descriptionField.textProperty().addListener((obs, oldValue, newValue) -> {
+                if (newValue.length() > DESCRIPTION_MAX_LENGTH) {
+                    setError(descriptionErrorLabel, "La description ne peut pas dépasser " + DESCRIPTION_MAX_LENGTH + " caractères.");
+                } else if (newValue.length() < DESCRIPTION_MIN_LENGTH && !newValue.isEmpty()) {
+                    setError(descriptionErrorLabel, "La description doit contenir au moins " + DESCRIPTION_MIN_LENGTH + " caractères.");
+                } else if (containsForbiddenWord(newValue)) {
+                    setError(descriptionErrorLabel, "La description contient un mot interdit.");
+                } else {
+                    clearError(descriptionErrorLabel);
+                }
+                validateInputs(); // Met à jour l'état du bouton
+            });
+
+            // Action du bouton "Envoyer"
+            submitButton.setOnAction(event -> {
+                String titre = titreField.getText().trim();
+                String description = descriptionField.getText().trim();
+
+                // Nettoyer les anciens messages d'erreur
+                titreErrorLabel.setVisible(false);
+                titreErrorLabel.setManaged(false);
+                descriptionErrorLabel.setVisible(false);
+                descriptionErrorLabel.setManaged(false);
+
+                if (!validateForm(titre, description)) {
+                    return;
+                }
+
+                addReclamation();
+            });
+
+            // Désactiver le bouton au départ si champs vides
+            submitButton.setDisable(true);
+        }
 
     private void loadInitialData() {
         if (SessionManager.getCurrentUser() == null) {
@@ -141,6 +187,10 @@ public class ReclamationController {
                     ITEMS_PER_PAGE
             );
             reclamationTable.getItems().addAll(reclamations);
+            reclamationTable.setFixedCellSize(35);// Hauteur fixe des lignes
+            reclamationTable.prefHeightProperty().bind(
+                    Bindings.size(reclamationTable.getItems()).multiply(reclamationTable.getFixedCellSize()).add(60)
+            );
         } catch (Exception e) {
             showAlert("Erreur", "Erreur lors du chargement des réclamations");
             e.printStackTrace();
@@ -162,6 +212,9 @@ public class ReclamationController {
 
     @FXML
     private void addReclamation() {
+        formSubmitted = true; // activer la validation visible
+        validateInputs(); // montrer les messages s’il y a erreur
+
         String titre = titreField.getText().trim();
         String description = descriptionField.getText().trim();
 
@@ -175,6 +228,8 @@ public class ReclamationController {
             clearForm();
             updateUI();
             showAlert("Succès", "Réclamation ajoutée avec succès");
+            formSubmitted = false; // réinitialiser
+            validateInputs(); // cacher les erreurs après succès
         } catch (SQLException e) {
             showAlert("Erreur", "Échec de l'ajout de la réclamation");
             e.printStackTrace();
@@ -228,30 +283,35 @@ public class ReclamationController {
         descriptionErrorLabel.setManaged(false);
 
         // Validation titre
-        if (titre.length() < TITRE_MIN_LENGTH || titre.length() > TITRE_MAX_LENGTH) {
-            setError(titreErrorLabel, String.format(
-                    "Le titre doit contenir entre %d et %d caractères",
-                    TITRE_MIN_LENGTH, TITRE_MAX_LENGTH
-            ));
-            isValid = false;
-        } else if (containsForbiddenWord(titre)) {
-            setError(titreErrorLabel, "Le titre contient un mot interdit");
-            isValid = false;
+        if (!titre.isEmpty()) {
+            if (titre.length() < TITRE_MIN_LENGTH || titre.length() > TITRE_MAX_LENGTH) {
+                setError(titreErrorLabel, String.format(
+                        "Le titre doit contenir entre %d et %d caractères",
+                        TITRE_MIN_LENGTH, TITRE_MAX_LENGTH
+                ));
+                isValid = false;
+            } else if (containsForbiddenWord(titre)) {
+                setError(titreErrorLabel, "Le titre contient un mot interdit");
+                isValid = false;
+            }
         }
 
         // Validation description
-        if (description.length() < DESCRIPTION_MIN_LENGTH || description.length() > DESCRIPTION_MAX_LENGTH) {
-            setError(descriptionErrorLabel, String.format(
-                    "La description doit contenir entre %d et %d caractères",
-                    DESCRIPTION_MIN_LENGTH, DESCRIPTION_MAX_LENGTH
-            ));
-            isValid = false;
-        } else if (containsForbiddenWord(description)) {
-            setError(descriptionErrorLabel, "La description contient un mot interdit");
-            isValid = false;
+        if (!description.isEmpty()) {
+            if (description.length() < DESCRIPTION_MIN_LENGTH || description.length() > DESCRIPTION_MAX_LENGTH) {
+                setError(descriptionErrorLabel, String.format(
+                        "La description doit contenir entre %d et %d caractères",
+                        DESCRIPTION_MIN_LENGTH, DESCRIPTION_MAX_LENGTH
+                ));
+                isValid = false;
+            } else if (containsForbiddenWord(description)) {
+                setError(descriptionErrorLabel, "La description contient un mot interdit");
+                isValid = false;
+            }
         }
 
-        submitButton.setDisable(!isValid);
+        // Active ou désactive le bouton en fonction de la validité
+        submitButton.setDisable(titre.isEmpty() || description.isEmpty() || !isValid);
     }
 
     private boolean containsForbiddenWord(String text) {
@@ -301,5 +361,11 @@ public class ReclamationController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void clearError(Label label) {
+        label.setText("");
+        label.setVisible(false);
+        label.setManaged(false);
     }
 }
