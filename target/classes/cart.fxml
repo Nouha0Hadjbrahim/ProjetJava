@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<AnchorPane styleClass="anchor-pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CartController">
+    <children>
+        <VBox spacing="20" alignment="CENTER" styleClass="main-vbox">
+            <children>
+                <!-- Header -->
+                <HBox alignment="CENTER" styleClass="header">
+                    <children>
+                        <Label text="🛒 Vérifiez votre panier" styleClass="header-title" />
+                    </children>
+                    <padding>
+                        <Insets top="10" right="15" bottom="10" left="15" />
+                    </padding>
+                </HBox>
+
+                <!-- Cart Items -->
+                <ScrollPane fitToWidth="true" styleClass="cart-scroll">
+                    <content>
+                        <VBox fx:id="cartItemsVBox" spacing="10" alignment="CENTER" styleClass="cart-items">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15" />
+                            </padding>
+                            <!-- Cart items will be dynamically added here -->
+                        </VBox>
+                    </content>
+                </ScrollPane>
+
+                <!-- Total and Checkout -->
+                <VBox spacing="10" alignment="CENTER">
+                    <children>
+                        <Label fx:id="totalLabel" text="Total: 0.0 DT" styleClass="total-label" />
+                        <HBox spacing="10" alignment="CENTER">
+                            <children>
+                                <Label text="Livraison:" styleClass="delivery-label" />
+                                <TextField fx:id="addressField" promptText="Adresse de livraison" styleClass="address-field" />
+                                <ChoiceBox fx:id="paymentChoice" styleClass="payment-choice">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Carte Bancaire" />
+                                            <String fx:value="PayPal" />
+                                            <String fx:value="Espèces" />
+                                        </FXCollections>
+                                    </items>
+                                </ChoiceBox>
+                                <Button fx:id="checkoutButton" text="Confirmer la commande ✅" styleClass="checkout-button" onAction="#checkout" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox spacing="20" styleClass="edit-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPromotionController">
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30" />
+    </padding>
+    <children>
+        <Label text="Ajouter Promotion" styleClass="form-title" />
+
+        <GridPane hgap="10" vgap="10" styleClass="form-grid">
+            <!-- Code Coupon -->
+            <Label text="Code Coupon" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="codeField" promptText="Code Coupon" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            <Label fx:id="codeError" styleClass="error-label" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <!-- Prix Nouveau -->
+            <Label text="Prix Nouveau (DT)" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <TextField fx:id="prixNouvField" promptText="Prix Nouveau (DT)" styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+            <Label fx:id="prixNouvError" styleClass="error-label" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+            <!-- Start Date -->
+            <Label text="Date Début" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <DatePicker fx:id="startDatePicker" styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+            <Label fx:id="startDateError" styleClass="error-label" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+            <!-- End Date -->
+            <Label text="Date Fin" styleClass="form-label" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <DatePicker fx:id="endDatePicker" styleClass="form-field" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+            <Label fx:id="endDateError" styleClass="error-label" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+        </GridPane>
+
+        <!-- Buttons -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Enregistrer" styleClass="save-button" onAction="#savePromotion" />
+            <Button text="Annuler" styleClass="cancel-button" onAction="#cancel" />
+        </HBox>
+    </children>
+</VBox>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox spacing="20" styleClass="promotion-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PromotionListController">
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30" />
+    </padding>
+    <children>
+        <Label text="Liste des Promotions" styleClass="form-title" />
+
+        <!-- ListView for Promotions -->
+        <ListView fx:id="promotionListView" styleClass="promotion-list" />
+
+        <!-- Button to Add New Promotion -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="➕ Ajouter Promotion" styleClass="add-button" onAction="#openAddPage" />
+        </HBox>
+    </children>
+</VBox>

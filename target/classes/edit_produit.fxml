@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox spacing="20" styleClass="edit-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditProduitController">
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30" />
+    </padding>
+    <children>
+        <Label text="Modifier Produit" styleClass="form-title" />
+
+        <GridPane hgap="10" vgap="10" styleClass="form-grid">
+            <!-- Nom -->
+            <Label text="Nom du produit" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="nomField" promptText="Nom du produit" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            <Label fx:id="nomError" styleClass="error-label" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <!-- Catégorie -->
+            <Label text="Catégorie" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <ComboBox fx:id="categorieComboBox" styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Sélectionner une catégorie" />
+            <Label fx:id="categorieError" styleClass="error-label" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+            <!-- Prix -->
+            <Label text="Prix (DT)" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <TextField fx:id="prixField" promptText="Prix (DT)" styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+            <Label fx:id="prixError" styleClass="error-label" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+            <!-- Stock -->
+            <Label text="Stock" styleClass="form-label" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <TextField fx:id="stockField" promptText="Stock" styleClass="form-field" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+            <Label fx:id="stockError" styleClass="error-label" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+
+            <!-- Promotion -->
+            <Label text="Promotion" styleClass="form-label" GridPane.rowIndex="8" GridPane.columnIndex="0" />
+            <ComboBox fx:id="promotionComboBox" styleClass="form-field" GridPane.rowIndex="8" GridPane.columnIndex="1" promptText="Sélectionner une promotion (facultatif)" />
+            <Label fx:id="promotionError" styleClass="error-label" GridPane.rowIndex="9" GridPane.columnIndex="1" />
+
+            <!-- Image -->
+            <Label text="Chemin de l'image" styleClass="form-label" GridPane.rowIndex="10" GridPane.columnIndex="0" />
+            <HBox spacing="5" GridPane.rowIndex="10" GridPane.columnIndex="1">
+                <TextField fx:id="imageField" promptText="Chemin de l'image" styleClass="form-field" editable="false" />
+                <Button text="📁 Upload" styleClass="upload-button" onAction="#uploadImage" />
+            </HBox>
+            <Label fx:id="imageError" styleClass="error-label" GridPane.rowIndex="11" GridPane.columnIndex="1" />
+        </GridPane>
+
+        <!-- Buttons -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Enregistrer" styleClass="save-button" onAction="#saveProduit" />
+            <Button text="Annuler" styleClass="cancel-button" onAction="#cancel" />
+        </HBox>
+    </children>
+</VBox>
