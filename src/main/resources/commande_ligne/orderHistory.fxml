@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<AnchorPane styleClass="anchor-pane" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OrderHistoryController">
+    <children>
+        <VBox spacing="10" alignment="CENTER" styleClass="main-vbox"
+              AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <!-- Header -->
+                <HBox alignment="CENTER" styleClass="header">
+                    <children>
+                        <Label text="📜 Historique des Commandes" styleClass="header-title" />
+                    </children>
+                    <padding>
+                        <Insets top="10" right="15" bottom="10" left="15" />
+                    </padding>
+                </HBox>
+
+                <!-- Order History -->
+                <ScrollPane fitToWidth="true" styleClass="cart-scroll" VBox.vgrow="ALWAYS">
+                    <content>
+                        <VBox fx:id="ordersVBox" spacing="15" alignment="CENTER" styleClass="cart-items"
+                              prefWidth="600" minWidth="500">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15" />
+                            </padding>
+                            <!-- Orders will be dynamically added here -->
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

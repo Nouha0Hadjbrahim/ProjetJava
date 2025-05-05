@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.transform.Rotate?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.paint.Color?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MateriauxController"
+            stylesheets="@/styles/materiaux.css"
+            fitToWidth="true"
+            style="-fx-background-color: transparent;">
+
+    <VBox spacing="0" alignment="CENTER" styleClass="bg">
+        <!-- Contenu principal avec padding -->
+        <!-- Titre principal -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="MATERIAUX" styleClass="materiaux-title"/>
+            <Label text="Des matériaux soigneusement sélectionnés pour sublimer vos créations artisanales"
+                   styleClass="materiaux-subtitle"/>
+        </VBox>
+
+        <VBox spacing="40" alignment="CENTER" style="-fx-padding: 30;">
+
+            <!-- Barre de recherche et filtres -->
+            <HBox spacing="20" alignment="CENTER">
+                <TextField fx:id="searchField" promptText="Rechercher..." styleClass="search-field"
+                           onKeyReleased="#handleSearch" />
+                <ComboBox fx:id="filterCombo" promptText="Aucun filtre" styleClass="filter-combo"/>
+                <Button fx:id="VoirwWishList" onAction="#handleOpenWishlist" styleClass="flip-btn">
+                    <graphic>
+                        <HBox spacing="5" alignment="CENTER">
+                            <ImageView fitHeight="20" fitWidth="20">
+                                <image>
+                                    <Image url="@/assets/icons/heart.png" />
+                                </image>
+                            </ImageView>
+                            <Label text="Voir ma WishList" />
+                        </HBox>
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <!-- Grille des flip cards -->
+            <GridPane fx:id="materialsGrid" hgap="20" vgap="20" alignment="CENTER">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                </columnConstraints>
+            </GridPane>
+        </VBox>
+
+        <!-- Footer sans padding -->
+        <fx:include source="/fornt views/footer.fxml"/>
+    </VBox>
+</ScrollPane>

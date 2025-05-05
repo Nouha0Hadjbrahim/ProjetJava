@@ -1,0 +1,213 @@
+/* === Animations et transitions === */
+.fade-in {
+    -fx-opacity: 0;
+    -fx-transition: opacity 0.8s ease-in;
+}
+
+.form-hbox {
+    -fx-alignment: center;
+    -fx-spacing: 40;
+    -fx-padding: 30 0 30 0;
+}
+
+.bg {
+    -fx-background: linear-gradient(to bottom right, #f8e5d5, #f3f0ea 80%);
+    -fx-background-color: linear-gradient(to bottom right, #f8e5d5, #f3f0ea 80%);
+}
+
+
+
+.image-container .image-view {
+    -fx-effect: dropshadow(gaussian, #8C4A1D, 10, 0.2, 0, 2);
+}
+
+/* === Formulaire === */
+.form-container {
+    -fx-background-color: #fff;
+    -fx-border-color: #e0bfa3;
+    -fx-border-radius: 18px;
+    -fx-background-radius: 18px;
+    -fx-padding: 30px 30px 25px 30px;
+    -fx-spacing: 18px;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 12, 0.15, 0, 2);
+    -fx-alignment: center;
+    -fx-min-width: 600px;
+}
+
+.form-title, .reclamation-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+    -fx-padding: 10 0 0 0;
+    -fx-alignment: center;
+}
+
+.form-label {
+    -fx-font-size: 15px;
+    -fx-text-fill: #8C4A1D;
+    -fx-font-weight: bold;
+}
+
+.form-field {
+    -fx-background-color: #f8e5d5;
+    -fx-border-color: #e0bfa3;
+    -fx-border-radius: 7px;
+    -fx-background-radius: 7px;
+    -fx-padding: 8px;
+    -fx-font-size: 15px;
+    -fx-text-fill: #8C4A1D;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 2, 0.1, 0, 1);
+    -fx-transition: border-color 0.3s;
+}
+
+.form-field:focused {
+    -fx-border-color: #8C4A1D;
+    -fx-border-width: 2px;
+}
+
+.submit-button {
+    -fx-background-color: linear-gradient(to right, #8C4A1D, #e0bfa3);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 30px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 4, 0.2, 0, 2);
+    -fx-transition: background-color 0.3s;
+}
+.submit-button:hover {
+    -fx-background-color: linear-gradient(to right, #a05a2c, #f8e5d5);
+}
+
+/* === Tableau de réclamation modernisé === */
+.reclamation-table {
+    -fx-background-color: #fff;
+    -fx-border-color: #e0bfa3;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 10px;
+    -fx-table-cell-size: 38px;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 10, 0.15, 0, 2);
+    -fx-font-size: 15px;
+}
+.reclamation-table .column-header-background {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.reclamation-table .table-header-row {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.reclamation-table .column-header .label {
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-text-fill: #8C4A1D;
+    -fx-font-size: 16px;
+}
+.table-row-cell {
+    -fx-border-color: #f3e0d0;
+    -fx-background-color: #fff;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 2, 0.05, 0, 1);
+    -fx-transition: background-color 0.3s;
+}
+.table-row-cell:odd {
+    -fx-background-color: #f8e5d5;
+}
+.table-row-cell:hover {
+    -fx-background-color: #f3e0d0;
+    -fx-effect: dropshadow(gaussian, #8C4A1D, 6, 0.15, 0, 2);
+}
+.table-row-cell:filled:selected {
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: white;
+}
+.table-row-cell:selected .text {
+    -fx-fill: white;
+}
+.table-cell {
+    -fx-font-size: 15px;
+    -fx-text-fill: #653616;
+}
+
+/* === Actions du tableau === */
+.table-row-cell .button {
+    -fx-background-color: #e0bfa3;
+    -fx-text-fill: #8C4A1D;
+    -fx-background-radius: 10px;
+    -fx-padding: 4 10;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 2, 0.1, 0, 1);
+    -fx-transition: background-color 0.3s;
+}
+.table-row-cell .button:hover {
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: #fff;
+}
+
+/* === Pagination modernisée === */
+.pagination .page {
+    -fx-pref-height: 40px;
+    -fx-background-color: #f8e5d5;
+    -fx-border-radius: 10px;
+    -fx-font-size: 15px;
+    -fx-text-fill: #8C4A1D;
+}
+
+/* === Divers === */
+.reclamation-subtitle {
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-padding: 5 0 20 0;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.error-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #e3120f;
+    -fx-font-style: italic;
+}
+
+.no-reclamation-label {
+    -fx-font-size: 15px;
+    -fx-text-fill: #b0a7a7;
+    -fx-font-style: italic;
+    -fx-padding: 20px;
+}
+
+.back-button {
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-background-color: #e0bfa3;
+    -fx-text-fill: #8C4A1D;
+    -fx-font-weight: bold;
+}
+
+/* === Responsive === */
+@media screen and (max-width: 900px) {
+    .form-hbox {
+        -fx-orientation: vertical;
+        -fx-spacing: 20;
+    }
+
+}
+/* Forcer la transparence complète du header */
+.reclamation-table .column-header-background,
+.reclamation-table .table-header-row,
+.reclamation-table .column-header,
+.reclamation-table .table-column-header {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}

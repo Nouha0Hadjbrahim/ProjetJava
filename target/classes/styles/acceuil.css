@@ -1,0 +1,391 @@
+/* === Fond général et transitions === */
+.root, .scroll-pane, .bg {
+    -fx-background-color: linear-gradient(to bottom right, #f8e5d5 60%, #f3f0ea 100%);
+}
+
+.fade-in {
+    -fx-opacity: 0;
+    -fx-transition: opacity 1s cubic-bezier(0.4,0,0.2,1);
+}
+
+.slide-in {
+    -fx-translate-y: 40px;
+    -fx-opacity: 0;
+    -fx-transition: all 1s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* === Bloc 1 : Titre + image === */
+.accueil-bloc1 {
+    -fx-background-color: linear-gradient(to bottom, #f8e5d5 80%, #e0bfa3 100%);
+    -fx-padding: 60 50;
+    -fx-pref-height: 500;
+    -fx-background-radius: 30;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 18, 0.18, 0, 2);
+    -fx-margin: 0 0 40 0;
+    -fx-border-width: 0 0 4 0;
+    -fx-border-color: #e0bfa3;
+}
+
+.floating-image {
+    -fx-translate-y: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 16, 0.2, 0, 3);
+    -fx-transition: all 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.floating-image:hover {
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+    -fx-effect: dropshadow(gaussian, #8C4A1D, 24, 0.3, 0, 6);
+}
+
+.label.title {
+    -fx-font-size: 38px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 2, 0.1, 0, 1);
+}
+
+.label.subtitle {
+    -fx-font-size: 18px;
+    -fx-text-fill: #8C4A1D;
+    -fx-opacity: 0.95;
+    -fx-font-weight: 500;
+}
+
+/* === Logos partenaires === */
+.partners-container {
+    -fx-padding: 30 0 30 0;
+    -fx-background-color: transparent;
+}
+.logos-slider {
+    -fx-spacing: 60;
+    -fx-alignment: center;
+}
+.logos-slider .image-view {
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 6, 0.2, 0, 2);
+    -fx-transition: all 0.3s;
+}
+.logos-slider .image-view:hover {
+    -fx-scale-x: 1.12;
+    -fx-scale-y: 1.12;
+    -fx-effect: dropshadow(gaussian, #8C4A1D, 12, 0.3, 0, 4);
+}
+
+/* === Section Boutique === */
+.boutique-section {
+    -fx-padding: 50 20;
+    -fx-background-color: linear-gradient(to bottom, #fff 80%, #f9f6ec 100%);
+    -fx-background-radius: 30;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 14, 0.15, 0, 2);
+    -fx-alignment: center;
+    -fx-margin: 0 0 40 0;
+    -fx-border-width: 0 0 4 0;
+    -fx-border-color: #e0bfa3;
+}
+.boutique-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+    -fx-padding: 10 0 5 0;
+}
+.boutique-subtitle {
+    -fx-text-fill: #333333;
+    -fx-font-size: 16px;
+    -fx-padding: 0 0 20 0;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+.boutique-btn {
+    -fx-background-color: linear-gradient(to right, #D9A58C, #e0bfa3);
+    -fx-text-fill: #8C4A1D;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-padding: 10 24;
+    -fx-background-radius: 22;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 2, 0.1, 0, 1);
+    -fx-transition: all 0.3s;
+}
+.boutique-btn:hover, .boutique-btn.active {
+    -fx-background-color: linear-gradient(to right, #8C4A1D, #D9A58C);
+    -fx-text-fill: white;
+}
+.imagesBox .image-view, .boutique-section .image-view {
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 6, 0.2, 0, 2);
+    -fx-transition: all 0.3s;
+}
+.imagesBox .image-view:hover, .boutique-section .image-view:hover {
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+    -fx-effect: dropshadow(gaussian, #8C4A1D, 12, 0.3, 0, 4);
+}
+
+/* === Bloc Ateliers === */
+.ateliers-section {
+    -fx-padding: 60 40 ;
+    -fx-background-color: linear-gradient(to bottom, #f9f6ec 80%, #e0bfa3 100%);
+    -fx-background-radius: 30;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 14, 0.13, 0, 2);
+    -fx-margin: 0 0 40 0;
+    -fx-border-width: 0 0 4 0;
+    -fx-border-color: #e0bfa3;
+}
+.ateliers-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+    -fx-padding: 10 0 0 0;
+    -fx-alignment: center;
+}
+.ateliers-subtitle {
+    -fx-text-fill: #333;
+    -fx-font-size: 16px;
+    -fx-padding: 5 0 20 0;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+.card-container {
+    -fx-spacing: 25;
+    -fx-alignment: center;
+}
+.atelier-card {
+    -fx-background-color: rgba(255,255,255,0.98);
+    -fx-background-radius: 18;
+    -fx-padding: 24;
+    -fx-spacing: 12;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 12, 0.18, 0, 2);
+    -fx-pref-width: 340;
+    -fx-min-height: 400;
+    -fx-transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.atelier-card:hover {
+    -fx-translate-y: -8;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, #8C4A1D, 18, 0.22, 0, 6);
+}
+.atelier-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+    -fx-font-size: 16px;
+}
+.atelier-stitle {
+    -fx-font-weight: bold;
+    -fx-text-fill: #cba28a;
+    -fx-font-size: 15px;
+}
+.text.atelier-price {
+    -fx-fill: #8C4A1D;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+.atelier-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #8C4A1D;
+    -fx-font-weight: bold;
+    -fx-padding: 8 22;
+    -fx-border-color: #8C4A1D;
+    -fx-border-radius: 22;
+    -fx-background-radius: 22;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+    -fx-font-size: 15px;
+}
+.atelier-btn:hover {
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: white;
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+}
+.text.atelier-label, .label.atelier-label {
+    -fx-text-fill: #444;
+    -fx-font-size: 14px;
+    -fx-padding: 2 0 0 0;
+}
+.hyperlink {
+    -fx-text-fill:#cba28a;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-transition: color 0.3s;
+}
+.hyperlink:hover {
+    -fx-text-fill: #c65f35;
+}
+/* === Bloc Contact === */
+.contact-section {
+    -fx-background-color: linear-gradient(to bottom, #fff 80%, #f8e5d5 100%);
+    -fx-background-radius: 30;
+    -fx-padding: 60 30;
+    -fx-spacing: 20;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 14, 0.13, 0, 2);
+    -fx-margin: 0 0 40 0;
+    -fx-border-width: 0 0 4 0;
+    -fx-border-color: #e0bfa3;
+}
+.contact-title {
+    -fx-font-size: 26px;
+    -fx-text-fill: #8C4A1D;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 0 0;
+}
+.contact-subtitle {
+    -fx-text-fill: #333333;
+    -fx-font-size: 15px;
+    -fx-padding: 5 0 20 0;
+}
+.contact-box {
+    -fx-background-color: #fff;
+    -fx-border-color: #8C4A1D;
+    -fx-border-width: 1 0 1 0;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 8, 0.18, 0, 2);
+    -fx-background-radius: 18;
+    -fx-padding: 30;
+    -fx-spacing: 20;
+}
+.contact-info-item {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER_LEFT;
+}
+.contact-info-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+    -fx-font-size: 15px;
+}
+.contact-map {
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 8, 0.18, 0, 2);
+    -fx-border-color: #8C4A1D;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-background-radius: 18;
+    -fx-transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.contact-map:hover {
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-cursor: hand;
+}
+.contact-form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill:  #8C4A1D;
+}
+.partners-container {
+    -fx-padding: 20 0 20 0;
+}
+.contact-form-box{
+    -fx-padding: 20 0 20 0;
+    -fx-background-color: #fff9f5;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 8, 0.18, 0, 2);
+    -fx-margin: 20 0 20 0;
+    -fx-border-width: 0 0 4 0;
+    -fx-border-color: #e0bfa3;
+}
+.contact-form-fields {
+    -fx-spacing: 15;
+    -fx-alignment: center;
+}
+.contact-textfield, .contact-textarea {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+    -fx-font-size: 15px;
+    -fx-border-color: #ac775d;
+    -fx-prompt-text-fill: #999;
+    -fx-transition: border-color 0.3s, background-color 0.3s;
+}
+.contact-textfield:focused, .contact-textarea:focused {
+    -fx-border-color:  #8C4A1D;
+    -fx-background-color: #ffffff;
+}
+.contact-send-button {
+    -fx-background-color: linear-gradient(to right, #C79074, #e0bfa3);
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+    -fx-padding: 12 28;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 4, 0.18, 0, 2);
+    -fx-transition: background-color 0.3s;
+}
+.contact-send-button:hover {
+    -fx-background-color: #8C4A1D;
+}
+
+/* === Responsive === */
+@media screen and (max-width: 1100px) {
+    .accueil-bloc1, .boutique-section, .ateliers-section, .contact-section {
+        -fx-padding: 30 10;
+    }
+    .atelier-card {
+        -fx-pref-width: 90vw;
+    }
+}
+@media screen and (max-width: 900px) {
+    .accueil-bloc1, .boutique-section, .ateliers-section, .contact-section {
+        -fx-padding: 20 2;
+    }
+    .atelier-card {
+        -fx-pref-width: 98vw;
+    }
+    .partners-container {
+        -fx-padding: 10 0 10 0;
+    }
+}
+
+.section-separator {
+    -fx-padding: 0 0 30 0;
+    -fx-spacing: 10;
+}
+
+.decorative-separator {
+    -fx-background-color: transparent;
+    -fx-border-color: #e0bfa3;
+    -fx-border-width: 0 0 2 0;
+    -fx-pref-width: 180;
+}
+
+.separator-icon {
+    -fx-font-size: 22px;
+    -fx-text-fill: #e0bfa3;
+    -fx-padding: 0 10;
+}
+
+.ateliers-section{
+    -fx-padding: 60 40 60;
+    -fx-background-color: linear-gradient(to bottom, #f9f6ec 80%, #d5a58a 100%);
+    -fx-background-radius: 30;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 14, 0.13, 0, 2);
+    -fx-margin: 0 0 40 0;
+    -fx-border-width: 0 0 4 0;
+    -fx-border-color: #e0bfa3;
+}
+
+.boutique-section{
+    -fx-padding: 60 40 60;
+    -fx-background-color: linear-gradient(to bottom, #f9f6ec 80%, #e0bfa3 100%);
+    -fx-background-radius: 30;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #e0bfa3, 14, 0.13, 0, 2);
+    -fx-margin: 0 0 40 0;
+    -fx-border-width: 0 0 4 0;
+    -fx-border-color: #e0bfa3;
+}
+
+.contact-section {
+    -fx-alignment: center;
+}
+.contact-info-box {
+    -fx-pref-width: 600;
+}
+.contact-form-box {
+    -fx-pref-width: 550;
+    -fx-max-height: 400;
+    -fx-min-height: 400;
+    -fx-alignment: center;
+}

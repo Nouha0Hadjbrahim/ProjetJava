@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/20"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.ProductCatalogController"
+            stylesheets="@/styles/front_client.css, @/styles.css"
+            style="-fx-background-color: #F5F5DC;">
+
+    <!-- Main Content: Scrollable Grid -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: transparent;">
+            <content>
+                <VBox style="-fx-background-color: #f5e6d3;
+                              -fx-background-radius: 10;
+                              -fx-border-radius: 10;
+                              -fx-border-color: #d3b8a3;
+                              -fx-border-width: 1;
+                              -fx-padding: 15;">
+                    <GridPane fx:id="productGrid" alignment="CENTER" hgap="20" vgap="20">
+                        <padding>
+                            <Insets top="15" right="15" bottom="15" left="15"/>
+                        </padding>
+                    </GridPane>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

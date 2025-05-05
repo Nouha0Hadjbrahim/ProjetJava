@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.EditUserController"
+            prefWidth="500" prefHeight="500"
+            stylesheets="@/styles/edit-user.css"
+            styleClass="root">
+
+    <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+
+        <!-- Titre -->
+        <Label text="✏️ Modifier Utilisateur" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #3a4c68;"/>
+
+        <!-- Formulaire -->
+        <VBox spacing="15" alignment="CENTER_LEFT">
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Nom :" styleClass="form-label"/>
+                <TextField fx:id="tfNom" promptText="Entrez le nom" prefWidth="250"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Prénom :" styleClass="form-label"/>
+                <TextField fx:id="tfPrenom" promptText="Entrez le prénom" prefWidth="250"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Email :" styleClass="form-label"/>
+                <TextField fx:id="tfEmail" promptText="Entrez l'email" prefWidth="250"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Statut :" styleClass="form-label"/>
+                <ComboBox fx:id="comboStatut" prefWidth="150"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Rôle :" styleClass="form-label"/>
+                <ComboBox fx:id="comboRole" prefWidth="150"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Photo :" styleClass="form-label"/>
+                <TextField fx:id="tfPhoto" promptText="Nom du fichier photo" prefWidth="180"/>
+                <Button text="Parcourir" onAction="#handleBrowsePhoto"/>
+            </HBox>
+
+        </VBox>
+
+        <!-- Bouton enregistrer -->
+        <Button text="💾 Enregistrer les modifications" onAction="#handleSave"/>
+
+    </VBox>
+</AnchorPane>

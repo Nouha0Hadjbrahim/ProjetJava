@@ -1,0 +1,11 @@
+service\ReclamationService.class
+controller\BackReclamationController$1.class
+controller\ReclamationDetailsController.class
+controller\BackReclamationDetailsController.class
+model\Reclamation.class
+controller\ReclamationController$1.class
+service\TranslationService.class
+service\ReponseService.class
+controller\BackReclamationController.class
+model\Reponse.class
+controller\VoiceRecognition.class

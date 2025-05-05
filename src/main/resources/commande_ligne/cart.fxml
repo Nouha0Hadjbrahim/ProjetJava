@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.CartController"
+            stylesheets="@/styles/front_client.css, @/styles.css"
+            style="-fx-background-color: #F5E1D4;">
+
+    <!-- Top Section with Title -->
+    <top>
+        <VBox alignment="CENTER" spacing="10" style="-fx-background-color: transparent; -fx-padding: 20;">
+            <Label text="🛒 Vérifiez votre panier" styleClass="main-title" />
+        </VBox>
+    </top>
+
+    <!-- Main Content -->
+    <center>
+        <HBox spacing="20" alignment="TOP_LEFT" style="-fx-padding: 30;">
+            <!-- Left Side: Cart Items -->
+            <VBox styleClass="cart-container" style="-fx-pref-width: 900;">
+                <ScrollPane fitToWidth="true" styleClass="cart-scroll">
+                    <content>
+                        <VBox fx:id="cartItemsVBox" spacing="10" alignment="CENTER" styleClass="cart-items">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Right Side: Checkout Section -->
+            <VBox spacing="15" alignment="TOP_CENTER" styleClass="checkout-section" style="-fx-pref-width: 500;">
+                <Label fx:id="totalLabel" text="Total: 0.0 DT" styleClass="total-label"/>
+                <VBox spacing="15" alignment="CENTER">
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Livraison:" styleClass="delivery-label"/>
+                        <TextField fx:id="addressField" promptText="Adresse de livraison" styleClass="address-field"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <ChoiceBox fx:id="paymentChoice" styleClass="payment-choice">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Carte Bancaire"/>
+                                    <String fx:value="PayPal"/>
+                                    <String fx:value="Espèces"/>
+                                </FXCollections>
+                            </items>
+                        </ChoiceBox>
+                        <Button fx:id="checkoutButton" text="Confirmer la commande ✅" styleClass="checkout-button" onAction="#checkout"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>

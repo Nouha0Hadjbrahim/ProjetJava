@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.AteliersAdminController"
+            style="-fx-background-color: linear-gradient(to bottom right, #f8f9fa, #e9ecef);"
+            stylesheets="@/styles/atelierback.css">
+
+    <!-- EN-TÊTE -->
+    <top>
+        <VBox  alignment="CENTER">
+            <!-- Titre principal -->
+            <Label text="Gestion des ateliers en ligne" styleClass="titre-principal"/>
+
+            <!-- Ligne décorative -->
+            <HBox alignment="CENTER">
+                <Region
+                        prefHeight="2"
+                        maxHeight="2"
+                        prefWidth="320"
+                        maxWidth="320"
+                        style="-fx-background-color: #3a4c68;" />
+            </HBox>
+
+            <!-- Barre de recherche et filtre -->
+            <HBox fx:id="searchBox" alignment="CENTER" spacing="10">
+                <padding>
+                    <Insets top="50" bottom="12" />
+                </padding>
+                <ComboBox fx:id="categoryFilter" promptText="Filtrer par catégorie"
+                          styleClass="filter-combo"/>
+            </HBox>
+
+        </VBox>
+    </top>
+
+    <!-- CONTENU : liste des utilisateurs -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <HBox alignment="CENTER">
+                <VBox alignment="CENTER" >
+                    <StackPane alignment="CENTER" styleClass="table-card">
+                        <VBox alignment="TOP_CENTER">
+                            <!-- ✅ Ligne d'en-tête -->
+
+
+                            <!-- ✅ Liste des utilisateurs -->
+                            <VBox fx:id="atelierListView" alignment="CENTER" spacing="10"/>
+                        </VBox>
+                    </StackPane>
+                </VBox>
+            </HBox>
+        </ScrollPane>
+    </center>
+
+    <!-- PAGINATION -->
+    <bottom>
+        <HBox fx:id="paginationContainer" alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+        </HBox>
+    </bottom>
+
+</BorderPane>

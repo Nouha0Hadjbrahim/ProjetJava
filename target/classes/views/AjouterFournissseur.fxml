@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.AjoutFournisseurController"
+      spacing="10"
+      style="-fx-padding: 20; -fx-background-color: #f5f5f5;"
+      prefWidth="600">
+
+    <Label text="Ajouter un nouveau fournisseur"
+           style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <!-- Label pour les messages d'erreur -->
+    <Label fx:id="errorLabel"
+           style="-fx-text-fill: red; -fx-font-weight: bold;"
+           wrapText="true"/>
+
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="30"/>
+            <ColumnConstraints percentWidth="70"/>
+        </columnConstraints>
+
+        <!-- Nom du fournisseur -->
+        <Label text="Nom du fournisseur *:"
+               GridPane.rowIndex="0" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold;"/>
+        <TextField fx:id="nomField"
+                   GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   promptText="Saisir le nom (lettres seulement)"/>
+
+        <!-- Adresse -->
+        <Label text="Adresse :"
+               GridPane.rowIndex="1" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold;"/>
+        <TextField fx:id="adresseField"
+                   GridPane.rowIndex="1" GridPane.columnIndex="1"
+                   promptText="Saisir l'adresse"/>
+
+        <!-- Contact -->
+        <Label text="Contact *:"
+               GridPane.rowIndex="2" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold;"/>
+        <TextField fx:id="contactField"
+                   GridPane.rowIndex="2" GridPane.columnIndex="1"
+                   promptText="8 chiffres seulement"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Retour" fx:id="btnRetour" onAction="#handleRetour"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Button fx:id="btnAjouter" text="Ajouter" onAction="#handleAjouter"
+                style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Petite légende pour les champs obligatoires -->
+    <Label text="* Champs obligatoires"
+           style="-fx-font-style: italic; -fx-text-fill: #7f8c8d;"/>
+</VBox>

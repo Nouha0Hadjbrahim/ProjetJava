@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.effect.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ProductCatalog"
+      stylesheets="@/styles/dashboard.css, @/styles.css"
+      spacing="10" alignment="CENTER" style="-fx-background-color: #F4F6FA;"
+      prefWidth="1000" prefHeight="700">
+
+    <!-- Search Bar with Add Button -->
+    <HBox fx:id="searchBar" spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-background-radius: 5; -fx-padding: 12;">
+        <effect>
+            <DropShadow radius="5" spread="0.2" color="rgba(0,0,0,0.1)"/>
+        </effect>
+
+        <Label text="RECHERCHER" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="searchField" promptText="Nom du produit"
+                   onKeyReleased="#filterProducts"
+                   style="-fx-background-color: #ecf0f1; -fx-background-radius: 4; -fx-prompt-text-fill: #7f8c8d; -fx-padding: 5;"
+                   prefWidth="150"/>
+
+        <Label text="CATÉGORIE" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+
+        <ComboBox fx:id="categorieFilter" onAction="#filterProducts"
+                  style="-fx-background-color: #ecf0f1; -fx-background-radius: 4;"
+                  prefWidth="120">
+            <effect>
+                <InnerShadow radius="2" color="rgba(0,0,0,0.1)"/>
+            </effect>
+        </ComboBox>
+
+        <Label text="PRIX (DT)" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="minPrixFilter" promptText="Min"
+                   onKeyReleased="#filterProducts"
+                   style="-fx-background-color: #ecf0f1; -fx-background-radius: 4; -fx-prompt-text-fill: #7f8c8d; -fx-padding: 5;"
+                   prefWidth="80"/>
+
+        <TextField fx:id="maxPrixFilter" promptText="Max"
+                   onKeyReleased="#filterProducts"
+                   style="-fx-background-color: #ecf0f1; -fx-background-radius: 4; -fx-prompt-text-fill: #7f8c8d; -fx-padding: 5;"
+                   prefWidth="80"/>
+
+        <Label text="STOCK" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="minStockFilter" promptText="Min"
+                   onKeyReleased="#filterProducts"
+                   style="-fx-background-color: #ecf0f1; -fx-background-radius: 4; -fx-prompt-text-fill: #7f8c8d; -fx-padding: 5;"
+                   prefWidth="80"/>
+
+        <TextField fx:id="maxStockFilter" promptText="Max"
+                   onKeyReleased="#filterProducts"
+                   style="-fx-background-color: #ecf0f1; -fx-background-radius: 4; -fx-prompt-text-fill: #7f8c8d; -fx-padding: 5;"
+                   prefWidth="80"/>
+
+        <Label text="TRIER" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+
+        <ComboBox fx:id="sortFilter" onAction="#filterProducts"
+                  style="-fx-background-color: #ecf0f1; -fx-background-radius: 4;"
+                  prefWidth="120">
+            <effect>
+                <InnerShadow radius="2" color="rgba(0,0,0,0.1)"/>
+            </effect>
+        </ComboBox>
+
+        <!-- Spacer to push Add Button to the right -->
+        <Pane HBox.hgrow="ALWAYS"/>
+
+        <!-- Add Button -->
+        <Button fx:id="addButton" onAction="#openAddPage" styleClass="icon-add-button">
+            <graphic>
+                <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                    <image>
+                        <Image url="@/assets/ajout.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <!-- Scrollable Product Grid -->
+    <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="product-scroll" VBox.vgrow="ALWAYS">
+        <content>
+            <GridPane fx:id="productGrid" hgap="20" vgap="20" alignment="CENTER" styleClass="grid-pane">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+            </GridPane>
+        </content>
+    </ScrollPane>
+</VBox>
