@@ -70,9 +70,7 @@ public class DashboardHomeController {
     private List<Image> images = new ArrayList<>();
     private int currentImageIndex = 0;
     private SequentialTransition animation;
-    private static final String WEATHER_API_KEY = "1bca0ccc6c06a3ec4663f2baa688aa0d";
-    private static final String WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather?q=Ariana,TN&units=metric&appid=";
-    
+
     @FXML
     public void initialize() {
         loadImages();
@@ -115,16 +113,16 @@ public class DashboardHomeController {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.FRENCH);
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE", Locale.FRENCH);
-        
+
         dateLabel.setText(now.format(dateFormatter));
-        dayLabel.setText(now.format(dayFormatter).substring(0, 1).toUpperCase() + 
+        dayLabel.setText(now.format(dayFormatter).substring(0, 1).toUpperCase() +
                         now.format(dayFormatter).substring(1));
     }
 
     private void startWeatherUpdateTask() {
         // Mise à jour initiale
         updateWeather();
-        
+
         // Créer une tâche périodique pour mettre à jour la météo toutes les 30 minutes
         Task<Void> weatherTask = new Task<Void>() {
             @Override
@@ -135,7 +133,7 @@ public class DashboardHomeController {
                 }
             }
         };
-        
+
         Thread weatherThread = new Thread(weatherTask);
         weatherThread.setDaemon(true);
         weatherThread.start();
@@ -150,33 +148,33 @@ public class DashboardHomeController {
                     URL url = new URL(urlString);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
-                    
+
                     BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder response = new StringBuilder();
                     String line;
-                    
+
                     while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
                     reader.close();
-                    
+
                     JSONObject jsonResponse = new JSONObject(response.toString());
                     JSONObject main = jsonResponse.getJSONObject("main");
                     double temperature = main.getDouble("temp");
                     String weatherIconCode = jsonResponse.getJSONArray("weather")
                                                        .getJSONObject(0)
                                                        .getString("icon");
-                    
+
                     final String iconUrl = "http://openweathermap.org/img/w/" + weatherIconCode + ".png";
                     final String tempText = String.format("%.1f°C", temperature);
                     final String location = jsonResponse.getString("name") + ", Tunisie";
-                    
+
                     Platform.runLater(() -> {
                         temperatureLabel.setText(tempText);
                         weatherIcon.setImage(new Image(iconUrl));
                         locationLabel.setText(location);
                     });
-                    
+
                 } catch (Exception e) {
                     System.err.println("Erreur lors de la récupération de la météo: " + e.getMessage());
                     // En cas d'erreur, afficher des données par défaut
@@ -189,20 +187,20 @@ public class DashboardHomeController {
                 return null;
             }
         };
-        
+
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
     }
-    
+
     private void loadImages() {
         File imageDir = new File("src/main/resources/assets/artisanat");
         if (imageDir.exists() && imageDir.isDirectory()) {
-            File[] files = imageDir.listFiles((dir, name) -> 
-                name.toLowerCase().endsWith(".jpg") || 
+            File[] files = imageDir.listFiles((dir, name) ->
+                name.toLowerCase().endsWith(".jpg") ||
                 name.toLowerCase().endsWith(".png") ||
                 name.toLowerCase().endsWith(".jpeg"));
-            
+
             if (files != null) {
                 for (File file : files) {
                     images.add(new Image(file.toURI().toString()));
@@ -210,42 +208,42 @@ public class DashboardHomeController {
             }
         }
     }
-    
+
     private void setupImageAnimation() {
         if (images.isEmpty()) return;
-        
+
         animation = new SequentialTransition();
-        
+
         for (int i = 0; i < images.size(); i++) {
             final int index = i;
-            
+
             FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), artisanatImage);
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);
-            
+
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            
+
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), artisanatImage);
             fadeIn.setFromValue(0.0);
             fadeIn.setToValue(1.0);
-            
+
             fadeOut.setOnFinished(e -> {
                 artisanatImage.setImage(images.get(index));
             });
-            
+
             animation.getChildren().addAll(fadeOut, fadeIn, pause);
         }
-        
+
         animation.setCycleCount(SequentialTransition.INDEFINITE);
         animation.play();
     }
-    
+
     public void setUser(User user) {
         this.connectedUser = user;
         welcomeLabel.setText("Bonjour " + user.getPrenom() + " " + user.getNom());
         loadTodos();
     }
-    
+
     @FXML
     private void handleAddTask() {
         String description = taskInput.getText().trim();
@@ -255,48 +253,48 @@ public class DashboardHomeController {
             loadTodos();
         }
     }
-    
+
     private void loadTodos() {
         if (connectedUser == null) return;
-        
+
         todoList.getChildren().clear();
         for (Todo todo : todoService.getAllTodos(connectedUser.getId())) {
             HBox todoItem = createTodoItem(todo);
             todoList.getChildren().add(todoItem);
         }
     }
-    
+
     private HBox createTodoItem(Todo todo) {
         HBox todoItem = new HBox(10);
         todoItem.setAlignment(Pos.CENTER_LEFT);
         todoItem.getStyleClass().add("todo-item");
-        
+
         CheckBox checkBox = new CheckBox();
         checkBox.setSelected(todo.isCompleted());
         checkBox.setOnAction(e -> {
             todoService.updateTodoStatus(todo.getId(), checkBox.isSelected());
             loadTodos();
         });
-        
+
         Label description = new Label(todo.getDescription());
         description.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(description, Priority.ALWAYS);
-        
+
         if (todo.isCompleted()) {
             description.getStyleClass().add("completed");
         }
-        
+
         Button deleteBtn = new Button("×");
         deleteBtn.getStyleClass().add("delete-button");
         deleteBtn.setOnAction(e -> {
             todoService.deleteTodo(todo.getId());
             loadTodos();
         });
-        
+
         todoItem.getChildren().addAll(checkBox, description, deleteBtn);
         return todoItem;
     }
-    
+
     private void setupStatistics() {
         try {
             // Get total users count
@@ -322,7 +320,7 @@ public class DashboardHomeController {
             chart.setTitle("");
             chart.setLegendVisible(false);
             chart.setLabelsVisible(true);
-            
+
             // Calculate percentages for labels
             double total = activeUsers + blockedUsers;
             pieChartData.forEach(data -> {
@@ -332,7 +330,7 @@ public class DashboardHomeController {
 
             // Style the chart
             chart.getStyleClass().add("custom-chart");
-            
+
             // Add the chart to the container
             chartContainer.getChildren().setAll(chart);
 
@@ -412,4 +410,4 @@ public class DashboardHomeController {
     }
 
 
-} 
+}

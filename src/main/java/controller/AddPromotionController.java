@@ -10,7 +10,6 @@ import javafx.util.Duration;
 import model.Promotion;
 import org.controlsfx.control.Notifications;
 import service.PromotionService;
-import service.TwilioService;
 
 import java.time.LocalDate;
 
@@ -26,7 +25,6 @@ public class AddPromotionController {
     @FXML private Label endDateError;
 
     private PromotionService promotionService;
-    private TwilioService twilioService;
     private PromotionListController promotionListController;
 
     public void setPromotionListController(PromotionListController controller) {
@@ -35,7 +33,6 @@ public class AddPromotionController {
 
     public void initialize() {
         promotionService = new PromotionService();
-        twilioService = new TwilioService();
         clearErrors();
     }
 
@@ -62,7 +59,6 @@ public class AddPromotionController {
             String smsMessage = "🎉 Nouvelle promotion ajoutée ! Code: " + newPromotion.getCodeCoupon() +
                     ", Prix: " + newPromotion.getPrixNouv() + " DT. Valide du " +
                     newPromotion.getStartDate() + " au " + newPromotion.getEndDate() + ".";
-            twilioService.sendSMS(userPhoneNumber, smsMessage);
 
             // Show notifications
             showNotification("✅ Succès", "Promotion ajoutée : " + newPromotion.getCodeCoupon(), "success");

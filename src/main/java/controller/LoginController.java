@@ -18,7 +18,6 @@ import service.HistoriqueConnexionService;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import service.UserService;
-import service.GoogleAuthService;
 import utils.SessionManager;
 
 public class LoginController {
@@ -99,65 +98,6 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur lors de l'exécution du script Face ID.");
-        }
-    }
-
-    @FXML
-    private void handleGoogleLogin() {
-        try {
-            GoogleAuthService googleAuth = new GoogleAuthService();
-            User user = googleAuth.authenticateWithGoogle();
-
-            // 🔒 Vérification si l'utilisateur est null
-            if (user == null) {
-                showAlert(Alert.AlertType.ERROR, "❌ Échec de l'authentification Google.");
-                return;
-            }
-
-            // 🔒 Vérification du statut
-            if ("blocked".equalsIgnoreCase(user.getStatut())) {
-                showAlert(Alert.AlertType.ERROR, "❌ Ce compte est bloqué. Veuillez contacter l'administration.");
-                return;
-            }
-            // AJOUT: Enregistrement de l'utilisateur dans le SessionManager
-            SessionManager.getInstance().setCurrentUser(user);
-            // 🔐 Historique de connexion
-            new HistoriqueConnexionService().enregistrerConnexion(user);
-
-            // 🎯 Vérification des rôles
-            String roles = user.getRoles();
-            Stage stage = (Stage) btnGoogle.getScene().getWindow();
-            FXMLLoader loader;
-            Parent root;
-
-            if (roles.contains("ROLE_ADMIN")) {
-                loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
-                root = loader.load();
-                DashboardController controller = loader.getController();
-                controller.initialize(user);
-                stage.setTitle("Dashboard Admin");
-
-            } else if (roles.contains("ROLE_ARTISAN")) {
-                loader = new FXMLLoader(getClass().getResource("/dashboardArtisan.fxml"));
-                root = loader.load();
-                DashboardArtisanController controller = loader.getController();
-                controller.initialize(user);
-                stage.setTitle("Espace Artisan");
-
-            } else {
-                loader = new FXMLLoader(getClass().getResource("/front.fxml"));
-                root = loader.load();
-                FrontClientController controller = loader.getController();
-                controller.setConnectedUser(user);
-                stage.setTitle("Espace Client");
-            }
-
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur lors de l'authentification Google.");
         }
     }
 

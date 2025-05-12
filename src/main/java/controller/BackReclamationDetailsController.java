@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import model.Reclamation;
 import service.ReclamationService;
 import service.ReponseService;
-import service.TranslationService;
 
 import java.sql.SQLException;
 
