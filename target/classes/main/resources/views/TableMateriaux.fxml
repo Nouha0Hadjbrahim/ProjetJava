@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.1"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.TableMateriauxController"
+      spacing="15"
+      alignment="TOP_CENTER"
+      stylesheets="@/styles/table_utilisateur.css">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- TITRE -->
+    <Label text="GESTION DES Matériaux"
+           styleClass="titre-principal"/>
+
+    <!-- RECHERCHE + CATÉGORIE + BOUTON AJOUTER -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <ImageView styleClass="search-icon"
+                   fitWidth="20" fitHeight="20">
+            <image><Image url="@/assets/icons/recherche.png"/></image>
+        </ImageView>
+        <TextField fx:id="searchField"
+                   promptText="Rechercher un matériau…"
+                   styleClass="search-field"/>
+        <ComboBox fx:id="categoryComboBox"
+                  promptText="Catégorie"
+                  prefWidth="150"
+                  styleClass="combo-custom"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="btnAjouter"
+                styleClass="action-icon-button">
+            <tooltip><Tooltip text="Ajouter un matériau"/></tooltip>
+        </Button>
+    </HBox>
+
+    <!-- CONTENEUR BLANC ARRONDI POUR LA TABLE -->
+    <VBox fx:id="materiauxListContainer"
+          spacing="0"
+          styleClass="table-card"
+          maxWidth="800" minWidth="800">
+
+        <!-- EN-TÊTE DE LA TABLE -->
+        <HBox spacing="10" styleClass="table-header" alignment="CENTER_LEFT">
+            <Label text="Photo"     prefWidth="100" styleClass="header-label"/>
+            <Label text="Nom"       prefWidth="150" styleClass="header-label"/>
+            <Label text="Catégorie" prefWidth="100" styleClass="header-label"/>
+            <Label text="Quantité"  prefWidth="80"  styleClass="header-label"/>
+            <Label text="Prix"      prefWidth="80"  styleClass="header-label"/>
+            <Label text="Actions"   prefWidth="160" styleClass="header-label"/>
+        </HBox>
+
+        <!-- LISTVIEW STYLÉE COMME TABLE -->
+        <ListView fx:id="listViewMateriaux"
+                  prefHeight="200"
+                  styleClass="table-listview"/>
+
+        <!-- PAGINATION -->
+        <HBox fx:id="paginationContainer"
+              alignment="CENTER"
+              spacing="10"
+              styleClass="pagination-container"/>
+    </VBox>
+
+    <!-- PIE CHART HORS CONTENEUR BLANC -->
+    <PieChart fx:id="pieChartQuantites"
+              VBox.vgrow="NEVER"
+              legendSide="RIGHT"
+              styleClass="pie-chart"/>
+</VBox>

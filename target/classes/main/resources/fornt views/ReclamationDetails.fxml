@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.ReclamationDetailsController"
+            stylesheets="@/styles/reclamation.css"
+            fitToWidth="true">
+
+    <VBox spacing="20" alignment="TOP_CENTER" styleClass="bg">
+        <padding>
+            <Insets top="25" right="25" bottom="25" left="25"/>
+        </padding>
+
+        <!-- Titre -->
+        <Label text="Détails de la Réclamation" styleClass="reclamation-title"/>
+
+        <!-- Détails de la réclamation -->
+        <GridPane hgap="10" vgap="10" alignment="TOP_LEFT">
+            <columnConstraints>
+                <ColumnConstraints minWidth="150" halignment="RIGHT"/>
+                <ColumnConstraints minWidth="300" halignment="LEFT"/>
+            </columnConstraints>
+
+            <Label text="ID :" styleClass="detail-label"/>
+            <Label fx:id="idLabel" GridPane.columnIndex="1" styleClass="detail-value"/>
+
+            <Label text="Titre :" GridPane.rowIndex="1" styleClass="detail-label"/>
+            <Label fx:id="titreLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="detail-value"/>
+
+            <Label text="Description :" GridPane.rowIndex="2" styleClass="detail-label"/>
+            <TextArea fx:id="descriptionArea" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                      editable="false" wrapText="true" styleClass="detail-textarea"/>
+
+            <Label text="Statut :" GridPane.rowIndex="3" styleClass="detail-label"/>
+            <Label fx:id="statutLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="detail-value"/>
+
+            <Label text="Date :" GridPane.rowIndex="4" styleClass="detail-label"/>
+            <Label fx:id="dateLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="detail-value"/>
+
+            <Label text="Réponse :" GridPane.rowIndex="5" styleClass="detail-label"/>
+            <TextArea fx:id="reponseArea" GridPane.columnIndex="1" GridPane.rowIndex="5"
+                      editable="false" wrapText="true" styleClass="detail-textarea"/>
+        </GridPane>
+
+        <!-- Boutons d'action -->
+        <HBox fx:id="actionButtonsBox" spacing="10" alignment="CENTER">
+            <Button fx:id="modifierButton" text="Modifier" onAction="#handleModifier"/>
+            <Button fx:id="supprimerButton" text="Supprimer" onAction="#handleSupprimer"/>
+            <Button fx:id="pdfButton" text="Générer PDF" styleClass="action-button" onAction="#handleGeneratePDF" visible="false"/>
+        </HBox>
+
+        <!-- Bouton Retour -->
+        <Button text="Retour" styleClass="back-button" onAction="#handleBack"/>
+    </VBox>
+</ScrollPane>

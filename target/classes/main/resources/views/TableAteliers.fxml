@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.AteliersController"
+            style="-fx-background-color: linear-gradient(to bottom right, #f8f9fa, #e9ecef);"
+            stylesheets="@/styles/atelierback.css">
+
+    <!-- EN-TÊTE -->
+    <top>
+        <VBox fx:id="topContainer" alignment="CENTER">
+            <!-- Titre principal -->
+            <Label text="Gestion des ateliers en ligne" styleClass="titre-principal"/>
+
+            <!-- Ligne décorative -->
+            <HBox alignment="CENTER">
+                <Region prefHeight="2" maxHeight="2" prefWidth="320" maxWidth="320"
+                        style="-fx-background-color: #3a4c68;"/>
+            </HBox>
+
+            <!-- Barre de recherche et filtre -->
+            <HBox fx:id="searchBox" alignment="CENTER" spacing="10">
+                <padding>
+                    <Insets top="50" bottom="12"/>
+                </padding>
+                <Label text="🔍" styleClass="search-icon"/>
+                <TextField fx:id="searchField"
+                           promptText="Rechercher par titre"
+                           styleClass="search-field"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button text="+" onAction="#ouvrirAjoutAtelier" styleClass="add-button"/>
+                </HBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- CONTENU CENTRAL dynamique -->
+    <center>
+        <VBox fx:id="mainContent" alignment="CENTER">
+            <!-- au début tu mets la liste dedans -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                <HBox alignment="CENTER">
+                    <VBox alignment="CENTER">
+                        <StackPane alignment="CENTER" styleClass="table-card">
+                            <VBox alignment="TOP_CENTER">
+                                <VBox fx:id="atelierListView" alignment="CENTER" spacing="10"/>
+                            </VBox>
+                        </StackPane>
+                    </VBox>
+                </HBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+
+    <!-- PAGINATION -->
+    <bottom>
+        <VBox fx:id="bottomContainer">
+            <HBox fx:id="paginationContainer" alignment="CENTER" spacing="10">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

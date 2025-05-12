@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.PromotionListController"
+            stylesheets="@/styles/dashboard.css, @/styles.css"
+            prefWidth="1200" prefHeight="700"
+            style="-fx-background-color: #F4F6FA;">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox style="-fx-background-color: #1d2135; -fx-padding: 10;"
+              alignment="CENTER_RIGHT" spacing="20">
+            <!-- Logo -->
+            <ImageView fx:id="logoImage" fitHeight="40" fitWidth="100" preserveRatio="true"/>
+            <!-- Spacer -->
+            <Pane HBox.hgrow="ALWAYS"/>
+            <!-- User Info -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label fx:id="userNameLabel" text="Utilisateur"
+                       style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                <ImageView fx:id="userPhoto" fitHeight="32" fitWidth="32"
+                           style="-fx-background-radius: 50%; -fx-border-radius: 50%;"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <left>
+        <VBox style="-fx-background-color: #1d2135; -fx-padding: 20;"
+              spacing="10" prefWidth="200">
+            <Button fx:id="btnDashboard" text="📊 Dashboard" styleClass="sidebar-button"
+                    onAction="#loadDashboardHome"/>
+
+            <!-- Utilisateurs -->
+            <TitledPane text="👥 Utilisateurs" expanded="false" styleClass="sidebar-button">
+                <content>
+                    <VBox>
+                        <Button fx:id="btnTableUtilisateurs" text="• Table" styleClass="sidebar-sub-button"
+                                onAction="#loadTableUtilisateurs"/>
+                    </VBox>
+                </content>
+            </TitledPane>
+
+            <!-- Produits -->
+            <TitledPane text="📦 Produits" expanded="false" styleClass="sidebar-button">
+                <content>
+                    <VBox>
+                        <Button fx:id="btnProductTable" text="• Table" styleClass="sidebar-sub-button"
+                                onAction="#loadProductCatalog"/>
+                    </VBox>
+                </content>
+            </TitledPane>
+
+            <!-- Promotions -->
+            <TitledPane text="🎟️ Promotions" expanded="true" styleClass="sidebar-button">
+                <content>
+                    <VBox>
+                        <Button fx:id="btnPromotionTable" text="• Table" styleClass="sidebar-sub-button"
+                                onAction="#loadPromotions"/>
+                    </VBox>
+                </content>
+            </TitledPane>
+
+            <!-- Ateliers -->
+            <TitledPane text="🎥 Ateliers en ligne" expanded="false" styleClass="sidebar-button">
+                <content>
+                    <VBox>
+                        <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    </VBox>
+                </content>
+            </TitledPane>
+
+            <!-- Matériaux -->
+            <TitledPane text="🛠 Matériaux" expanded="false" styleClass="sidebar-button">
+                <content>
+                    <VBox>
+                        <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    </VBox>
+                </content>
+            </TitledPane>
+
+            <!-- Commandes -->
+            <TitledPane text="🛒 Commandes" expanded="false" styleClass="sidebar-button">
+                <content>
+                    <VBox>
+                        <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    </VBox>
+                </content>
+            </TitledPane>
+
+            <!-- Réclamations -->
+            <TitledPane text="💬 Réclamations" expanded="false" styleClass="sidebar-button">
+                <content>
+                    <VBox>
+                        <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    </VBox>
+                </content>
+            </TitledPane>
+        </VBox>
+    </left>
+
+    <!-- CENTRAL CONTENT -->
+    <center>
+        <StackPane fx:id="mainContent" style="-fx-background-color: #F4F6FA;" VBox.vgrow="ALWAYS">
+            <!-- Promotion Catalog Content with Scroll -->
+            <VBox spacing="20" alignment="CENTER" styleClass="anchor-pane">
+                <children>
+                    <Button fx:id="addButton" onAction="#openAddPage" styleClass="icon-add-button">
+                        <graphic>
+                            <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@/assets/ajout.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="product-scroll">
+                        <content>
+                            <GridPane fx:id="promotionGrid" hgap="20" vgap="20" alignment="CENTER" styleClass="grid-pane">
+                                <padding>
+                                    <Insets top="15" right="15" bottom="15" left="15"/>
+                                </padding>
+                            </GridPane>
+                        </content>
+                    </ScrollPane>
+                </children>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

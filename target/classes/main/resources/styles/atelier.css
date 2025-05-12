@@ -1,0 +1,249 @@
+/* === Section Ateliers === */
+.bg {
+    -fx-background: #f8e5d5;
+    -fx-background-color: #f8e5d5;
+}
+
+.ateliers-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+    -fx-padding: 10 0 0 0;
+    -fx-alignment: center;
+}
+
+.ateliers-subtitle {
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-padding: 5 0 20 0;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+/* Style pour le conteneur principal des ateliers */
+.ateliers-container {
+    -fx-padding: 0 50px;
+    -fx-max-width: 1200px;
+}
+
+/* Conteneur des cartes */
+.card-container {
+    -fx-padding: 20px;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+}
+
+/* Style des cartes d'atelier */
+.atelier-card {
+    -fx-background-color: white;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-padding: 20px;
+    -fx-min-width: 280px;
+    -fx-max-width: 280px;
+    -fx-spacing: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+.atelier-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8C4A1D;
+}
+
+.atelier-stitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.atelier-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555;
+}
+
+/* Style pour le prix */
+.price-container {
+    -fx-alignment: center-left;
+    -fx-spacing: 5px;
+}
+
+.atelier-price {
+    -fx-font-weight: bold;
+    -fx-fill: #8C4A1D;
+    -fx-font-size: 16px;
+}
+
+
+/* Conteneur des actions */
+.atelier-actions {
+    -fx-spacing: 15px;
+    -fx-padding: 15px 0 0 0;
+    -fx-alignment: center;
+}
+
+/* Lien "Voir plus" - MODIFICATION */
+.voir-plus-link {
+    -fx-text-fill: #8C4A1D;
+    -fx-underline: true;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-font-weight: normal;
+}
+
+.voir-plus-link:hover {
+    -fx-text-fill: #6e3a15;
+}
+
+/* Bouton "S'inscrire" - MODIFICATION */
+.inscrire-btn ,
+.button{
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 15px;
+    -fx-background-radius: 15px;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 1, 1);
+    -fx-border-width: 0;
+}
+
+.inscrire-btn:hover ,
+.button:hover{
+    -fx-background-color: #6e3a15;
+}
+
+/* Styles pour le modal */
+.dialog-pane {
+    -fx-background-color: #f8e5d5;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f8e5d5;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+    -fx-padding: 5 15;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #6e3a15;
+}
+
+.text-area {
+    -fx-control-inner-background: white;
+    -fx-border-color: #8C4A1D;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Style pour les alertes */
+.alert-dialog {
+    -fx-background-color: #f8e5d5;
+}
+
+.alert-dialog .label {
+    -fx-text-fill: #5a3921;
+}
+
+.alert-dialog .button {
+    -fx-background-color: #8C4A1D;
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+}
+
+.alert-dialog .button:hover {
+    -fx-background-color: #6e3a15;
+}
+.card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.2, 4, 4);
+}
+
+.card-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #843C0C;
+}
+
+.action-buttons {
+    -fx-spacing: 10;
+}
+
+/* Style personnalisé pour le ComboBox */
+.rounded-combo-box {
+    -fx-background-color: #f5f5f5; /* Gris clair au lieu de blanc */
+    -fx-background-radius: 15px; /* Coins très arrondis */
+    -fx-border-radius: 15px; /* Coins arrondis pour la bordure */
+    -fx-border-color: #d3d3d3;
+    -fx-border-width: 1px;
+    -fx-padding: 0 0 0 10px;
+    -fx-font-size: 12px;
+    -fx-pref-height: 30px;
+}
+
+/* Style de la flèche */
+.rounded-combo-box .arrow-button {
+    -fx-background-radius: 0 15px 15px 0; /* Coins arrondis seulement à droite */
+    -fx-background-color: transparent;
+}
+
+.rounded-combo-box .arrow {
+    -fx-background-color: #8B4513; /* Couleur marron */
+}
+
+/* Style des items dans la liste déroulante */
+.rounded-combo-box .list-cell {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px 10px;
+}
+
+.rounded-combo-box .list-view {
+    -fx-background-radius: 10px;
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #d3d3d3;
+    -fx-border-radius: 10px;
+}
+
+/* Effet hover marron */
+.rounded-combo-box .list-cell:filled:hover {
+    -fx-background-color: #8B4513; /* Marron */
+    -fx-text-fill: white;
+}
+
+/* Style des statuts */
+.status-upcoming, .status-completed {
+    -fx-background-radius: 10px;
+    -fx-padding: 2px 8px;
+}
+
+.status-upcoming {
+    -fx-text-fill: #8B4513; /* Marron au lieu de bleu */
+    -fx-background-color: #f0e6d2; /* Beige clair */
+}
+
+.status-upcoming:hover {
+    -fx-background-color: #8B4513; /* Marron */
+    -fx-text-fill: white;
+}
+
+.status-completed {
+    -fx-text-fill: #5a3921; /* Marron foncé */
+    -fx-background-color: #e6d5c3; /* Beige */
+}
+
+.status-completed:hover {
+    -fx-background-color: #8B4513; /* Marron */
+    -fx-text-fill: white;
+}

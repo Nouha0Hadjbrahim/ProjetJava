@@ -25,13 +25,31 @@
             <!-- Espacement -->
             <Pane HBox.hgrow="ALWAYS"/>
 
+            <!-- Icône d'alerte pour les messages -->
+            <StackPane fx:id="alertStackPane" style="-fx-cursor: hand;" onMouseClicked="#handleAlertClick">
+                <ImageView fx:id="alertIcon" fitHeight="24" fitWidth="24" preserveRatio="true"/>
+                <Label fx:id="alertCounter" text="0" styleClass="alert-counter"/>
+            </StackPane>
+
             <!-- Nom + image user -->
-            <HBox spacing="10" alignment="CENTER_RIGHT">
-                <Label fx:id="userNameLabel" text="Utilisateur"
-                       style="-fx-text-fill: white; -fx-font-weight: bold;"/>
-                <ImageView fx:id="userPhoto" fitHeight="32" fitWidth="32"
-                           style="-fx-background-radius: 50%; -fx-border-radius: 50%;"/>
+            <HBox fx:id="userBox"
+                  spacing="10"
+                  alignment="CENTER_RIGHT"
+                  onMouseClicked="#showUserMenu"
+                  style="-fx-padding: 0 20 0 0; -fx-cursor: hand;">
+
+                <Label fx:id="userNameLabel"
+                       text="Utilisateur"
+                       styleClass="user-name-label"/>
+
+                <ImageView fx:id="userPhoto"
+                           fitHeight="32"
+                           fitWidth="32"
+                           pickOnBounds="true"/>
             </HBox>
+
+
+
         </HBox>
     </top>
 
@@ -52,38 +70,43 @@
             <!-- Produits -->
             <TitledPane text="📦 Produits" expanded="false" styleClass="sidebar-button">
                 <VBox>
-                    <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    <Button  fx:id="btnTableProduits" text="• Table" styleClass="sidebar-sub-button"/>
                 </VBox>
             </TitledPane>
 
             <!-- Ateliers -->
             <TitledPane text="🎥 Ateliers en ligne" expanded="false" styleClass="sidebar-button">
                 <VBox>
-                    <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    <Button fx:id="btnTableAteliers" text="• Table" styleClass="sidebar-sub-button"/>
                 </VBox>
             </TitledPane>
 
             <!-- Matériaux -->
             <TitledPane text="🛠 Matériaux" expanded="false" styleClass="sidebar-button">
-                <VBox>
-                    <Button text="• Table" styleClass="sidebar-sub-button"/>
-                </VBox>
+                <content>
+                    <VBox spacing="5" style="-fx-padding: 5;">
+                        <Button fx:id="btnTableMateriaux" text="• Table Materiaux" styleClass="sidebar-sub-button"/>
+                        <Button fx:id="btnTableFournisseur" text="• Table Fournisseur" styleClass="sidebar-sub-button"/>
+                    </VBox>
+                </content>
             </TitledPane>
+
 
             <!-- Commandes -->
             <TitledPane text="🛒 Commandes" expanded="false" styleClass="sidebar-button">
                 <VBox>
-                    <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    <Button fx:id="btnTableCommande" text="• Table" styleClass="sidebar-sub-button"/>
                 </VBox>
             </TitledPane>
 
             <!-- Réclamations -->
             <TitledPane text="💬 Réclamations" expanded="false" styleClass="sidebar-button">
                 <VBox>
-                    <Button text="• Table" styleClass="sidebar-sub-button"/>
+                    <Button fx:id="btnListeReclamation" text="• Liste"
+                            styleClass="sidebar-sub-button"
+                            onAction="#handleListeReclamation"/>
                 </VBox>
             </TitledPane>
-
         </VBox>
     </left>
 

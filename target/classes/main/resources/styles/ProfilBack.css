@@ -1,0 +1,212 @@
+/* ===== VARIABLES ===== */
+* {
+    -primary-color: #3a4c68;
+    -primary-light: #507fc3;
+    -secondary-color: #64748b;
+    -background-color: #ffffff;
+    -border-color: #e2e8f0;
+    -hover-color: rgba(58, 76, 104, 0.05);
+    -error-color: #e53e3e;
+    -success-color: #38a169;
+}
+
+/* ===== CONTENEUR GÉNÉRAL ===== */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* ===== EN-TÊTE ===== */
+.header-section {
+    -fx-padding: 0 0 20 0;
+}
+
+.page-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+}
+
+.page-subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: -secondary-color;
+}
+
+/* ===== CONTENEUR PRINCIPAL ===== */
+.profile-container {
+    -fx-background-color: -background-color;
+    -fx-background-radius: 20;
+    -fx-padding: 30;
+}
+
+.profile-content {
+    -fx-padding: 20;
+}
+
+/* ===== SCROLL PANE ===== */
+.main-scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.main-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.main-scroll-pane > .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 10;
+}
+
+.main-scroll-pane > .scroll-bar:vertical > .thumb {
+    -fx-background-color: -primary-color;
+    -fx-background-radius: 5;
+    -fx-opacity: 0.6;
+}
+
+.main-scroll-pane > .scroll-bar:vertical > .thumb:hover {
+    -fx-opacity: 0.8;
+}
+
+.main-container {
+    -fx-padding: 40 20 40 20;
+}
+
+/* ===== SECTION PHOTO ===== */
+.photo-section {
+    -fx-min-width: 200;
+    -fx-padding: 20;
+}
+
+.photo-container {
+    -fx-background-color: -background-color;
+    -fx-background-radius: 50%;
+    -fx-padding: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);
+}
+
+.profile-photo {
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);
+    -fx-opacity: 0.85; /* rend l'image un peu plus foncée */
+
+}
+
+.profile-photo > ImageView {
+    -fx-background-radius: 50%;
+}
+
+.edit-photo-button {
+    -fx-background-color:transparent;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+.edit-photo-button:hover {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50%;
+    -fx-translate-x: 3;
+    -fx-translate-y: 3;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3);
+}
+
+.user-name {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+}
+
+/* ===== SÉPARATEUR ===== */
+.vertical-separator {
+    -fx-background-color: -border-color;
+    -fx-opacity: 0.5;
+    -fx-padding: 0.5;
+    -fx-pref-height: 400;
+}
+
+.section-separator {
+    -fx-background-color: -border-color;
+    -fx-opacity: 0.5;
+    -fx-padding: 0.5;
+    -fx-margin: 10 0;
+}
+
+/* ===== SECTION FORMULAIRE ===== */
+.form-section {
+    -fx-spacing: 20;
+    -fx-pref-width: 400;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+    -fx-padding: 10 0 5 0;
+}
+
+.field-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: -secondary-color;
+    -fx-font-weight: normal;
+}
+
+/* ===== CHAMPS DE SAISIE ===== */
+.text-field, .password-field {
+    -fx-background-color: -background-color;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+    -fx-font-size: 14px;
+}
+
+.text-field:hover, .password-field:hover {
+    -fx-background-color: -hover-color;
+    -fx-border-color: -primary-light;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-background-color: -background-color;
+    -fx-border-color: -primary-color;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(58,76,104,0.1), 4, 0, 0, 0);
+}
+
+/* ===== BOUTONS ===== */
+.primary-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+.primary-button:hover {
+    -fx-background-color: -primary-light;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 8;
+    -fx-padding: 12;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: -hover-color;
+    -fx-border-color: -primary-color;
+}
+
+/* ===== CONTENEUR D'ACTIONS ===== */
+.actions-container {
+    -fx-padding: 20 0 0 0;
+}
